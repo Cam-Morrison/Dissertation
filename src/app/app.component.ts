@@ -1,4 +1,4 @@
-import { MyDataService } from './services/data.service';
+import { MyDataService } from './shared/services/data.service';
 import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { shareReplay } from 'rxjs/operators';
@@ -30,6 +30,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   public chartOptions?: Partial<ChartOptions>;
   dataPoints:any = [];
   ticker = "PYPL";
+
+  showFiller = false;
 
   ngOnInit():void {
   }
