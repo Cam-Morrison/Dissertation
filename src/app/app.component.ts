@@ -29,8 +29,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   public chartOptions?: Partial<ChartOptions>;
   dataPoints:any = [];
-  ticker = "PYPL";
-
+  volume:any = [];
+  ticker = "VOO";
+  tickerTitle = "Vanguard S&P 500 Index";
   showFiller = false;
 
   ngOnInit():void {
@@ -38,39 +39,53 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   constructor(private MyDataService: MyDataService) {
 
-    let resp = this.MyDataService.getPrices(this.ticker).pipe(shareReplay());
+    //Read in ticker
+    let resp = this.MyDataService.getPrices(this.ticker, "2017-01-01").pipe(shareReplay());
     resp.subscribe((data: any)=> {
-        for (var key in data['Time Series (Daily)']) {
-          var dt = data['Time Series (Daily)'][key];
-
-          this.dataPoints.push({x: new Date(key), y: Number(dt["4. close"]) });
+        for (var key in data['results']) {
+          var dt = data['results'][key];
+          this.dataPoints.push([[new Date(dt["t"])],
+          [Number(dt["o"]), Number(dt["h"]), Number(dt["l"]), Number(dt["c"])]]);
+          this.volume.push(Number(dt["v"]));
         }
         this.intializationChart();
     },
     (error) => {
-      console.log("error is: "+ error);
+      console.log("error is: " + error);
     });
 
   }
 
   intializationChart() {
-
     this.chartOptions = {
       series: [{
         name: "Price",
+        type: "candlestick",
         data: this.dataPoints
-      }],
+      }
+    ],
       chart: {
         id: 'chart',
-        type: "line",
+        type: "candlestick",
         height: 350
       },
       title: {
-        text: `${this.ticker}`,
-        align: "left"
+        text: `${this.tickerTitle}`,
+        align: "center"
       },
       xaxis: {
-        type: "datetime"
+        type: "datetime",
+        axisTicks: {
+          show: true,
+          borderType: 'solid',
+          color: '#78909C',
+          height: 6,
+          offsetX: 0,
+          offsetY: 0
+        },
+        labels: {
+          format: 'MM/yy',
+        }
       },
       yaxis: {
         tooltip: {
@@ -82,5 +97,4 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
   }
-
 }
