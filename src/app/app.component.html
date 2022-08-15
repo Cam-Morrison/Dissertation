@@ -1,10 +1,45 @@
-<app-navigation></app-navigation>
-<div id="chart">
-  <apx-chart *ngIf="chartOptions"
-    [series]="chartOptions.series!"
-    [chart]="chartOptions.chart!"
-    [xaxis]="chartOptions.xaxis!"
-    [yaxis]="chartOptions.yaxis!"
-    [title]="chartOptions.title!"
-  ></apx-chart>
-</div>
+<!-- Top navigation toolbar -->
+<mat-toolbar class="mat-elevation-z8">
+  <button
+    mat-icon-button
+    *ngIf="sidenav.mode === 'over'"
+    (click)="sidenav.toggle()"
+  >
+    <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+    <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+  </button>
+  CM Investment Analytics
+</mat-toolbar>
+
+<!-- Sidebar navigation -->
+<mat-sidenav-container>
+  <!-- Profile -->
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+    <!-- <img class="avatar mat-elevation-z8" src="" /> -->
+    <h4 class="name">{{userName}}</h4>
+    <p class="designation">{{userRole}}</p>
+
+    <mat-divider></mat-divider>
+
+    <!-- Navigation pages -->
+    <div *ngFor="let data of navData">
+      <button  mat-button class="menu-button" (click)="sidenav.toggle()"
+      routerLink="{{data.routeLink}}" routerLinkActive="active" ariaCurrentWhenActive="page">
+      <mat-icon>{{data.icon}}</mat-icon>
+      <span> {{data.label}}</span>
+      </button>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <button mat-button class="menu-button" routerLink="/help">
+      <mat-icon>logout</mat-icon>
+      <span>Sign out</span>
+    </button>
+  </mat-sidenav>
+
+  <!-- Main page content -->
+  <mat-sidenav-content>
+      <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

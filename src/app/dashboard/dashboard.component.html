@@ -1,0 +1,12 @@
+<div class="content mat-elevation-z8">
+  <div id="chart">
+    <apx-chart *ngIf="chartOptions"
+      [series]="chartOptions.series!"
+      [chart]="chartOptions.chart!"
+      [xaxis]="chartOptions.xaxis!"
+      [yaxis]="chartOptions.yaxis!"
+      [title]="chartOptions.title!"
+    ></apx-chart>
+  </div>
+</div>
+
