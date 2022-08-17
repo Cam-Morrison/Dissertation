@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NewsComponent } from './news/news.component';
+import { OverlayModule } from '@angular/cdk/overlay'
+import { CdkMenuModule } from '@angular/cdk/menu'
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { NewsComponent } from './news/news.component';
   ],
   imports: [
     BrowserModule,
+    CdkMenuModule,
     NgApexchartsModule,
     HttpClientModule,
     AppRoutingModule,
@@ -29,7 +32,8 @@ import { NewsComponent } from './news/news.component';
     MatSidenavModule,
     MatButtonModule,
     MatIconModule,
-    MatDividerModule
+    MatDividerModule,
+    OverlayModule
   ],
   providers: [],
   bootstrap: [AppComponent],

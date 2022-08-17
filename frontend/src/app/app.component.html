@@ -1,44 +1,45 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row (click)="drawer.toggle()">
-    <button mat-icon-button>
-      <mat-icon>menu</mat-icon>
-    </button>
-    <h1>CM Investment Analytics</h1>
-  </mat-toolbar-row>
+<!-- Top navigation toolbar -->
+<mat-toolbar class="mat-elevation-z8">
+  <button
+    mat-icon-button
+    *ngIf="sidenav.mode === 'over'"
+    (click)="sidenav.toggle()"
+  >
+    <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+    <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+  </button>
+  CM Investment Analytics
 </mat-toolbar>
 
-<mat-drawer-container autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="over">
-    <p>Image goes here perhaps</p>
+<!-- Sidebar navigation -->
+<mat-sidenav-container>
+  <!-- Profile -->
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+    <!-- <img class="avatar mat-elevation-z8" src="" /> -->
+    <h4 class="name">{{userName}}</h4>
+    <p class="designation">{{userRole}}</p>
 
-    <button mat-button class="menu-button"
-    routerLink="/dashboard" routerLinkActive="active" ariaCurrentWhenActive="page">
-      <mat-icon>dashboard</mat-icon>
-      <span> Dashboard</span>
-    </button>
+    <mat-divider></mat-divider>
 
-    <button mat-button class="menu-button"
-    routerLink="/news" routerLinkActive="active" ariaCurrentWhenActive="page">
-      <mat-icon>library_books</mat-icon>
-      <span> Market news</span>
-    </button>
+    <!-- Navigation pages -->
+    <div *ngFor="let data of navData">
+      <button  mat-button class="menu-button" (click)="sidenav.toggle()"
+      routerLink="{{data.routeLink}}" routerLinkActive="active" ariaCurrentWhenActive="page">
+      <mat-icon>{{data.icon}}</mat-icon>
+      <span> {{data.label}}</span>
+      </button>
+    </div>
 
-    <button mat-button class="menu-button">
-      <mat-icon>trending_up</mat-icon>
-      <span> Search stocks</span>
-    </button>
+    <mat-divider></mat-divider>
 
-    <button mat-button class="menu-button">
-      <mat-icon>memory</mat-icon>
-      <span> Predictive learning</span>
+    <button mat-button class="menu-button" routerLink="/help">
+      <mat-icon>logout</mat-icon>
+      <span>Sign out</span>
     </button>
-    <button mat-button class="menu-button">
-      <mat-icon>account_box</mat-icon>
-      <span> My account</span>
-    </button>
-  </mat-drawer>
+  </mat-sidenav>
 
-  <div>
-    <router-outlet></router-outlet>
-  </div>
-</mat-drawer-container>
+  <!-- Main page content -->
+  <mat-sidenav-content>
+      <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
