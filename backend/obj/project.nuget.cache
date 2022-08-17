@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Rmxz+M+HbbOg8q0RYT+qXbnT3z+Nzxq3ItfHuj1LXPeO9J6eeI82vl+bPM3U7aLHlYygmg7VH5f7mmrKLe6hCA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Cameron Morrison\\Documents\\Repos\\dissertation\\backend\\backend.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Cameron Morrison\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.11.1\\microsoft.visualstudio.azure.containers.tools.targets.1.11.1.nupkg.sha512"
+  ],
+  "logs": []
+}
