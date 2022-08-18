@@ -1,10 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "Rmxz+M+HbbOg8q0RYT+qXbnT3z+Nzxq3ItfHuj1LXPeO9J6eeI82vl+bPM3U7aLHlYygmg7VH5f7mmrKLe6hCA==",
+  "dgSpecHash": "C9kTk8be8Mtfyu62BtLHNBhpyBvgTJeYOCrutwQddlWLb8U/4hhN3LT9x1sLZDPeGWnT+fv7YI5N8JlZp5+tXw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Cameron Morrison\\Documents\\Repos\\dissertation\\backend\\backend.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Cameron Morrison\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.11.1\\microsoft.visualstudio.azure.containers.tools.targets.1.11.1.nupkg.sha512"
+    "C:\\Users\\Cameron Morrison\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\Cameron Morrison\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Cameron Morrison\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
+    "C:\\Users\\Cameron Morrison\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\Cameron Morrison\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "C:\\Users\\Cameron Morrison\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
   ],
   "logs": []
 }
