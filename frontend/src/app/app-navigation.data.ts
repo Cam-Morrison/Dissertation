@@ -10,7 +10,7 @@ export const navigationData = [
         label: 'Market News'
     },
     {
-        routeLink: '',
+        routeLink: 'stocks',
         icon: 'trending_up',
         label: 'Search Stocks'
     },

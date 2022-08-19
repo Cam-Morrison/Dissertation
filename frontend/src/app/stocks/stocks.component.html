@@ -1,0 +1,42 @@
+<div class="content mat-elevation-z8" *ngIf="isDataAvailable">
+  <table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="Ticker">
+    <th mat-header-cell *matHeaderCellDef>
+      Ticker
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element[0]}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Volume">
+    <th mat-header-cell *matHeaderCellDef>
+      Volume
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element[1]}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Open">
+    <th mat-header-cell *matHeaderCellDef>
+      Open
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element[2]}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Close">
+      <th mat-header-cell *matHeaderCellDef>
+        Close
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element[3]}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Change">
+      <th mat-header-cell *matHeaderCellDef>
+        Change
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element[4]}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
