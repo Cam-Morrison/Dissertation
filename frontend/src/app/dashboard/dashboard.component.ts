@@ -29,7 +29,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   public chartOptions?: Partial<ChartOptions>;
   dataPoints:any = [];
-  volume:any = [];
   ticker = "VOO";
   tickerTitle = "Vanguard S&P 500 Index";
   showFiller = false;
@@ -40,13 +39,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   constructor(private MyDataService: MyDataService) {
 
     //Read in ticker
-    let resp = this.MyDataService.getPrices(this.ticker, "2017-01-01").pipe(shareReplay());
+    let resp = this.MyDataService.getStockPrice(this.ticker, "2017-01-01").pipe(shareReplay());
     resp.subscribe((data: any)=> {
         for (var key in data['results']) {
           var dt = data['results'][key];
           this.dataPoints.push([[new Date(dt["t"])],
           [Number(dt["o"]), Number(dt["h"]), Number(dt["l"]), Number(dt["c"])]]);
-          this.volume.push(Number(dt["v"]));
         }
         this.intializationChart();
     },
