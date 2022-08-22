@@ -5,3 +5,11 @@ table {
 th.mat-sort-header-sorted {
   color: black;
 }
+
+.positive {
+  color: green;
+}
+
+.negative {
+  color: red;
+}

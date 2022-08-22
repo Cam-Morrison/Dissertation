@@ -1,3 +1,4 @@
+import { StocksModule } from './stocks/stocks.module';
 import { StocksComponent } from './stocks/stocks.component';
 import { NewsComponent } from './news/news.component';
 import { NgModule } from '@angular/core';
@@ -8,7 +9,11 @@ const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'news', component: NewsComponent },
-  { path: 'stocks', component: StocksComponent },
+  {
+    path: 'stocks',
+    loadChildren: () => import('./stocks/stocks.module').then(m => m.StocksModule),
+    component: StocksComponent
+  },
  // { path: '**', component: PageNotFoundComponent },  // 404PAGE
 ];
 

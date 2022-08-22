@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MyDataService } from '../shared/services/data.service';
 import { shareReplay } from 'rxjs/operators';
-import {LiveAnnouncer} from '@angular/cdk/a11y';
-import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
@@ -21,7 +19,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
   isDataAvailable:boolean=false;
 
-  constructor(private MyDataService: MyDataService, private _liveAnnouncer: LiveAnnouncer) {
+  constructor(private MyDataService: MyDataService) {
   }
 
   ngOnInit(){
@@ -31,7 +29,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
     resp.subscribe((data: any)=> {
         for (var key in data['results']) {
           var dt = data['results'][key];
-          var percentage = Number(this.getPercentageChange(dt["o"], dt["c"])) + "%";
+          var percentage = Number(this.getPercentageChange(dt["o"], dt["c"]));
           this.dataPoints.push([dt["T"], dt["v"], dt["o"], dt["c"], percentage]);
           count++;
           if(count === 30){
@@ -48,7 +46,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
   }
 
   getPercentageChange(oldNumber: number, newNumber: number){
-    return (((newNumber - oldNumber)/oldNumber) * 100).toFixed(3);
+    return (((newNumber - oldNumber)/oldNumber) * 100).toFixed(2);
   }
 
   ngAfterViewInit() {

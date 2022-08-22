@@ -2,11 +2,6 @@ import { ThisReceiver } from "@angular/compiler";
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { navigationData } from "./app-navigation.data";
 
-interface SideNavToggle {
-  screenWidth: number;
-  collapsed: boolean;
-}
-
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
