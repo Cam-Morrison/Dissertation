@@ -10,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IFeatureFlagService, FeatureFlagService>();
+builder.Services.AddSingleton<IMarketDataService, MarketDataService>();
 
 var app = builder.Build();
  

@@ -31,7 +31,8 @@ namespace backend.Controllers
             {
                 if(await _featureFlag.GetFeatureFlagAsync("getMarketMovement"))
                 {
-                    return Ok(_marketDataService.GetStockPriceAsync(ticker));
+                    return Ok(_marketDataService.GetMarketData());
+                    // return Ok(_marketDataService.GetStockPriceAsync(ticker));
                 } 
                 return Ok("Feature not implemented");
             }

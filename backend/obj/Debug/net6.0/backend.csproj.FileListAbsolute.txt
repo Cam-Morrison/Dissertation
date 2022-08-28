@@ -31,3 +31,4 @@ C:\Users\Cameron Morrison\Documents\Repos\dissertation\backend\obj\Debug\net6.0\
 C:\Users\Cameron Morrison\Documents\Repos\dissertation\backend\obj\Debug\net6.0\backend.pdb
 C:\Users\Cameron Morrison\Documents\Repos\dissertation\backend\obj\Debug\net6.0\backend.genruntimeconfig.cache
 C:\Users\Cameron Morrison\Documents\Repos\dissertation\backend\obj\Debug\net6.0\ref\backend.dll
+C:\Users\Cameron Morrison\Documents\Repos\dissertation\backend\bin\Debug\net6.0\Newtonsoft.Json.dll
