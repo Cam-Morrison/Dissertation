@@ -45,7 +45,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatIconModule,
     A11yModule,
     MatDividerModule,
-    OverlayModule
+    OverlayModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

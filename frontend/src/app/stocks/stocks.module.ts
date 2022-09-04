@@ -4,7 +4,10 @@ import { StocksComponent } from './stocks.component';
 import { RouterModule } from '@angular/router';
 import { StockDetailComponent } from './stock-detail/stock-detail.component';
 import { MatInputModule } from '@angular/material/input';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -15,6 +18,10 @@ import { MatTableModule } from '@angular/material/table';
     CommonModule,
     MatInputModule,
     MatTableModule,
+    MatIconModule,
+    MatSortModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       {
         path: 'stocks', component: StocksComponent },
@@ -25,6 +32,7 @@ import { MatTableModule } from '@angular/material/table';
     ])
 
   ],
+  bootstrap: [StocksComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class StocksModule { }

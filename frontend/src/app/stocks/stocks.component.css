@@ -13,3 +13,8 @@ th.mat-sort-header-sorted {
 .negative {
   color: red;
 }
+
+.searchBar {
+  width:10rem;
+  padding-left:1rem;
+}

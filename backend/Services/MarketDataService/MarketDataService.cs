@@ -1,67 +1,67 @@
 namespace backend.services 
 {
+    using System;
+    using System.Collections.Generic;
     using System.Net.Http;
     using System.Net.Http.Headers; 
-    using System;
-    using System.IO;
-    using System.Net;
-    using System.Text;
+
     public class MarketDataService : IMarketDataService
     {
         private readonly IConfiguration Configuration;
-        private static string marketData;
         private string marketDataKey;
-        private string allStocksUrl = "https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/2022-08-17?adjusted=true&include_otc=true&apiKey=";
+        private string yesterday = DateTime.Today.AddDays(-2).ToString("yyyy-MM-dd");
 
         public MarketDataService(IConfiguration configuration)
         {
             Configuration = configuration;
-            if(marketData == null)
-            {
-                initialise();
-            } 
+            initialise();
         }
 
         public void initialise()
         {
-            this.marketDataKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("marketDataKey");
-            
-            string url = allStocksUrl + marketDataKey;
-            // Create a request for the URL. 		
-            WebRequest request = WebRequest.Create(url);
-            // If required by the server, set the credentials.
-            request.Credentials = CredentialCache.DefaultCredentials;
-            // Get the response.
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse ();
-            // Display the status.
-            Console.WriteLine(response.StatusDescription);
-            // Get the stream containing content returned by the server.
-            Stream dataStream = response.GetResponseStream ();
-            // Open the stream using a StreamReader for easy access.
-            StreamReader reader = new StreamReader(dataStream);
-            // Read the content.
-            marketData = reader.ReadToEnd();
-            // Display the content.
-            Console.WriteLine(marketData);
-            // Cleanup the streams and the response.
-            reader.Close ();
-            dataStream.Close ();
-            response.Close ();
+           this.marketDataKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("marketDataKey");
         }
 
-        public HttpResponseMessage GetStockPriceAsync(string ticker)
-        {
-            return null;
+        public string GetStockPrice(string ticker)
+        {        
+            string stockPriceUrl = "https://api.polygon.io/v1/open-close/" + ticker + "/" + yesterday + "?adjusted=true&apiKey=";      
+            return callUrl(stockPriceUrl);
         }
 
         //change to best performers then add customer search for stock instead?
         public string GetMarketData()
         {
-            if(marketData == null){
-                throw new NullReferenceException("GetMarketData error");
-            }
-            return marketData;
+            throw new NullReferenceException("GetMarketData error");
         }
 
+        public string GetStockDetail(string ticker)
+        {
+           string stockDetailUrl = "https://api.polygon.io/v3/reference/tickers/" + ticker + "?apiKey=";
+           return callUrl(stockDetailUrl);
+        }
+
+        private string callUrl(string inputUrl)
+        {
+            string url = inputUrl + marketDataKey;
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(url);
+            // Add an Accept header for JSON format.
+            client.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue("application/json"));
+            // List data response.
+            HttpResponseMessage response = client.GetAsync(url).Result;  // Blocking call! Program will wait here until a response is received or a timeout occurs.
+            if (response.IsSuccessStatusCode)
+            {
+                // Parse the response body.
+                var responseString = response.Content.ReadAsStringAsync().Result;
+                client.Dispose();
+                return responseString;
+            }
+            else
+            {
+                client.Dispose();
+                return "GetStockPriceAsync Error";
+            }
+        }
     }
 }
