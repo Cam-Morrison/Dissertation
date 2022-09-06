@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MyDataService } from '../shared/services/data.service';
 import { shareReplay } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-stocks',
@@ -16,6 +17,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
   constructor
   (
     private MyDataService: MyDataService,
+    private router: Router,
   )  { }
 
   ngOnInit() {
@@ -57,5 +59,9 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  onBack(): void {
+    this.router.navigate(['/dashboard']);
   }
 }

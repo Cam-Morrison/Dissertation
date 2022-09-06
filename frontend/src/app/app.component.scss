@@ -1,6 +1,11 @@
-mat-toolbar {
-  background: #004a9f;
+mat-toolbar, mat-sidenav, footer{
+  background: #002b5c;
   color: white;
+}
+
+footer {
+  padding:2rem;
+  font-size:16px;
 }
 
 mat-sidenav {
@@ -8,8 +13,6 @@ mat-sidenav {
   width: auto;
   overflow-x: hidden;
   border-right: none;
-  background: #002b5c;
-  color: white;
   border-radius: 10px;
   padding: 16px;
   text-align: center;
@@ -32,13 +35,6 @@ mat-sidenav-container {
   }
 }
 
-.avatar {
-  margin-top: 16px;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-}
-
 .name {
   margin-top: 8px;
   font-weight: normal;
@@ -55,3 +51,26 @@ mat-divider {
   margin-bottom: 16px;
   background-color: rgba(255, 255, 255, 0.5);
 }
+
+mat-grid-tile {
+  padding: 0;
+  display: flex;
+  overflow: wrap;
+  align-items: center;
+  justify-content: center;
+  div {
+    display: inline-block;
+    height: auto;
+    width: auto;
+  }
+}
+
+.copyright {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  color:#fff;
+  font-size: 15px;
+  border-top: 1px solid rgba(255,255,255,0.4);
+  text-align: center;
+}
+.copyright a{color:#01c7e9;transition: all 0.2s ease 0s;}

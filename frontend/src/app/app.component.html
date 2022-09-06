@@ -43,3 +43,23 @@
       <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<footer>
+  <mat-grid-list cols="1" rowHeight="2:1">
+    <mat-grid-tile>
+      <!-- Navigation pages -->
+      <div class = "content">
+      <div *ngFor="let data of navData">
+        <button  mat-button class="menu-button" (click)="scrollToTop()"
+        routerLink="{{data.routeLink}}" routerLinkActive="active" ariaCurrentWhenActive="page">
+        <mat-icon>{{data.icon}}</mat-icon>
+        <span> {{data.label}}</span>
+        </button>
+        </div>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <p class="copyright">Copyright © Mr. Morrison 2831609</p>
+    </mat-grid-tile>
+  </mat-grid-list>
+</footer>

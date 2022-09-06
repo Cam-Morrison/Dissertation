@@ -18,4 +18,8 @@ export class AppComponent implements OnInit {
 
   constructor() {
   }
+  
+  scrollToTop(){
+    window.scroll(0,0);
+  }
 }

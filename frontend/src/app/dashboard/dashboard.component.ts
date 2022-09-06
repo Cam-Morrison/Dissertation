@@ -1,9 +1,7 @@
 import { MyDataService } from '../shared/services/data.service';
-import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { shareReplay } from 'rxjs/operators';
 import {
-  ChartComponent,
   ApexAxisChartSeries,
   ApexChart,
   ApexYAxis,
@@ -30,14 +28,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public chartOptions?: Partial<ChartOptions>;
   dataPoints:any = [];
   ticker = "VOO";
-  tickerTitle = "Vanguard S&P 500 Index";
+  tickerTitle = "S&P 500 Index";
   showFiller = false;
 
   ngOnInit():void {
-  }
-
-  constructor(private MyDataService: MyDataService) {
-
     //Read in ticker
     let resp = this.MyDataService.getStockPrice(this.ticker, "2017-01-01").pipe(shareReplay());
     resp.subscribe((data: any)=> {
@@ -51,8 +45,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     (error) => {
       console.log("error is: " + error);
     });
-
   }
+
+  constructor(private MyDataService: MyDataService) {}
 
   intializationChart() {
     this.chartOptions = {

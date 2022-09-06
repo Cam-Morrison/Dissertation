@@ -1,1 +1,15 @@
-<p>stock-detail works!</p>
+<div class="content mat-elevation-z5">
+    <button mat-button color="primary" (click)='onBack()'>
+        <mat-icon>arrow_back</mat-icon>
+        <p> Go back</p>
+    </button>
+    <div id="chart">
+        <apx-chart *ngIf="chartOptions"
+          [series]="chartOptions.series!"
+          [chart]="chartOptions.chart!"
+          [xaxis]="chartOptions.xaxis!"
+          [yaxis]="chartOptions.yaxis!"
+          [title]="chartOptions.title!"
+        ></apx-chart>
+    </div>
+</div>

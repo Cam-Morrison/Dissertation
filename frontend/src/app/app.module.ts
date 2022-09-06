@@ -14,12 +14,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NewsComponent } from './news/news.component';
 import { OverlayModule } from '@angular/cdk/overlay'
 import { CdkMenuModule } from '@angular/cdk/menu';
-import {A11yModule} from '@angular/cdk/a11y';
+import { A11yModule} from '@angular/cdk/a11y';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MatSortModule } from '@angular/material/sort';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatTableModule,
+    MatSnackBarModule,
     MatSortModule,
     MatInputModule,
     MatPaginatorModule,

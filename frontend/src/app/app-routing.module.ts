@@ -4,16 +4,24 @@ import { NewsComponent } from './news/news.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { StockDetailComponent } from './stocks/stock-detail/stock-detail.component';
+import { StockDetailGuard } from './stocks/stock-detail/stock-detail.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'news', component: NewsComponent },
   {
     path: 'stocks',
     loadChildren: () => import('./stocks/stocks.module').then(m => m.StocksModule),
     component: StocksComponent
-  }
+  },
+  { 
+    path: 'stocks/:ticker', 
+    canActivate: [StockDetailGuard],
+    component: StockDetailComponent
+  },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '**', redirectTo: '/dashboard', pathMatch: 'full' },
 ];
 
 @NgModule({
