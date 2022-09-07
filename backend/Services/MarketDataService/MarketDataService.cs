@@ -4,12 +4,15 @@ namespace backend.services
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Net.Http.Headers; 
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     public class MarketDataService : IMarketDataService
     {
         private readonly IConfiguration Configuration;
         private string marketDataKey;
-        private string yesterday = DateTime.Today.AddDays(-2).ToString("yyyy-MM-dd");
+        private static string marketData;
+        private string yesterday = DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd");
 
         public MarketDataService(IConfiguration configuration)
         {
@@ -20,12 +23,22 @@ namespace backend.services
         public void initialise()
         {
            this.marketDataKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("marketDataKey");
+            if(marketData == null)
+            {
+                string marketDataUrl = $"https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/{yesterday}?adjusted=true&include_otc=false&apiKey=";
+                marketData = callUrl(marketDataUrl);
+            }
         }
 
         public string GetStockPrice(string ticker)
         {        
-            string stockPriceUrl = "https://api.polygon.io/v1/open-close/" + ticker + "/" + yesterday + "?adjusted=true&apiKey=";      
-            return callUrl(stockPriceUrl);
+            // string stockPriceUrl = $"https://api.polygon.io/v1/open-close/{ticker}/{yesterday}?adjusted=true&apiKey=";      
+            // return callUrl(stockPriceUrl);
+            var data = (JObject)JsonConvert.DeserializeObject(marketData);
+            
+            // manufacturer with the name 'Acme Co'
+            JToken selection = data.SelectToken("$.results[?(@.T == '"+ ticker +"')]");
+            return selection.ToString(Formatting.None);
         }
 
         //change to best performers then add customer search for stock instead?
@@ -36,9 +49,11 @@ namespace backend.services
 
         public string GetStockDetail(string ticker)
         {
-           string stockDetailUrl = "https://api.polygon.io/v3/reference/tickers/" + ticker + "?apiKey=";
+           string stockDetailUrl = $"https://api.polygon.io/v3/reference/tickers/{ticker}?apiKey=";
            return callUrl(stockDetailUrl);
         }
+
+        // public string doesStockExist()
 
         private string callUrl(string inputUrl)
         {
