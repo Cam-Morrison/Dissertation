@@ -33,7 +33,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
     ReactiveFormsModule,
     RouterModule.forChild([
       {
-        path: 'stocks', component: StocksComponent },
+        path: 'stocks',
+        loadChildren: () => import('./stocks.module').then(m => m.StocksModule),
+        component: StocksComponent
+      },
       { 
         path: 'stocks/:ticker', 
         canActivate: [StockDetailGuard],

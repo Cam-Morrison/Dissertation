@@ -39,11 +39,17 @@ namespace backend.services
         }
 
         public string GetStockPrice(string ticker)
-        {        
-            var data = (JObject)JsonConvert.DeserializeObject(marketData);
-            
-            JToken selection = data.SelectToken("$.results[?(@.T == '"+ ticker +"')]");
-            return selection.ToString(Formatting.None);
+        {       
+            try
+            {
+                var data = (JObject)JsonConvert.DeserializeObject(marketData);
+                JToken selection = data.SelectToken("$.results[?(@.T == '"+ ticker +"')]");
+                return selection.ToString(Formatting.None);
+            }
+            catch(Exception ex) 
+            {
+                return "Ticker cannot be found";
+            }
         }
 
         //change to best performers then add customer search for stock instead?
