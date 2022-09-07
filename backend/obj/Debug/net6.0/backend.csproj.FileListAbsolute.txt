@@ -67,3 +67,4 @@ C:\Users\Cam-M\Documents\Dissertation\backend\obj\Debug\net6.0\backend.csproj.Co
 C:\Users\Cam-M\Documents\Dissertation\backend\obj\Debug\net6.0\backend.genruntimeconfig.cache
 C:\Users\Cam-M\Documents\Dissertation\backend\obj\Debug\net6.0\ref\backend.dll
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Swashbuckle.AspNetCore.Annotations.dll
+C:\Users\Cameron Morrison\Documents\Repos\dissertation\backend\bin\Debug\net6.0\Swashbuckle.AspNetCore.Annotations.dll

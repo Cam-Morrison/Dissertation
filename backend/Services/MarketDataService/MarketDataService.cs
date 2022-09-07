@@ -24,19 +24,24 @@ namespace backend.services
         {
            this.marketDataKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("marketDataKey");
             if(marketData == null)
-            {
-                string marketDataUrl = $"https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/{yesterday}?adjusted=true&include_otc=false&apiKey=";
-                marketData = callUrl(marketDataUrl);
+            {            
+                updateMarketData();
             }
+        }
+
+        public void updateMarketData(){
+            string marketDataUrl = $"https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/{yesterday}?adjusted=true&include_otc=false&apiKey=";
+            string updatedMarketData = callUrl(marketDataUrl);
+            if(updatedMarketData != "Issue with API Call")
+            {
+                marketData = updatedMarketData;
+            } 
         }
 
         public string GetStockPrice(string ticker)
         {        
-            // string stockPriceUrl = $"https://api.polygon.io/v1/open-close/{ticker}/{yesterday}?adjusted=true&apiKey=";      
-            // return callUrl(stockPriceUrl);
             var data = (JObject)JsonConvert.DeserializeObject(marketData);
             
-            // manufacturer with the name 'Acme Co'
             JToken selection = data.SelectToken("$.results[?(@.T == '"+ ticker +"')]");
             return selection.ToString(Formatting.None);
         }
@@ -75,7 +80,7 @@ namespace backend.services
             else
             {
                 client.Dispose();
-                return "GetStockPriceAsync Error";
+                return "Issue with API Call";
             }
         }
     }
