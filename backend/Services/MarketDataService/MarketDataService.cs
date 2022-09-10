@@ -13,6 +13,7 @@ namespace backend.services
         private string marketDataKey;
         private static string marketData;
         private string yesterday = DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd");
+        private string today = DateTime.Today.AddDays(0).ToString("yyyy-MM-dd");
 
         public MarketDataService(IConfiguration configuration)
         {
@@ -25,11 +26,11 @@ namespace backend.services
            this.marketDataKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("marketDataKey");
             if(marketData == null)
             {            
-                updateMarketData();
+                UpdateMarketData();
             }
         }
 
-        public void updateMarketData(){
+        public void UpdateMarketData(){
             string marketDataUrl = $"https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/{yesterday}?adjusted=true&include_otc=false&apiKey=";
             string updatedMarketData = callUrl(marketDataUrl);
             if(updatedMarketData != "Issue with API Call")
@@ -48,14 +49,14 @@ namespace backend.services
             }
             catch(Exception ex) 
             {
-                return "Ticker cannot be found";
+                return ex.ToString();
             }
         }
 
-        //change to best performers then add customer search for stock instead?
-        public string GetMarketData()
+        public string GetPriceHistory(string ticker)
         {
-            throw new NullReferenceException("GetMarketData error");
+            var url = $"https://api.polygon.io/v2/aggs/ticker/{ticker}/range/1/day/2018-01-01/{today}?adjusted=true&sort=asc&apiKey=";
+            return callUrl(url);
         }
 
         public string GetStockDetail(string ticker)

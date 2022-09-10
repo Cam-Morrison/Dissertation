@@ -1,23 +1,21 @@
-import { ThisReceiver } from "@angular/compiler";
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component } from "@angular/core";
+import { ChildrenOutletContexts } from "@angular/router";
 import { navigationData } from "./app-navigation.data";
+import { fadeAnimation } from "./shared/services/routing-animation";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"]
+  styleUrls: ["./app.component.scss"],
+  animations: [ fadeAnimation ]
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
   public navData = navigationData;
   userRole = "Administrator";
   userName = "Cameron Morrison";
 
-  ngOnInit():void {
-  }
-
-  constructor() {
-  }
+  constructor(private contexts: ChildrenOutletContexts) {}
   
   scrollToTop(){
     window.scroll(0,0);

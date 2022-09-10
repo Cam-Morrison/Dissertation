@@ -13,6 +13,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
   dataPoints: any[] = [];
   displayedColumns: string[] = ['Ticker', 'Volume', 'Open', 'Close', 'Change'];
   dataSource: any;
+  isLoading = true;
 
   constructor
   (
@@ -36,6 +37,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
             C: dt['c'],
             M: percentage,
           };
+          this.isLoading = false;
           this.dataPoints.push(stock);
           count++;
           if (count === 100) {

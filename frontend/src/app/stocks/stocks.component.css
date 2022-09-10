@@ -27,3 +27,11 @@ th.mat-sort-header-sorted, th {
   width:10rem;
   padding-left:1rem;
 }
+
+.spinbox {
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  padding-top:20rem; 
+  zoom: 0.5;
+}

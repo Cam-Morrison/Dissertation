@@ -8,11 +8,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { StockDetailGuard } from './stock-detail/stock-detail.guard';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { NgApexchartsModule } from "ng-apexcharts";
 import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
     MatSortModule,
     MatRippleModule,
     MatSnackBarModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
     NgApexchartsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -39,7 +42,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
       },
       { 
         path: 'stocks/:ticker', 
-        canActivate: [StockDetailGuard],
         component: StockDetailComponent
       }
     ])

@@ -1,15 +1,33 @@
 <div class="content mat-elevation-z5">
-    <button mat-button color="primary" (click)='onBack()'>
-        <mat-icon>arrow_back</mat-icon>
-        <p> Go back</p>
+  <div>
+    <button mat-button color="primary" (click)="onBack()">
+      <mat-icon>arrow_back</mat-icon>
+      <p>Go back</p>
     </button>
-    <div id="chart">
-        <apx-chart *ngIf="chartOptions"
-          [series]="chartOptions.series!"
-          [chart]="chartOptions.chart!"
-          [xaxis]="chartOptions.xaxis!"
-          [yaxis]="chartOptions.yaxis!"
-          [title]="chartOptions.title!"
-        ></apx-chart>
-    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Change chart</mat-label>
+      <mat-select
+        (selectionChange)="onMatSelectValueChanges($event)"
+        [(value)]="selectedChart"
+      >
+        <mat-option value="area">Area</mat-option>
+        <mat-option value="candlestick">Candle stick</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div id="chart">
+    <apx-chart
+      *ngIf="chartOptions"
+      [series]="chartOptions.series!"
+      [chart]="chartOptions.chart!"
+      [xaxis]="chartOptions.xaxis!"
+      [yaxis]="chartOptions.yaxis!"
+      [title]="chartOptions.title!"
+      [dataLabels]="chartOptions.dataLabels!"
+      [markers]="chartOptions.markers!"
+      [fill]="chartOptions.fill!"
+      [tooltip]="chartOptions.tooltip!"
+      [autoUpdateSeries]="true"
+    ></apx-chart>
+  </div>
 </div>

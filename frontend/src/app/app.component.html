@@ -39,9 +39,10 @@
   </mat-sidenav>
 
   <!-- Main page content -->
-  <mat-sidenav-content>
-      <router-outlet></router-outlet>
+  <mat-sidenav-content [@fadeAnimation]="outlet.isActivated ? outlet.activatedRoute : ''">
+    <router-outlet #outlet="outlet"></router-outlet>
   </mat-sidenav-content>
+
 </mat-sidenav-container>
 
 <footer>

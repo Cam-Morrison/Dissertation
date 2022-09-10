@@ -4,3 +4,10 @@
   overflow-y:hidden;
 }
 
+.spinbox {
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  padding-top:20rem; 
+  zoom: 0.5;
+}

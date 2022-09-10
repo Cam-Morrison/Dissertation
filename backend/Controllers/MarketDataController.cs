@@ -34,7 +34,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getMarketMovement"))
+                if(await _featureFlag.GetFeatureFlagAsync("getStockPrice"))
                 {
                     return Ok(_marketDataService.GetStockPrice(ticker));
                 } 
@@ -56,7 +56,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getMarketMovement"))
+                if(await _featureFlag.GetFeatureFlagAsync("getStockDetail"))
                 {
                     return Ok(_marketDataService.GetStockDetail(ticker));
                 } 
@@ -65,6 +65,28 @@ namespace backend.Controllers
             catch(Exception ex)
             {
                 Log.Information("MarketDataController.GetStockDetail()");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("/history/{ticker}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(Summary = "Gets the historical prices of {ticker}, used for charts and prediction")]
+        public async Task<IActionResult> GetStockHistory(string ticker)
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("getStockHistory"))
+                {
+                    return Ok(_marketDataService.GetPriceHistory(ticker));
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("MarketDataController.GetStockHistory()");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

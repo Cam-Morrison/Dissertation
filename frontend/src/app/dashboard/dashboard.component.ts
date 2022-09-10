@@ -6,15 +6,25 @@ import {
   ApexChart,
   ApexYAxis,
   ApexXAxis,
-  ApexTitleSubtitle
+  ApexTitleSubtitle,
+  ApexFill,
+  ApexMarkers,
+  ApexTooltip,
+  ApexDataLabels,
+  ApexStroke
 } from "ng-apexcharts";
 
 export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  yaxis: ApexYAxis;
-  title: ApexTitleSubtitle;
+   series: ApexAxisChartSeries;
+   chart: ApexChart;
+   dataLabels: ApexDataLabels;
+   markers: ApexMarkers;
+   title: ApexTitleSubtitle;
+   fill: ApexFill;
+   yaxis: ApexYAxis;
+   xaxis: ApexXAxis;
+   tooltip: ApexTooltip;
+   stroke: ApexStroke;
 };
 
 @Component({
@@ -28,20 +38,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public chartOptions?: Partial<ChartOptions>;
   dataPoints:any = [];
   ticker = "VOO";
-  tickerTitle = "S&P 500 Index";
+  tickerTitle = "S&P 500";
   showFiller = false;
+  isLoading = true;
 
   ngOnInit():void {
     //Read in ticker
-    let resp = this.MyDataService.getStockPrice(this.ticker, "2017-01-01").pipe(shareReplay());
+    let resp = this.MyDataService.getStockHistory(this.ticker).pipe(shareReplay());
     resp.subscribe((data: any)=> {
         for (var key in data['results']) {
           var dt = data['results'][key];
           this.dataPoints.push([[new Date(dt["t"])],
           [Number(dt["o"]), Number(dt["h"]), Number(dt["l"]), Number(dt["c"])]]);
         }
+        this.isLoading = false;
         this.intializationChart();
-    },
+    },   
     (error) => {
       console.log("error is: " + error);
     });
