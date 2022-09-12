@@ -18,7 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 @NgModule({
   declarations: [
     StocksComponent,
-    StockDetailComponent
+    StockDetailComponent,
   ],
   imports: [
     CommonModule,

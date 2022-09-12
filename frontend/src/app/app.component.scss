@@ -4,7 +4,7 @@ mat-toolbar, mat-sidenav, footer{
 }
 
 footer {
-  padding:2rem;
+  padding:1rem;
   font-size:16px;
 }
 
@@ -18,9 +18,13 @@ mat-sidenav {
   text-align: center;
 }
 
-
 mat-sidenav-container {
   height: calc(100vh - 65px);
+}
+
+mat-sidenav-content {
+  overflow:hidden;
+
 }
 
 .menu-button {
@@ -52,13 +56,35 @@ mat-divider {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-mat-grid-tile {
-  padding: 0;
+.horizontalNav {
   display: flex;
+  background-color:#07203d;
+}
+
+.horizontalButtons {
+  color:white;
+}
+.horizontalButtons:hover {
+  background-color:#448de0;
+}
+.mobileButton {
+  display:none;
+}
+
+@media screen and (max-width: 1200px) {
+  .horizontalNav {
+    display: none;
+  }
+  .mobileButton {
+    display:flex;
+  }
+}
+
+.flexbox {
+  padding: 0;
   overflow: wrap;
   align-items: center;
   justify-content: center;
-
   div {
     display: inline-block;
     height: auto;

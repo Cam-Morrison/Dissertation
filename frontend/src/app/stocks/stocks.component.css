@@ -15,14 +15,6 @@ th.mat-sort-header-sorted, th {
   font-weight:bold;
 }
 
-.positive {
-  color: green;
-}
-
-.negative {
-  color: red;
-}
-
 .searchBar {
   width:10rem;
   padding-left:1rem;

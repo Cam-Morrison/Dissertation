@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ChildrenOutletContexts } from "@angular/router";
 import { navigationData } from "./app-navigation.data";
-import { fadeAnimation } from "./shared/services/routing-animation";
+import { fadeAnimation } from "./shared/component/routing-animation";
 
 @Component({
   selector: "app-root",

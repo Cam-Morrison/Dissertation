@@ -1,9 +1,8 @@
 <!-- Top navigation toolbar -->
-<mat-toolbar class="mat-elevation-z8">
-  <button
+<mat-toolbar class="flexbox" (click)="sidenav.toggle()" fixed>
+  <button class="mobileButton"
     mat-icon-button
     *ngIf="sidenav.mode === 'over'"
-    (click)="sidenav.toggle()"
   >
     <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
     <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
@@ -40,27 +39,29 @@
 
   <!-- Main page content -->
   <mat-sidenav-content [@fadeAnimation]="outlet.isActivated ? outlet.activatedRoute : ''">
+          <!-- Navigation pages -->
+              <!-- Navigation pages -->
+              <div class="flexbox horizontalNav">
+              <div *ngFor="let data of navData">
+                <button mat-button mat-ripple class="horizontalButtons" (click)="scrollToTop()"
+                routerLink="{{data.routeLink}}" routerLinkActive="active" ariaCurrentWhenActive="page">
+                <mat-icon>{{data.icon}}</mat-icon>
+                <span> {{data.label}}</span>
+                </button>
+                </div>
+              </div>
+    <!-- <button mat-button color="primary" > 
+      <div class="with-icon" (click)="sidenav.toggle()">
+        <mat-icon>near_me</mat-icon>Search stocks, news and more
+      </div>  
+    </button> -->
     <router-outlet #outlet="outlet"></router-outlet>
   </mat-sidenav-content>
 
 </mat-sidenav-container>
 
 <footer>
-  <mat-grid-list cols="1" rowHeight="2:1">
-    <mat-grid-tile>
-      <!-- Navigation pages -->
-      <div class = "content">
-      <div *ngFor="let data of navData">
-        <button  mat-button class="menu-button" (click)="scrollToTop()"
-        routerLink="{{data.routeLink}}" routerLinkActive="active" ariaCurrentWhenActive="page">
-        <mat-icon>{{data.icon}}</mat-icon>
-        <span> {{data.label}}</span>
-        </button>
-        </div>
-      </div>
-    </mat-grid-tile>
-    <mat-grid-tile>
+    <div class="flexbox">
       <p class="copyright">Copyright © Mr. Morrison 2831609</p>
-    </mat-grid-tile>
-  </mat-grid-list>
+    </div>
 </footer>
