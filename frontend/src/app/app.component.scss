@@ -1,6 +1,11 @@
-mat-toolbar {
-  background: #004a9f;
+mat-toolbar, mat-sidenav, footer{
+  background: #002b5c;
   color: white;
+}
+
+footer {
+  padding:1rem;
+  font-size:16px;
 }
 
 mat-sidenav {
@@ -8,16 +13,18 @@ mat-sidenav {
   width: auto;
   overflow-x: hidden;
   border-right: none;
-  background: #002b5c;
-  color: white;
   border-radius: 10px;
   padding: 16px;
   text-align: center;
 }
 
-
 mat-sidenav-container {
   height: calc(100vh - 65px);
+}
+
+mat-sidenav-content {
+  overflow:hidden;
+
 }
 
 .menu-button {
@@ -30,13 +37,6 @@ mat-sidenav-container {
   mat-icon {
     margin-right: 8px;
   }
-}
-
-.avatar {
-  margin-top: 16px;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
 }
 
 .name {
@@ -55,3 +55,49 @@ mat-divider {
   margin-bottom: 16px;
   background-color: rgba(255, 255, 255, 0.5);
 }
+
+.horizontalNav {
+  display: flex;
+  background-color:#07203d;
+}
+
+.horizontalButtons {
+  color:white;
+}
+.horizontalButtons:hover {
+  background-color:#448de0;
+}
+.mobileButton {
+  display:none;
+}
+
+@media screen and (max-width: 1200px) {
+  .horizontalNav {
+    display: none;
+  }
+  .mobileButton {
+    display:flex;
+  }
+}
+
+.flexbox {
+  padding: 0;
+  overflow: wrap;
+  align-items: center;
+  justify-content: center;
+  div {
+    display: inline-block;
+    height: auto;
+    width: auto;
+  }
+}
+
+.copyright {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  color:#fff;
+  font-size: 15px;
+  border-top: 1px solid rgba(255,255,255,0.4);
+  text-align: center;
+}
+.copyright a{color:#01c7e9;transition: all 0.2s ease 0s;}

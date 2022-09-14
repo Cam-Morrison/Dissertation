@@ -1,12 +1,34 @@
-<div class="content mat-elevation-z8">
-  <div id="chart">
-    <apx-chart *ngIf="chartOptions"
-      [series]="chartOptions.series!"
-      [chart]="chartOptions.chart!"
-      [xaxis]="chartOptions.xaxis!"
-      [yaxis]="chartOptions.yaxis!"
-      [title]="chartOptions.title!"
-    ></apx-chart>
+<div class="content mat-elevation-z5">
+  <div>
+    <div class="movement" [ngClass]="{
+        positive: dailyMovement> 0,
+        negative: dailyMovement < 0
+      }" *ngIf="dailyMovement != null">
+        <span *ngIf="dailyMovement > 0">
+          <mat-icon>trending_up</mat-icon>
+        </span>
+        <span *ngIf="dailyMovement < 0">
+          <mat-icon>trending_down</mat-icon>
+        </span>
+        <span *ngIf="dailyMovement == 0">
+          <mat-icon>trending_flat</mat-icon>
+        </span> 
+        <h2>
+        {{ dailyMovement + "%" }}
+        </h2>
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Change chart</mat-label>
+      <mat-select [(value)]="selectedChart">
+        <mat-option value="area">Area</mat-option>
+        <mat-option value="candlestick">Candle stick</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
+  <stockChart *ngIf="!isLoading"
+    [dataPoints]='dataPoints' 
+    [ticker]='tickerTitle'
+    [chartType]='selectedChart'
+  ></stockChart>
 </div>
 

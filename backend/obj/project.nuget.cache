@@ -1,11 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "533PaWOpdThYLOS0IscodAMhfSn+HA5woY+dYwzuwkSAXh04eKwyduxDytlYx7J8LySqWZQ/u0QpnlQJXB1s+g==",
+  "dgSpecHash": "vmWXm0ukcD06P7kNH8LYso6LseZ3Ap6rXQh1tuZLHZgYhFh0b1a/YUSc+842/AUNi4SWZ9xjauk0TUCMk5FxxQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Cam-M\\Documents\\Dissertation\\backend\\backend.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Cam-M\\.nuget\\packages\\aspnetcoreratelimit\\4.0.2\\aspnetcoreratelimit.4.0.2.nupkg.sha512",
     "C:\\Users\\Cam-M\\.nuget\\packages\\configcat.client\\6.5.2\\configcat.client.6.5.2.nupkg.sha512",
     "C:\\Users\\Cam-M\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\Cam-M\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\6.0.0\\microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\Cam-M\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\Cam-M\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.1\\microsoft.extensions.logging.abstractions.6.0.1.nupkg.sha512",
+    "C:\\Users\\Cam-M\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
+    "C:\\Users\\Cam-M\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "C:\\Users\\Cam-M\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.1\\microsoft.netcore.platforms.1.1.1.nupkg.sha512",
     "C:\\Users\\Cam-M\\.nuget\\packages\\microsoft.netcore.targets\\1.1.3\\microsoft.netcore.targets.1.1.3.nupkg.sha512",
     "C:\\Users\\Cam-M\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",

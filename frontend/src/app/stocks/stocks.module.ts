@@ -8,6 +8,13 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRippleModule } from '@angular/material/core';
+import { NgApexchartsModule } from "ng-apexcharts";
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { myChartModule } from '../shared/component/charts/chart.module';
 
 @NgModule({
   declarations: [
@@ -16,21 +23,30 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   imports: [
     CommonModule,
+    MatButtonModule,
     MatInputModule,
     MatTableModule,
     MatIconModule,
+    myChartModule,
     MatSortModule,
+    MatRippleModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
+    NgApexchartsModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       {
-        path: 'stocks', component: StocksComponent },
-      {
-        path: 'stocks/:ticker',
+        path: 'stocks',
+        loadChildren: () => import('./stocks.module').then(m => m.StocksModule),
+        component: StocksComponent
+      },
+      { 
+        path: 'stocks/:ticker', 
         component: StockDetailComponent
       }
     ])
-
   ],
   bootstrap: [StocksComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

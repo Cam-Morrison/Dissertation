@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MyDataService } from '../shared/services/data.service';
 import { shareReplay } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-stocks',
@@ -12,10 +13,12 @@ export class StocksComponent implements OnInit, AfterViewInit {
   dataPoints: any[] = [];
   displayedColumns: string[] = ['Ticker', 'Volume', 'Open', 'Close', 'Change'];
   dataSource: any;
+  isLoading = true;
 
   constructor
   (
     private MyDataService: MyDataService,
+    private router: Router,
   )  { }
 
   ngOnInit() {
@@ -34,6 +37,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
             C: dt['c'],
             M: percentage,
           };
+          this.isLoading = false;
           this.dataPoints.push(stock);
           count++;
           if (count === 100) {
@@ -57,5 +61,9 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  onBack(): void {
+    this.router.navigate(['/dashboard']);
   }
 }

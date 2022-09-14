@@ -1,1 +1,20 @@
-<p>stock-detail works!</p>
+<div class="content mat-elevation-z5">
+  <div>
+    <button mat-button color="primary" (click)="onBack()">
+      <mat-icon>arrow_back</mat-icon>
+      <p>Go back</p>
+    </button>
+    <mat-form-field appearance="fill">
+      <mat-label>Change chart</mat-label>
+      <mat-select [(value)]="selectedChart">
+        <mat-option value="area">Area</mat-option>
+        <mat-option value="candlestick">Candle stick</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <stockChart *ngIf="!isLoading"
+    [dataPoints]='dataPoints' 
+    [ticker]='ticker!'
+    [chartType]='selectedChart'
+  ></stockChart>
+</div>
