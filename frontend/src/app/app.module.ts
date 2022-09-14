@@ -3,7 +3,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 import { AppComponent } from "./app.component";
-import { NgApexchartsModule } from "ng-apexcharts";
+import { ChartComponent, NgApexchartsModule } from "ng-apexcharts";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -22,20 +22,24 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatSelectModule } from '@angular/material/select';
+import { myChartModule } from './shared/component/charts/chart.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    NewsComponent,
+    NewsComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     CdkMenuModule,
     NgApexchartsModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    myChartModule,
     MatToolbarModule,
     MatTableModule,
     MatSnackBarModule,

@@ -15,14 +15,14 @@ export const fadeAnimation = trigger('fadeAnimation', [
         width: '100%',
       }),
     ]),
-    query(':enter', [style({ opacity: 0, position: 'absolute' })], {
+    query(':enter', [style({ opacity: 0, position: 'relative' })], {
       optional: true,
     }),
     query(
       ':leave',
       [
         style({ opacity: 1 }),
-        animate('0.3s', style({ opacity: 0, position: 'absolute' })),
+        animate('0.3s', style({ opacity: 0, position: 'relative' })),
       ],
       { optional: true }
     ),

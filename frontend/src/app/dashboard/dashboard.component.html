@@ -19,29 +19,16 @@
     </div>
     <mat-form-field appearance="fill">
       <mat-label>Change chart</mat-label>
-      <mat-select
-        (selectionChange)="onMatSelectValueChanges($event)"
-        [(value)]="selectedChart"
-      >
+      <mat-select [(value)]="selectedChart">
         <mat-option value="area">Area</mat-option>
         <mat-option value="candlestick">Candle stick</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-  <div id="chart">
-    <apx-chart
-      *ngIf="chartOptions"
-      [series]="chartOptions.series!"
-      [chart]="chartOptions.chart!"
-      [xaxis]="chartOptions.xaxis!"
-      [yaxis]="chartOptions.yaxis!"
-      [title]="chartOptions.title!"
-      [dataLabels]="chartOptions.dataLabels!"
-      [markers]="chartOptions.markers!"
-      [fill]="chartOptions.fill!"
-      [tooltip]="chartOptions.tooltip!"
-      [autoUpdateSeries]="true"
-    ></apx-chart>
-  </div>
+  <stockChart *ngIf="!isLoading"
+    [dataPoints]='dataPoints' 
+    [ticker]='tickerTitle'
+    [chartType]='selectedChart'
+  ></stockChart>
 </div>
 

@@ -14,11 +14,12 @@ import { NgApexchartsModule } from "ng-apexcharts";
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { myChartModule } from '../shared/component/charts/chart.module';
 
 @NgModule({
   declarations: [
     StocksComponent,
-    StockDetailComponent,
+    StockDetailComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +27,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatTableModule,
     MatIconModule,
+    myChartModule,
     MatSortModule,
     MatRippleModule,
     MatSnackBarModule,
@@ -45,7 +47,6 @@ import { MatSelectModule } from '@angular/material/select';
         component: StockDetailComponent
       }
     ])
-
   ],
   bootstrap: [StocksComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
