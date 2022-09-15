@@ -1,9 +1,6 @@
 <!-- Top navigation toolbar -->
 <mat-toolbar class="flexbox" (click)="sidenav.toggle()" fixed>
-  <button class="mobileButton"
-    mat-icon-button
-    *ngIf="sidenav.mode === 'over'"
-  >
+  <button class="mobileButton" mat-icon-button *ngIf="sidenav.mode === 'over'">
     <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
     <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
   </button>
@@ -14,18 +11,23 @@
 <mat-sidenav-container>
   <!-- Profile -->
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <!-- <img class="avatar mat-elevation-z8" src="" /> -->
-    <h4 class="name">{{userName}}</h4>
-    <p class="designation">{{userRole}}</p>
+    <h4 class="name">{{ userName }}</h4>
+    <p class="designation">{{ userRole }}</p>
 
     <mat-divider></mat-divider>
 
     <!-- Navigation pages -->
     <div *ngFor="let data of navData">
-      <button  mat-button class="menu-button" (click)="sidenav.toggle()"
-      routerLink="{{data.routeLink}}" routerLinkActive="active" ariaCurrentWhenActive="page">
-      <mat-icon>{{data.icon}}</mat-icon>
-      <span> {{data.label}}</span>
+      <button
+        mat-button
+        class="menu-button"
+        (click)="sidenav.toggle()"
+        routerLink="{{ data.routeLink }}"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+      >
+        <mat-icon>{{ data.icon }}</mat-icon>
+        <span> {{ data.label }}</span>
       </button>
     </div>
 
@@ -38,30 +40,31 @@
   </mat-sidenav>
 
   <!-- Main page content -->
-  <mat-sidenav-content [@fadeAnimation]="outlet.isActivated ? outlet.activatedRoute : ''">
-          <!-- Navigation pages -->
-              <!-- Navigation pages -->
-              <div class="flexbox horizontalNav">
-              <div *ngFor="let data of navData">
-                <button mat-button mat-ripple class="horizontalButtons" (click)="scrollToTop()"
-                routerLink="{{data.routeLink}}" routerLinkActive="active" ariaCurrentWhenActive="page">
-                <mat-icon>{{data.icon}}</mat-icon>
-                <span> {{data.label}}</span>
-                </button>
-                </div>
-              </div>
-    <!-- <button mat-button color="primary" > 
-      <div class="with-icon" (click)="sidenav.toggle()">
-        <mat-icon>near_me</mat-icon>Search stocks, news and more
-      </div>  
-    </button> -->
+  <mat-sidenav-content
+    [@fadeAnimation]="outlet.isActivated ? outlet.activatedRoute : ''"
+  >
+    <div class="flexbox horizontalNav">
+      <div *ngFor="let data of navData">
+        <button
+          mat-button
+          mat-ripple
+          class="horizontalButtons"
+          (click)="scrollToTop()"
+          routerLink="{{ data.routeLink }}"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+        >
+          <mat-icon>{{ data.icon }}</mat-icon>
+          <span> {{ data.label }}</span>
+        </button>
+      </div>
+    </div>
     <router-outlet #outlet="outlet"></router-outlet>
   </mat-sidenav-content>
-
 </mat-sidenav-container>
 
 <footer>
-    <div class="flexbox">
-      <p class="copyright">Copyright © Mr. Morrison 2831609</p>
-    </div>
+  <div class="flexbox">
+    <p class="copyright">Copyright © Mr. Morrison 2831609</p>
+  </div>
 </footer>

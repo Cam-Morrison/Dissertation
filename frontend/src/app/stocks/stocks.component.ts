@@ -44,7 +44,6 @@ export class StocksComponent implements OnInit, AfterViewInit {
             break;
           }
         }
-        console.log(this.dataPoints);
         this.dataSource = new MatTableDataSource(this.dataPoints);
       },
       (error) => {

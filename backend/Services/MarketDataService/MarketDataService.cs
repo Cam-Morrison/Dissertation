@@ -65,8 +65,6 @@ namespace backend.services
            return callUrl(stockDetailUrl);
         }
 
-        // public string doesStockExist()
-
         private string callUrl(string inputUrl)
         {
             string url = inputUrl + marketDataKey;

@@ -15,6 +15,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { myChartModule } from '../shared/component/charts/chart.module';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { myChartModule } from '../shared/component/charts/chart.module';
     myChartModule,
     MatSortModule,
     MatRippleModule,
+    MatExpansionModule,
     MatSnackBarModule,
     MatSelectModule,
     MatProgressSpinnerModule,

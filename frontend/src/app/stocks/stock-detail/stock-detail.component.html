@@ -1,4 +1,5 @@
 <div class="content mat-elevation-z5">
+
   <div>
     <button mat-button color="primary" (click)="onBack()">
       <mat-icon>arrow_back</mat-icon>
@@ -12,9 +13,35 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <stockChart *ngIf="!isLoading"
-    [dataPoints]='dataPoints' 
-    [ticker]='ticker!'
-    [chartType]='selectedChart'
+
+  <stockChart
+    *ngIf="!isLoading"
+    [dataPoints]="dataPoints"
+    [ticker]="ticker!"
+    [chartType]="selectedChart"
   ></stockChart>
+
+  <mat-expansion-panel [expanded]="panelOpenState">
+    <mat-expansion-panel-header matRipple>
+      <mat-panel-title> <b>Stock Information</b> </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div *ngIf="detailsLoaded">
+      <h3>
+        {{details.name}}
+      </h3>
+      <p>
+        <span *ngIf="details.description"> {{details.description}} </span>
+      </p>
+      <div class="flexbox"> 
+        <p>
+          <span *ngIf="details.sic_description"> Industry - {{details.sic_description}} </span>
+          <span *ngIf="details.primaryExchange"> Primary exchange  - {{details.primaryExchange}} </span>
+          <span *ngIf="details.employees">  Employes - {{details.employees}} </span>
+          <span *ngIf="details.sic_description"> Market cap of {{details.marketCap | currency:'USD':'symbol':"1.2-3"}} </span>
+          <span *ngIf="details.listDate"> Initial public offering happened {{details.listDate | date}}</span>
+          <span *ngIf="details.companyUrl"><a href={{details.companyUrl}}> {{details.companyUrl}}</a></span>
+        </p>
+      </div>  
+    </div>
+  </mat-expansion-panel>
 </div>

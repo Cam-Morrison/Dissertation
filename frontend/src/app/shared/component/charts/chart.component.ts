@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, ViewChild } from "@angular/core";
-import * as ApexCharts from "apexcharts";
 import {
     ApexAxisChartSeries,
     ApexChart,
@@ -63,7 +62,7 @@ import {
       },
       yaxis: {
         tooltip: {
-          enabled: true,
+          enabled: false,
         },
         title: {
           text: 'Price',

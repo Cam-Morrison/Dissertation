@@ -3,3 +3,16 @@ mat-form-field  {
   width:15rem;
   float: right;
 }
+mat-expansion-panel {
+  border-top: 1px solid #07203d;
+}
+
+span {
+  padding: 0;
+  overflow: wrap;
+  align-items: left;
+  justify-content: left;
+  display: flex;
+  height: auto;
+  width: auto;
+}
