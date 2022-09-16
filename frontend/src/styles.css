@@ -29,3 +29,12 @@ body {
 .negative {
   color: red;
 }
+
+.spinbox {
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  width:100%;
+  padding-top:20rem; 
+  zoom: 0.5;
+}
