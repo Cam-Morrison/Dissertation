@@ -18,3 +18,12 @@ th.mat-sort-header-sorted, th {
   width:10rem;
   padding-left:1rem;
 }
+
+form {
+  padding-top:0.5rem;
+}
+
+.mat-header-row {
+  background-color:white;
+  z-index:2;
+}

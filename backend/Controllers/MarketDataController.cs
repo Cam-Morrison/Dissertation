@@ -90,5 +90,27 @@ namespace backend.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpGet]
+        [Route("/prediction")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(Summary = "Attempts to predict future market value using time series forecasting. This is only for stock details page.")]
+        public async Task<IActionResult> GetStockPrediction()
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("getStockHistory"))
+                {
+                    return Ok(_marketDataService.getPricePrediction());
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("MarketDataController.GetStockPrediction()");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

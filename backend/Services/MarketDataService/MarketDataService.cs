@@ -6,6 +6,7 @@ namespace backend.services
     using System.Net.Http.Headers; 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+    using backend.services.prediction;
 
     public class MarketDataService : IMarketDataService
     {
@@ -13,6 +14,7 @@ namespace backend.services
         private string marketDataKey;
         private static string marketData;
         private static string homePagePrices;
+        private static string mostRecentPriceHistory; //Used for AI prediction
         private string yesterday = DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd");
         private string today = DateTime.Today.AddDays(0).ToString("yyyy-MM-dd");
 
@@ -67,7 +69,8 @@ namespace backend.services
             }
             else
             {
-                return callUrl(url);
+                mostRecentPriceHistory = callUrl(url);
+                return mostRecentPriceHistory;
             }    
         }
 
@@ -75,6 +78,12 @@ namespace backend.services
         {
            string stockDetailUrl = $"https://api.polygon.io/v3/reference/tickers/{ticker}?apiKey=";
            return callUrl(stockDetailUrl);
+        }
+
+        public string getPricePrediction()
+        {
+            Prediction prophet = new Prediction();     
+            return prophet.timeSeriesForecasting(mostRecentPriceHistory);
         }
 
         private string callUrl(string inputUrl)

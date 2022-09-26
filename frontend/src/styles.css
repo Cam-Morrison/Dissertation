@@ -20,6 +20,7 @@ body {
   margin-left: 32px;
   padding: 0px 16px 16px 16px;
   overflow: auto;
+  background-color:white;
 }
 
 .positive {
