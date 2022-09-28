@@ -92,7 +92,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Route("/prediction")]
+        [Route("/timeSeriesForecasting")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [SwaggerOperation(Summary = "Attempts to predict future market value using time series forecasting. This is only for stock details page.")]
@@ -100,7 +100,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getStockHistory"))
+                if(await _featureFlag.GetFeatureFlagAsync("getStockPrediction"))
                 {
                     return Ok(_marketDataService.getPricePrediction());
                 } 

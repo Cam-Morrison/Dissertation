@@ -33,6 +33,7 @@ builder.Services.AddCors(options =>
 //Adding services
 builder.Services.AddSingleton<IFeatureFlagService, FeatureFlagService>();
 builder.Services.AddSingleton<IMarketDataService, MarketDataService>();
+builder.Services.AddSingleton<INewsService, NewsService>();
 
 //Building
 var app = builder.Build();

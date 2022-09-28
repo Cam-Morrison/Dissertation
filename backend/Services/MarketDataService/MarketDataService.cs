@@ -5,7 +5,6 @@ namespace backend.services
     using System.Net.Http.Headers; 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-    using DissertationML.integration;
 
     public class MarketDataService : IMarketDataService
     {
@@ -81,8 +80,7 @@ namespace backend.services
 
         public string getPricePrediction()
         {
-            SentimentAnalysis analysis = new SentimentAnalysis();
-            return analysis.Predict("The market outlook looks very promising.");
+            return "£430";
         }
 
         private string callUrl(string inputUrl)

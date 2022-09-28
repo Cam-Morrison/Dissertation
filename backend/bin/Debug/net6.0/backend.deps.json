@@ -10,7 +10,6 @@
         "dependencies": {
           "AspNetCoreRateLimit": "4.0.2",
           "ConfigCat.Client": "6.5.2",
-          "DissertationML.Model": "1.0.0",
           "Microsoft.ML": "1.7.1",
           "Newtonsoft.Json": "13.0.1",
           "Serilog": "2.11.0",
@@ -978,14 +977,6 @@
           "System.Threading": "4.3.0",
           "System.Xml.ReaderWriter": "4.3.0"
         }
-      },
-      "DissertationML.Model/1.0.0": {
-        "dependencies": {
-          "Microsoft.ML": "1.7.1"
-        },
-        "runtime": {
-          "DissertationML.Model.dll": {}
-        }
       }
     }
   },
@@ -1708,11 +1699,6 @@
       "sha512": "sha512-5zJ0XDxAIg8iy+t4aMnQAu0MqVbqyvfoUVl1yDV61xdo3Vth45oA2FoY4pPkxYAH5f8ixpmTqXeEIya95x0aCQ==",
       "path": "system.xml.xdocument/4.3.0",
       "hashPath": "system.xml.xdocument.4.3.0.nupkg.sha512"
-    },
-    "DissertationML.Model/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }

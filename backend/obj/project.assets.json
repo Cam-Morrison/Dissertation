@@ -1845,19 +1845,6 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
-      },
-      "DissertationML.Model/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "Microsoft.ML": "1.5.0-preview2"
-        },
-        "compile": {
-          "bin/placeholder/DissertationML.Model.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/DissertationML.Model.dll": {}
-        }
       }
     }
   },
@@ -5786,18 +5773,12 @@
         "system.xml.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
-    },
-    "DissertationML.Model/1.0.0": {
-      "type": "project",
-      "path": "../DissertationML.Model/DissertationML.Model.csproj",
-      "msbuildProject": "../DissertationML.Model/DissertationML.Model.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "AspNetCoreRateLimit >= 4.0.2",
       "ConfigCat.Client >= 6.5.2",
-      "DissertationML.Model >= 1.0.0",
       "Microsoft.ML >= 1.7.1",
       "Newtonsoft.Json >= 13.0.1",
       "Serilog >= 2.11.0",
@@ -5839,11 +5820,7 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {
-            "C:\\Users\\Cam-M\\Documents\\Dissertation\\DissertationML.Model\\DissertationML.Model.csproj": {
-              "projectPath": "C:\\Users\\Cam-M\\Documents\\Dissertation\\DissertationML.Model\\DissertationML.Model.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

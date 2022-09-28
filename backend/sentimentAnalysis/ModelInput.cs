@@ -2,7 +2,7 @@
 
 using Microsoft.ML.Data;
 
-namespace DissertationML.Model
+namespace Sentiment.Model
 {
     public class ModelInput
     {
