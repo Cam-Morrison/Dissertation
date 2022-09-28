@@ -1,12 +1,11 @@
 namespace backend.services 
 {
     using System;
-    using System.Collections.Generic;
     using System.Net.Http;
     using System.Net.Http.Headers; 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-    using backend.services.prediction;
+    using DissertationML.integration;
 
     public class MarketDataService : IMarketDataService
     {
@@ -82,8 +81,8 @@ namespace backend.services
 
         public string getPricePrediction()
         {
-            Prediction prophet = new Prediction();     
-            return prophet.timeSeriesForecasting(mostRecentPriceHistory);
+            SentimentAnalysis analysis = new SentimentAnalysis();
+            return analysis.Predict("The market outlook looks very promising.");
         }
 
         private string callUrl(string inputUrl)

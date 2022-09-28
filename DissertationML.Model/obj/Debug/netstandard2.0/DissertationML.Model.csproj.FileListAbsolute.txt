@@ -1,0 +1,11 @@
+C:\Users\Cam-M\Documents\Dissertation\DissertationML.Model\bin\Debug\netstandard2.0\MLModel.zip
+C:\Users\Cam-M\Documents\Dissertation\DissertationML.Model\bin\Debug\netstandard2.0\DissertationML.Model.deps.json
+C:\Users\Cam-M\Documents\Dissertation\DissertationML.Model\bin\Debug\netstandard2.0\DissertationML.Model.dll
+C:\Users\Cam-M\Documents\Dissertation\DissertationML.Model\bin\Debug\netstandard2.0\DissertationML.Model.pdb
+C:\Users\Cam-M\Documents\Dissertation\DissertationML.Model\obj\Debug\netstandard2.0\DissertationML.Model.csproj.AssemblyReference.cache
+C:\Users\Cam-M\Documents\Dissertation\DissertationML.Model\obj\Debug\netstandard2.0\DissertationML.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Cam-M\Documents\Dissertation\DissertationML.Model\obj\Debug\netstandard2.0\DissertationML.Model.AssemblyInfoInputs.cache
+C:\Users\Cam-M\Documents\Dissertation\DissertationML.Model\obj\Debug\netstandard2.0\DissertationML.Model.AssemblyInfo.cs
+C:\Users\Cam-M\Documents\Dissertation\DissertationML.Model\obj\Debug\netstandard2.0\DissertationML.Model.csproj.CoreCompileInputs.cache
+C:\Users\Cam-M\Documents\Dissertation\DissertationML.Model\obj\Debug\netstandard2.0\DissertationML.Model.dll
+C:\Users\Cam-M\Documents\Dissertation\DissertationML.Model\obj\Debug\netstandard2.0\DissertationML.Model.pdb
