@@ -24,12 +24,17 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatSelectModule } from '@angular/material/select';
 import { myChartModule } from './shared/component/charts/chart.module';
 import { CommonModule } from '@angular/common';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './shared/services/auth.guard';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    NewsComponent
+    NewsComponent,
+    LoginComponent,
+    AdminComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +60,7 @@ import { CommonModule } from '@angular/common';
     MatDividerModule,
     OverlayModule,
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

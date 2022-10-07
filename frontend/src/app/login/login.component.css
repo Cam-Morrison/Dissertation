@@ -1,0 +1,12 @@
+.form-container {
+    background-color:white;
+    border: radius 10px;
+    padding:3rem;
+    margin:0.5rem;
+}
+
+.mat-raised-button {
+    display: inline-block;
+    margin:0.5rem;
+    width:8rem;
+}

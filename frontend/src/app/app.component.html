@@ -23,7 +23,8 @@
         class="menu-button"
         (click)="sidenav.toggle()"
         routerLink="{{ data.routeLink }}"
-        routerLinkActive="active"
+        [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]="{exact:true}"
         ariaCurrentWhenActive="page"
       >
         <mat-icon>{{ data.icon }}</mat-icon>
@@ -51,7 +52,8 @@
           class="horizontalButtons"
           (click)="scrollToTop()"
           routerLink="{{ data.routeLink }}"
-          routerLinkActive="active"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{exact:true}"
           ariaCurrentWhenActive="page"
         >
           <mat-icon>{{ data.icon }}</mat-icon>

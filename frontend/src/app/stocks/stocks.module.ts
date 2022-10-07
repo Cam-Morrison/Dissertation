@@ -16,6 +16,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { myChartModule } from '../shared/component/charts/chart.module';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { AuthGuard } from '../shared/services/auth.guard';
 
 @NgModule({
   declarations: [
@@ -42,11 +43,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
       {
         path: 'stocks',
         loadChildren: () => import('./stocks.module').then(m => m.StocksModule),
-        component: StocksComponent
+        component: StocksComponent,
+        canActivate: [AuthGuard]
       },
       { 
         path: 'stocks/:ticker', 
-        component: StockDetailComponent
+        component: StockDetailComponent,
+        canActivate: [AuthGuard]
       }
     ])
   ],

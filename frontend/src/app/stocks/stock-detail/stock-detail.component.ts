@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 import { MyDataService } from 'src/app/shared/services/data.service';
 
@@ -54,9 +55,8 @@ export class StockDetailComponent implements OnInit {
       (error) => {
         //If stock doesn't exist go back to stock listings
         console.log('error is: ' + error);
-        this.onBack();
-      }
-    );
+        this.onBack(true);
+      });
     var detailsCall = this.MyDataService.getStockDetails(this.ticker!).pipe(
       shareReplay()
     );
@@ -97,7 +97,24 @@ export class StockDetailComponent implements OnInit {
     });
   }
 
-  onBack(): void {
-    this.router.navigate(['/stocks']);
+  onBack(isError: boolean): void {
+    if(isError == false) 
+    {
+      this.router.navigate(['/stocks']);
+    }
+    else 
+    {
+      this.router.navigate(['/stocks']).then(() => {
+        this.matSnackBar.open(
+          'There was an issue loading this stock, please try again later.',
+          'Close',
+          {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          }
+        );
+      });
+    }
   }
 }

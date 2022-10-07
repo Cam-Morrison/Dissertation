@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { ChildrenOutletContexts } from "@angular/router";
 import { navigationData } from "./app-navigation.data";
 import { fadeAnimation } from "./shared/component/routing-animation";
 
@@ -15,7 +14,7 @@ export class AppComponent {
   userRole = "Administrator";
   userName = "Cameron Morrison";
 
-  constructor(private contexts: ChildrenOutletContexts) {}
+  constructor() {}
   
   scrollToTop(){
     window.scroll(0,0);
