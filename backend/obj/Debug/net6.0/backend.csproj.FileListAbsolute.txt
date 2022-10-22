@@ -87,3 +87,12 @@ C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.ML.dll
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\runtimes\linux-arm\native\libLdaNative.so
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\runtimes\linux-arm64\native\libLdaNative.so
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\runtimes\osx-arm64\native\libLdaNative.dylib
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Humanizer.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\MySqlConnector.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll

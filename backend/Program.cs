@@ -1,12 +1,24 @@
+global using Microsoft.OpenApi.Models;
+global using Microsoft.EntityFrameworkCore;
 using backend.services;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+//DBContext
+var dbConnectionString = builder.Configuration.GetSection("ClientConfiguration").GetValue<string>("dBContextSecret");
+var serverVersion = new MySqlServerVersion(new Version("8.0.31"));
+builder.Services.AddDbContext<DbContext>(
+    DbContextOptions => DbContextOptions
+        .UseMySql(dbConnectionString, serverVersion));
+
+builder.Services.AddSingleton<IFeatureFlagService, FeatureFlagService>();
+builder.Services.AddSingleton<IMarketDataService, MarketDataService>();
+builder.Services.AddSingleton<INewsService, NewsService>();
+builder.Services.AddTransient<IUserService, UserService>();
 
 // Configuring swagger
 builder.Services.AddSwaggerGen(c => 
@@ -30,10 +42,7 @@ builder.Services.AddCors(options =>
     );
 });
 
-//Adding services
-builder.Services.AddSingleton<IFeatureFlagService, FeatureFlagService>();
-builder.Services.AddSingleton<IMarketDataService, MarketDataService>();
-builder.Services.AddSingleton<INewsService, NewsService>();
+
 
 //Building
 var app = builder.Build();
@@ -46,4 +55,5 @@ app.UseHttpsRedirection();
 app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthorization();
 app.MapControllers();
+
 app.Run();
