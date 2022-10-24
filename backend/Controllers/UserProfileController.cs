@@ -14,45 +14,50 @@ namespace backend.Controllers
         private readonly ILogger<UserProfileController> _logger;
         private readonly IFeatureFlagService _featureFlag;
         private IUserService _userService;
+        private readonly IConfiguration _configuration;
 
         public UserProfileController
         (
             ILogger<UserProfileController> logger, 
             IFeatureFlagService featureFlag,
-            IUserService userService
+            IUserService userService,
+            IConfiguration configuration
         )
         {
             _logger = logger;
             _featureFlag = featureFlag;
             _userService = userService;
+            _configuration = configuration;
         }
 
         [HttpPost]      
         [Route("/login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [SwaggerOperation(Summary = "Used to login to system.")]
         public async Task<IActionResult> Login(Login input)
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getNewsSentiment"))
+                if(await _featureFlag.GetFeatureFlagAsync("postlogin"))
                 {
-                    if(await _userService.Login(input) == false) 
+                    var response = await _userService.Login(input);
+                    if(response == "Username invalid." || response == "Password invalid.") 
                     {
-                        return BadRequest("Username or password is incorrect.");
+                        return Unauthorized(response);
                     }
                     else 
                     {
-                        return Ok("Logged in successfully.");
+                        return Ok(response);
                     }
                 } 
                 return Ok("Feature not implemented");
             }
             catch(Exception ex)
             {
-                Log.Information("UserProfileController.Login()");
-                return StatusCode(StatusCodes.Status401Unauthorized);
+                Log.Information("UserProfileController.Login(Login input)");
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
         }
 
@@ -65,22 +70,23 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getNewsSentiment"))
+                if(await _featureFlag.GetFeatureFlagAsync("postRegistration"))
                 {
-                    if(await _userService.Register(input) == false) 
+                    var response = await _userService.Register(input);
+                    if(response == "User already exists.") 
                     {
-                        return BadRequest("User already exists.");
+                        return BadRequest(response);
                     }
                     else 
                     {
-                        return Ok("Registered");
+                        return Ok(response);
                     }
                 } 
                 return Ok("Feature not implemented");
             }
             catch(Exception ex)
             {
-                Log.Information("UserProfileController.Register()");
+                Log.Information("UserProfileController.Register(Register input)");
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
         }

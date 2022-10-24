@@ -96,3 +96,8 @@ C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.Extensi
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\MySqlConnector.dll
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll

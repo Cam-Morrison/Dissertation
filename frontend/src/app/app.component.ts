@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 import { navigationData } from "./app-navigation.data";
 import { fadeAnimation } from "./shared/component/routing-animation";
 
@@ -14,9 +15,14 @@ export class AppComponent {
   userRole = "Administrator";
   userName = "Cameron Morrison";
 
-  constructor() {}
+  constructor(private router : Router) {}
   
   scrollToTop(){
     window.scroll(0,0);
+  }
+
+  logout(){
+    localStorage.removeItem('token');
+    this.router.navigate(["/login"]);
   }
 }

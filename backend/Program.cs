@@ -1,6 +1,7 @@
 global using Microsoft.OpenApi.Models;
 global using Microsoft.EntityFrameworkCore;
 using backend.services;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -31,28 +32,21 @@ builder.Services.AddSwaggerGen(c =>
         Description = "My backend operation to retrieve organised market data."
     });
 });
-//Allow Cross-Origin Resource Sharing for frontend
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(
-        name: MyAllowSpecificOrigins, policy  =>
-        {
-            policy.WithOrigins("http://localhost:4200");
-        }
-    );
-});
-
 
 
 //Building
 var app = builder.Build();
+
+app.UseCors(
+  options => options.WithOrigins("*").AllowAnyMethod().AllowAnyHeader()
+);
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();
-app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthorization();
 app.MapControllers();
 

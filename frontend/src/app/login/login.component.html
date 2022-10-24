@@ -3,10 +3,10 @@
     <mat-card class="form-container mat-elevation-z7">
         <mat-card-title>
             <h3><b>Build your watchlist</b></h3>
-            <p>and research US equity with our free service</p>
+            <p>and research stocks with our free service</p>
         </mat-card-title>
         <mat-card-content>
-            <form  >
+            <form [formGroup]="userForm">
             <p>
                 <mat-form-field>
                 <input type="text" matInput placeholder="Username" formControlName="username">
@@ -19,17 +19,18 @@
                 </mat-form-field>
             </p>
 
-            <p *ngIf="" class="error">
-                <!-- {{ error }} -->
+            <p class="error">
+                {{errorMessage}}
             </p>
 
             <div>
             <mat-divider></mat-divider>
-            <button mat-raised-button color="primary">
+
+            <button mat-raised-button color="primary" (click)="register()">
                 <mat-icon>how_to_reg</mat-icon>
                 Register
             </button>
-            <button mat-raised-button color="primary">
+            <button mat-raised-button color="primary" (click)="login()">
                 <mat-icon>lock_open</mat-icon>
                 Sign in
             </button>

@@ -27,6 +27,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './shared/services/auth.guard';
 import { AdminComponent } from './admin/admin.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { AdminComponent } from './admin/admin.component';
     A11yModule,
     MatDividerModule,
     OverlayModule,
+    ReactiveFormsModule,
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],
