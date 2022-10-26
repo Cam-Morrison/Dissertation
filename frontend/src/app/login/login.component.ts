@@ -40,7 +40,22 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/stocks'])
     },
     (error: HttpErrorResponse) => {
-      this.errorMessage = error.statusText;
+      var resp = error.error;
+      if(error.error[0] == "{")
+      {
+        resp = JSON.parse(error.error);
+        resp = resp["errors"];
+        if(resp["UserName"] != null) 
+        {
+          resp = resp["UserName"];
+        }
+        else 
+        {
+          resp = resp["Password"];
+        }
+      }
+      this.errorMessage = resp;
+
     })
   }
 
