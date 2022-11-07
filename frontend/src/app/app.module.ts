@@ -28,6 +28,8 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './shared/services/auth.guard';
 import { AdminComponent } from './admin/admin.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ConfirmationDialog } from './login/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     DashboardComponent,
     NewsComponent,
     LoginComponent,
-    AdminComponent
+    AdminComponent,
+    ConfirmationDialog
   ],
   imports: [
     CommonModule,
@@ -46,6 +49,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     BrowserAnimationsModule,
     myChartModule,
+    MatDialogModule,
     MatToolbarModule,
     MatTableModule,
     MatSnackBarModule,

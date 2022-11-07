@@ -9,13 +9,14 @@
             <form [formGroup]="userForm">
             <p>
                 <mat-form-field>
-                <input type="text" matInput placeholder="Username" formControlName="username">
+                    <input type="text" matInput placeholder="Username" formControlName="username" [errorStateMatcher]="matcher" required>
+                    <mat-error *ngIf="userForm.hasError('required')">Please enter a username longer than 6 letters.</mat-error>
                 </mat-form-field>
             </p>
 
             <p>
                 <mat-form-field>
-                <input type="password" matInput placeholder="Password" formControlName="password">
+                    <input type="password" matInput placeholder="Password" formControlName="password" [errorStateMatcher]="matcher" required>
                 </mat-form-field>
             </p>
 
@@ -26,11 +27,11 @@
             <div>
             <mat-divider></mat-divider>
 
-            <button mat-raised-button color="primary" (click)="register()">
+            <button mat-raised-button color="primary" [disabled]="!userForm.valid" (click)="openDialog()">
                 <mat-icon>how_to_reg</mat-icon>
                 Register
             </button>
-            <button mat-raised-button color="primary" (click)="login()">
+            <button mat-raised-button color="primary" [disabled]="!userForm.valid" (click)="login()">
                 <mat-icon>lock_open</mat-icon>
                 Sign in
             </button>
