@@ -1,6 +1,8 @@
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'confirmation-dialog',
@@ -13,7 +15,7 @@ export class ConfirmationDialog {
   url = "";
   username = "";
   password = "";
-  public errorMsg = false;
+  public errorMsg: string = "";
 
   public confirmationForm = new FormGroup({
     input: new FormControl('', 
@@ -23,7 +25,9 @@ export class ConfirmationDialog {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private dialogRef: MatDialogRef<ConfirmationDialog>
+    private dialogRef: MatDialogRef<ConfirmationDialog>,
+    private HTTP : HttpClient,
+    private router: Router,
   ) {
     if (data) {
       this.message = data.message || this.message;
@@ -40,11 +44,27 @@ export class ConfirmationDialog {
   register() {
     if(this.confirmationForm.get('input')?.value == this.password) 
     {
-        this.dialogRef.close(true);
+        this.HTTP.post(`${this.url}/register/`, 
+        {
+          userName: this.username,
+          password: this.password,
+          confirmPassword: this.confirmationForm.get('input')?.value
+        }, 
+        { 
+          responseType: 'text' 
+        })
+        .subscribe((response: string) => {
+          this.dialogRef.close()
+          localStorage.setItem('token', response)
+          this.router.navigate(['/stocks'])
+        }, 
+        (error: HttpErrorResponse) => {
+          this.errorMsg = error.error
+        })
     }
     else
     {
-        this.errorMsg = true;
+      this.errorMsg = "Passwords do not match"
     }
   }
 }

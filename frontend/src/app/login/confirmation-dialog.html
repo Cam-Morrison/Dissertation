@@ -8,7 +8,7 @@
                 <input type="text" matInput placeholder="Password confirmation" formControlName="input" required>
             </mat-form-field>
         </p>
-        <span *ngIf="errorMsg" style="color:red;">Passwords do not match.</span>
+        <span *ngIf="errorMsg != null" style="color:red;">{{errorMsg}}</span>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
