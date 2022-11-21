@@ -1,7 +1,6 @@
 namespace backend.services 
 {
     using System;
-    using System.Collections.Generic;
     using System.Net.Http;
     using System.Net.Http.Headers; 
     using Newtonsoft.Json;
@@ -12,6 +11,8 @@ namespace backend.services
         private readonly IConfiguration Configuration;
         private string marketDataKey;
         private static string marketData;
+        private static string homePagePrices;
+        private static string mostRecentPriceHistory; //Used for AI prediction
         private string yesterday = DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd");
         private string today = DateTime.Today.AddDays(0).ToString("yyyy-MM-dd");
 
@@ -56,7 +57,19 @@ namespace backend.services
         public string GetPriceHistory(string ticker)
         {
             var url = $"https://api.polygon.io/v2/aggs/ticker/{ticker}/range/1/day/2018-01-01/{today}?adjusted=true&sort=asc&apiKey=";
-            return callUrl(url);
+            if(ticker == "VOO")
+            {
+                if(homePagePrices == null)
+                {
+                    homePagePrices = callUrl(url);
+                }
+                return homePagePrices;
+            }
+            else
+            {
+                mostRecentPriceHistory = callUrl(url);
+                return mostRecentPriceHistory;
+            }    
         }
 
         public string GetStockDetail(string ticker)
@@ -65,7 +78,10 @@ namespace backend.services
            return callUrl(stockDetailUrl);
         }
 
-        // public string doesStockExist()
+        public string getPricePrediction()
+        {
+            return "£430";
+        }
 
         private string callUrl(string inputUrl)
         {

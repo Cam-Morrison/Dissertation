@@ -1,0 +1,42 @@
+
+<div class="centerbox">
+    <mat-card class="form-container mat-elevation-z7">
+        <mat-card-title>
+            <h3><b>Build your watchlist</b></h3>
+            <p>and research stocks with our free service</p>
+        </mat-card-title>
+        <mat-card-content>
+            <form [formGroup]="userForm">
+            <p>
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Username" formControlName="username" [errorStateMatcher]="matcher" required>
+                    <mat-error *ngIf="userForm.hasError('required')">Please enter a username longer than 6 letters.</mat-error>
+                </mat-form-field>
+            </p>
+
+            <p>
+                <mat-form-field>
+                    <input type="password" matInput placeholder="Password" formControlName="password" [errorStateMatcher]="matcher" required>
+                </mat-form-field>
+            </p>
+
+            <p class="error">
+                {{errorMessage}}
+            </p>
+
+            <div>
+            <mat-divider></mat-divider>
+
+            <button mat-raised-button color="primary" [disabled]="!userForm.valid" (click)="openDialog()">
+                <mat-icon>how_to_reg</mat-icon>
+                Register
+            </button>
+            <button mat-raised-button color="primary" [disabled]="!userForm.valid" (click)="login()">
+                <mat-icon>lock_open</mat-icon>
+                Sign in
+            </button>
+            </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

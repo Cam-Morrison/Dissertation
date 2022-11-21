@@ -24,12 +24,21 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatSelectModule } from '@angular/material/select';
 import { myChartModule } from './shared/component/charts/chart.module';
 import { CommonModule } from '@angular/common';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './shared/services/auth.guard';
+import { AdminComponent } from './admin/admin.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ConfirmationDialog } from './login/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    NewsComponent
+    NewsComponent,
+    LoginComponent,
+    AdminComponent,
+    ConfirmationDialog
   ],
   imports: [
     CommonModule,
@@ -40,6 +49,7 @@ import { CommonModule } from '@angular/common';
     AppRoutingModule,
     BrowserAnimationsModule,
     myChartModule,
+    MatDialogModule,
     MatToolbarModule,
     MatTableModule,
     MatSnackBarModule,
@@ -54,8 +64,9 @@ import { CommonModule } from '@angular/common';
     A11yModule,
     MatDividerModule,
     OverlayModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

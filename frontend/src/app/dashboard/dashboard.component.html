@@ -25,6 +25,11 @@
       </mat-select>
     </mat-form-field>
   </div>
+  <!-- Loader -->
+  <div class="spinbox" *ngIf="isLoading">
+    <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
   <stockChart *ngIf="!isLoading"
     [dataPoints]='dataPoints' 
     [ticker]='tickerTitle'

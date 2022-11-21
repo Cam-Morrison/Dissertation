@@ -2,14 +2,6 @@ h2 {
   padding-left:0.5rem;
 }
 
-.spinbox {
-  display: flex; 
-  justify-content: center; 
-  align-items: center;
-  padding-top:20rem; 
-  zoom: 0.5;
-}
-
 mat-form-field  {
   display:flex;
   width:15rem;

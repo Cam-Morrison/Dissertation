@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, ViewChild } from "@angular/core";
-import * as ApexCharts from "apexcharts";
 import {
     ApexAxisChartSeries,
     ApexChart,
@@ -11,7 +10,8 @@ import {
     ApexTooltip,
     ApexDataLabels,
     ApexStroke,
-    ChartComponent
+    ChartComponent,
+    ApexAnnotations
   } from "ng-apexcharts";
   
   export type ChartOptions = {
@@ -25,6 +25,9 @@ import {
      xaxis: ApexXAxis;
      tooltip: ApexTooltip;
      stroke: ApexStroke;
+     annotations: ApexAnnotations;
+     colors: any;
+     toolbar: any;
   };
 
   @Component({
@@ -36,9 +39,48 @@ import {
   export class myChartComponent implements OnChanges {
   
     public chartOptions!: Partial<ChartOptions>;
+    today: Date = new Date();
+    lastMonthsDate: Date = new Date(this.today.getFullYear(), this.today.getMonth() - 1, this.today.getDate());
+    halfYearDate: Date = new Date(this.today.getFullYear(), this.today.getMonth() - 6, this.today.getDate());
+    lastYearDate: Date = new Date(this.today.getFullYear() - 1, this.today.getMonth(), this.today.getDate());
+    threeYearDate: Date = new Date(this.today.getFullYear() - 3, this.today.getMonth(), this.today.getDate()); 
     @Input() dataPoints: any;
     @Input() ticker?: string;
     @Input() chartType?: string;
+
+    public activeOptionButton = "all";
+    public updateOptionsData = {
+      "1m": {
+        xaxis: {
+          min: this.lastMonthsDate.getTime(),
+          max: this.today.getTime()
+        }
+      },
+      "6m": {
+        xaxis: {
+          min: this.halfYearDate.getTime(),
+          max: this.today.getTime()
+        }
+      },
+      "1y": {
+        xaxis: {
+          min: this.lastYearDate.getTime(),
+          max: this.today.getTime()
+        }
+      },
+      "3y": {
+        xaxis: {
+          min: this.threeYearDate.getTime(),
+          max: this.today.getTime()
+        }
+      },
+      all: {
+        xaxis: {
+          min: undefined,
+          max: undefined
+        }
+      }
+    };
 
     public initCandleChart(): void {
         this.chartOptions = {
@@ -63,7 +105,7 @@ import {
       },
       yaxis: {
         tooltip: {
-          enabled: true,
+          enabled: false,
         },
         title: {
           text: 'Price',
@@ -151,4 +193,10 @@ import {
         this.initCandleChart();
       }
   }
+
+  public updateOptions(option: any): void {
+    this.activeOptionButton = option;
+    this.chart.updateOptions(this.updateOptionsData["1y"], false, true, true);
+  }
+
 }

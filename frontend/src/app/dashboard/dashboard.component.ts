@@ -1,6 +1,7 @@
 import { MyDataService } from '../shared/services/data.service';
 import { Component, OnInit, AfterViewInit, ViewChild } from "@angular/core";
-import { shareReplay } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
+import { interval } from 'rxjs/internal/observable/interval';
 
 @Component({
   selector: "app-dashboard",
@@ -18,11 +19,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   dailyMovement: any;
   myChartService:any;
   selectedChart: string = "area";
+  private sub: any;
 
   ngOnInit():void {
-    //Read in ticker
+    //Read in ticker, get its price datapoints and daily movement
     let resp = this.MyDataService.getStockHistory(this.ticker).pipe(shareReplay());
-    resp.subscribe((data: any)=> {
+    this.sub =  resp.subscribe((data: any)=> {
         for (var key in data['results']) {
           var dt = data['results'][key];
           this.dataPoints.push([[new Date(dt["t"])],
@@ -34,13 +36,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         var openValue = today[1];
         this.dailyMovement = (((closeValue - openValue) / openValue) * 100).toFixed(2);
     },   
-    (error) => {
-      console.log("error is: " + error);
-    });
+    (error) => {});  
   }
 
   constructor(private MyDataService: MyDataService) {}
   
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
   ngAfterViewInit() {
   }
 }

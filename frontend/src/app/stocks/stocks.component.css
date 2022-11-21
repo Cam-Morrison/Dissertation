@@ -7,12 +7,14 @@ tr.mat-row:hover {
   cursor:grab !important;
   background-color:rgba(0,74,159, 0.2);
   text-shadow: 0 0 1px black;
-  transition-delay:0.5ms;
 }
 
 th.mat-sort-header-sorted, th {
   color: black;
   font-weight:bold;
+  font-size:16px;
+  border-bottom:0.1em #07203d;
+  border-bottom-style:ridge;
 }
 
 .searchBar {
@@ -20,10 +22,11 @@ th.mat-sort-header-sorted, th {
   padding-left:1rem;
 }
 
-.spinbox {
-  display: flex; 
-  justify-content: center; 
-  align-items: center;
-  padding-top:20rem; 
-  zoom: 0.5;
+form {
+  padding-top:0.5rem;
+}
+
+.mat-header-row {
+  background-color:white;
+  z-index:2;
 }

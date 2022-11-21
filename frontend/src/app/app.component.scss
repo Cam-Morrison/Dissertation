@@ -64,7 +64,7 @@ mat-divider {
 .horizontalButtons {
   color:white;
 }
-.horizontalButtons:hover {
+.horizontalButtons:hover, .active {
   background-color:#448de0;
 }
 .mobileButton {

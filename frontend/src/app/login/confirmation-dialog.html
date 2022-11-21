@@ -1,0 +1,17 @@
+<mat-dialog-content class="form-container">
+	<p>
+		{{message}}
+    </p>
+    <form [formGroup]="confirmationForm">
+        <p>
+            <mat-form-field>
+                <input type="text" matInput placeholder="Password confirmation" formControlName="input" required>
+            </mat-form-field>
+        </p>
+        <span *ngIf="errorMsg != null" style="color:red;">{{errorMsg}}</span>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+	<button mat-raised-button mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>
+    <button mat-raised-button color="primary" (click)="register()" tabindex="1">{{confirmButtonText}}</button>
+</mat-dialog-actions>
