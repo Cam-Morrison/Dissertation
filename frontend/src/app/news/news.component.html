@@ -1,3 +1,28 @@
-<div class="content mat-elevation-z5">
-    <p> THIS WILL EVENTUALLY BE POPULATED WITH NEWS ARTICLES </p>
+<div class="content">
+<ng-template ngFor let-item [ngForOf]="newsList" let-i="index">
+  <mat-card>
+    <mat-card-content>
+      <a href="{{ item['url'] }}">
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title
+              ><h1>{{ item["headline"] }}</h1></mat-card-title
+            >
+            <mat-card-subtitle
+              ><h2>
+                {{ item["source"] }} - {{ item["datetime"] | date }}
+              </h2></mat-card-subtitle
+            >
+          </mat-card-title-group>
+        </mat-card-header>
+        <img mat-card-image src="{{ item['image'] }}" />
+        <p>{{ item["summary"] }}</p>
+      </a>
+      <mat-card-actions>
+        <button mat-button color="primary"><b>SHARE</b></button>
+        <button mat-button color="primary"><b>ADD TO READING LIST</b></button>
+      </mat-card-actions>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
 </div>

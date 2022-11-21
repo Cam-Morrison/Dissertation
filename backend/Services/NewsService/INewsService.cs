@@ -2,6 +2,7 @@ namespace backend.services
 {
     public interface INewsService
     {
-        string getSentiment(string articleText);
+        string GetSentiment(string articleText);
+        string GetDailyNews();
     }
 }

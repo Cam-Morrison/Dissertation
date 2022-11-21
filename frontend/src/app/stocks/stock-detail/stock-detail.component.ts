@@ -35,18 +35,19 @@ export class StockDetailComponent implements OnInit {
     );
     priceCall.subscribe(
       (priceResp: any) => {
+        console.log(priceResp)
         if (priceResp['resultsCount'] === 0) {
           this.pageNotFound();
         }
-        for (var key in priceResp['results']) {
-          var dt = priceResp['results'][key];
+        for (var key in priceResp['items']) {
+          var dt = priceResp['items'][key];
           this.dataPoints.push([
-            [new Date(dt['t'])],
+            [new Date(dt['date'])],
             [
-              Number(dt['o']),
-              Number(dt['h']),
-              Number(dt['l']),
-              Number(dt['c']),
+              Number(dt['open']),
+              Number(dt['high']),
+              Number(dt['low']),
+              Number(dt['close']),
             ],
           ]);
         }

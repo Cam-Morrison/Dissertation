@@ -92,6 +92,28 @@ namespace backend.Controllers
         }
 
         [HttpGet]
+        [Route("/movers")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(Summary = "Gets the most active stocks")]
+        public async Task<IActionResult> GetActiveStocks()
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("getStockHistory"))
+                {
+                    return Ok(_marketDataService.GetActiveStocks());
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("MarketDataController.GetActiveStocks()");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet]
         [Route("/timeSeriesForecasting")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

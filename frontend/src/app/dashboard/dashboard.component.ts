@@ -1,7 +1,6 @@
 import { MyDataService } from '../shared/services/data.service';
-import { Component, OnInit, AfterViewInit, ViewChild } from "@angular/core";
-import { map, shareReplay } from 'rxjs/operators';
-import { interval } from 'rxjs/internal/observable/interval';
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: "app-dashboard",

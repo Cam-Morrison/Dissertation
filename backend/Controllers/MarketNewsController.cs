@@ -26,6 +26,28 @@ namespace backend.Controllers
         }
 
         [HttpGet]      
+        [Route("/news/daily")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(Summary = "Returns a list of the daily news.")]
+        public async Task<IActionResult> GetDailyNews()
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("getNewsSentiment"))
+                {
+                    return Ok(_newsService.GetDailyNews());
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("MarketNewsController.GetDailyNews()");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet]      
         [Route("/sentiment/{text}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -36,7 +58,7 @@ namespace backend.Controllers
             {
                 if(await _featureFlag.GetFeatureFlagAsync("getNewsSentiment"))
                 {
-                    return Ok(_newsService.getSentiment(text));
+                    return Ok(_newsService.GetSentiment(text));
                 } 
                 return Ok("Feature not implemented");
             }

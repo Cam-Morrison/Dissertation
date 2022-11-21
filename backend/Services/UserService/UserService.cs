@@ -13,13 +13,15 @@ namespace backend.services
         private static readonly dbContext _context = new dbContext();
         public static string SessionIdToken = "session-id";
         private readonly IConfiguration _configuration;
+        private MarketDataService _marketDataService;
 
-        public UserService(IConfiguration configration){
+        public UserService(IConfiguration configration, MarketDataService marketDataService){
             _configuration = configration;
+            _marketDataService = marketDataService;
         }
 
-         public async Task<string> Login(Login input) {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == input.UserName);
+        public async Task<string> Login(Login input) {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == input.UserName);
             if(user == null)
             {
                 return "Username invalid.";
@@ -28,9 +30,8 @@ namespace backend.services
             {
                 return "Password invalid.";
             }
-
             return CreateToken(user);
-         }
+        }
 
          public async Task<string> Register(Register input) {
             if(_context.Users.Any(u => u.UserName == input.UserName)) 
@@ -98,6 +99,48 @@ namespace backend.services
 
         private string CreateRandomToken() {
             return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+        }
+
+        public string AddToWatchlist(string username, string ticker)
+        {
+            if (_context.Users.Any(u => u.UserName == username))
+            {
+                if (_marketDataService.isStockValid(ticker))
+                {
+                    var user = _context.Users.FirstOrDefaultAsync(u => u.UserName == username).Result;
+                    var watchlist = _context.Watchlists.FirstOrDefaultAsync(u => u.UserId == user!.UserId).Result;
+                    if (watchlist == null)
+                    {
+                        var entry = new Watchlist
+                        {
+                            UserId = (int)user!.UserId!,
+                            WatchListName = "My watchlist",
+                            Stocks = ticker
+                        };
+                        _context.Watchlists.Add(entry);
+                        _context.SaveChanges();
+                        return "Added to watchlist.";
+
+                    }
+                    else
+                    {
+                        if (!watchlist.Stocks.ToString().Contains(ticker))
+                        {
+                            watchlist.Stocks = watchlist.Stocks.ToString() + $", {ticker}";
+                            _context.Update(watchlist);
+                            _context.SaveChanges();
+                            return "Added to watchlist.";
+                        }
+                        return "Stock is already in watchlist.";
+                    }
+                }
+                return "Invalid stock ticker.";
+            }
+            return "Unauthorized";
+        }
+
+        public string RemoveFromWatchList(string ticker) {
+            return "TODO";
         }
     }
 }

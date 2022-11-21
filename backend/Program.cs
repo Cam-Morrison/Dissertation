@@ -20,6 +20,7 @@ builder.Services.AddSingleton<IFeatureFlagService, FeatureFlagService>();
 builder.Services.AddSingleton<IMarketDataService, MarketDataService>();
 builder.Services.AddSingleton<INewsService, NewsService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<MarketDataService>();
 
 // Configuring swagger
 builder.Services.AddSwaggerGen(c => 

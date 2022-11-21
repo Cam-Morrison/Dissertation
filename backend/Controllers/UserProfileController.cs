@@ -4,6 +4,7 @@ using Serilog;
 using Swashbuckle.AspNetCore.Annotations;
 using backend.entity;
 using backend.model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
@@ -14,19 +15,23 @@ namespace backend.Controllers
         private readonly ILogger<UserProfileController> _logger;
         private readonly IFeatureFlagService _featureFlag;
         private IUserService _userService;
+        private  IMarketDataService _marketDataService;
         private readonly IConfiguration _configuration;
+
 
         public UserProfileController
         (
             ILogger<UserProfileController> logger, 
             IFeatureFlagService featureFlag,
             IUserService userService,
-            IConfiguration configuration
+            IConfiguration configuration,
+            IMarketDataService marketDataService
         )
         {
             _logger = logger;
             _featureFlag = featureFlag;
             _userService = userService;
+            _marketDataService = marketDataService;
             _configuration = configuration;
         }
 
@@ -87,6 +92,33 @@ namespace backend.Controllers
             catch(Exception ex)
             {
                 Log.Information("UserProfileController.Register(Register input)");
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+        }
+
+        [HttpPost]   
+        [Route("/addToWatchlist")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [SwaggerOperation(Summary = "Adds a stock to a user's watchlist")]
+        public async Task<IActionResult> AddToWatchlist(string username, string ticker)
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("postRegistration"))
+                {
+                   var resp = _userService.AddToWatchlist(username, ticker);
+                   if(resp == "Unauthorized") {
+                        return Unauthorized();
+                   } 
+                   return Ok(resp);
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("UserProfileController.AddToWatchlist(String ticker)");
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
         }

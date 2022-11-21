@@ -1,11 +1,6 @@
-mat-toolbar, mat-sidenav, footer{
+mat-toolbar, mat-sidenav{
   background: #002b5c;
   color: white;
-}
-
-footer {
-  padding:1rem;
-  font-size:16px;
 }
 
 mat-sidenav {
@@ -91,13 +86,3 @@ mat-divider {
     width: auto;
   }
 }
-
-.copyright {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  color:#fff;
-  font-size: 15px;
-  border-top: 1px solid rgba(255,255,255,0.4);
-  text-align: center;
-}
-.copyright a{color:#01c7e9;transition: all 0.2s ease 0s;}

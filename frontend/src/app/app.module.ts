@@ -23,6 +23,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatSelectModule } from '@angular/material/select';
 import { myChartModule } from './shared/component/charts/chart.module';
+import {MatCardModule} from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './shared/services/auth.guard';
@@ -50,6 +51,7 @@ import { ConfirmationDialog } from './login/confirmation-dialog.component';
     BrowserAnimationsModule,
     myChartModule,
     MatDialogModule,
+    MatCardModule,
     MatToolbarModule,
     MatTableModule,
     MatSnackBarModule,

@@ -18,11 +18,17 @@ export class MyDataService
 
   getStockDetails(ticker: string)
   {
-    return this.http.get(`${this.myBackEndService}/details/${ticker}`)
+    return this.http.get(`${this.myBackEndService}/details/${ticker}`);
   }
 
+  //NEEDS CHANGED
   getAllStocks()
   {
     return this.http.get(`https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/2022-08-17?adjusted=true&include_otc=true&apiKey=${this.api_key}`);
+  }
+
+  getDailyNews()
+  {
+    return this.http.get(`${this.myBackEndService}/news/daily`);
   }
 }
