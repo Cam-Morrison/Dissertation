@@ -17,6 +17,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { myChartModule } from '../shared/component/charts/chart.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AuthGuard } from '../shared/services/auth.guard';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from '../shared/services/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,14 @@ import { AuthGuard } from '../shared/services/auth.guard';
     ])
   ],
   bootstrap: [StocksComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ]
 })
 export class StocksModule { }

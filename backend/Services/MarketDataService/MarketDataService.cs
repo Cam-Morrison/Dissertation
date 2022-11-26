@@ -48,6 +48,12 @@ namespace backend.services
             return callUrl(url, false);
         }
 
+        public string GetListPrices(string stocks)
+        {       
+            var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/{stocks}";
+            return callUrl(url, false);
+        }
+
         public string GetPriceHistory(string ticker)
         {
             //Currently set to one update per week

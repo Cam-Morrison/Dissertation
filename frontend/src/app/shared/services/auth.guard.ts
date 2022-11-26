@@ -37,4 +37,8 @@ export class AuthGuard implements CanActivate {
   private loggedIn() {
     return !!localStorage.getItem('token');
   }
+
+  public getToken() {
+    return localStorage.getItem('token')
+  }
 }

@@ -11,6 +11,10 @@ export class MyDataService
 
   constructor(private http: HttpClient){}
 
+  getWatchList() {
+    return this.http.get(`${this.myBackEndService}/getWatchlist`);
+  }
+
   getStockHistory(ticker: string)
   {
     return this.http.get(`${this.myBackEndService}/history/${ticker}`);

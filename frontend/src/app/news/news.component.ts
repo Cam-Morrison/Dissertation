@@ -19,6 +19,11 @@ export class NewsComponent implements OnInit {
     let resp = this.MyDataService.getDailyNews().pipe(shareReplay());
     this.sub =  resp.subscribe((data: any)=> {
         for (var key in data) {
+          //Gets rid of repetitive photo of bloomberg logo
+          if(data[key]["source"] == "Bloomberg")
+          {
+            data[key]["image"] = null
+          }
           this.newsList.push(data[key])
         }
         this.isLoading == false

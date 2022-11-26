@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using backend.services;
 using Serilog;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class MarketDataController : ControllerBase
     {
