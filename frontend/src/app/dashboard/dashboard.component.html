@@ -1,20 +1,75 @@
-<div class="content mat-elevation-z5">
-  <!-- Loader -->
+<div class="content">
   <div class="spinbox" *ngIf="isLoading">
     <mat-progress-spinner color="primary" mode="indeterminate">
     </mat-progress-spinner>
   </div>
-  <div *ngIf="!isLoading">
-    <h1> {{ watchlistTitle }} </h1>
-    <mat-card *ngFor="let item of stocks">
-      <mat-card-header><h1>{{item["longName"]}} ({{item["symbol"]}})</h1></mat-card-header>
-      <mat-card-subtitle>Timezone: {{item["exchangeTimezoneName"]}}. Market status: {{item["marketState"]}}</mat-card-subtitle>
-      <mat-card-content>
-        <p>Previous close: <strong>{{item["regularMarketPreviousClose"] | currency:item["currency"] }}</strong></p>
-        <p>Current price: <strong>{{item["ask"] | currency:item["currency"]}}</strong></p>
-        <!-- <p>Daily change {{(item["ask"] - item["regularMarketPreviousClose"]) / 100 | percent }}</p> -->
-      </mat-card-content>
+  <div class="dashboard" *ngIf="!isLoading">
+    <div>
+      <div
+        class="movement"
+        [ngClass]="{
+          positive: dailyMovement > 0,
+          negative: dailyMovement < 0
+        }"
+        *ngIf="dailyMovement != null"
+      >
+        <span *ngIf="dailyMovement > 0">
+          <mat-icon>trending_up</mat-icon>
+        </span>
+        <span *ngIf="dailyMovement < 0">
+          <mat-icon>trending_down</mat-icon>
+        </span>
+        <span *ngIf="dailyMovement == 0">
+          <mat-icon>trending_flat</mat-icon>
+        </span>
+        <h2>
+          {{ dailyMovement + "%" }}
+        </h2>
+      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Change chart</mat-label>
+        <mat-select [(value)]="selectedChart">
+          <mat-option value="area">Area</mat-option>
+          <mat-option value="candlestick">Candle stick</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <stockChart
+      [dataPoints]="dataPoints"
+      [ticker]="chartTitle"
+      [chartType]="selectedChart"
+    ></stockChart>
+    <div class="centre"><h1>{{watchlistTitle}}</h1></div>
+    <ng-template ngFor let-item [ngForOf]="stocks" let-i="index">
+      <mat-card>
+          <mat-card-content>
+            <a href="../stocks/{{ item['symbol'] }}">
+            <div class="hoverable">
+            <mat-card-header>
+              <mat-card-title-group>
+                <mat-card-title
+                  ><h1>{{ item["longName"] }}</h1></mat-card-title
+                >
+                <mat-card-subtitle
+                  ><p>
+                    {{ item["exchangeTimezoneName"] }}
+                  </p>
+                </mat-card-subtitle>
+              </mat-card-title-group>
+            </mat-card-header>
+            <h3>
+              Previous close:
+              {{
+                item["regularMarketPreviousClose"] | currency: item["currency"]
+              }}
+              . Current price:
+              {{ item["ask"] | currency: item["currency"] }}
+            </h3>
+          </div>
+          </a>
+          <button mat-button *ngIf="editMode"><h2>Remove from watchlist</h2></button>
+          </mat-card-content>
       </mat-card>
+    </ng-template>
   </div>
 </div>
-

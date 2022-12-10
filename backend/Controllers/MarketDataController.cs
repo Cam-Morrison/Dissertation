@@ -36,7 +36,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getStockPrice"))
+                if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
                 {
                     return Ok(_marketDataService.GetStockPrice(ticker));
                 } 
@@ -58,7 +58,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getStockDetail"))
+                if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
                 {
                     return Ok(_marketDataService.GetStockDetail(ticker));
                 } 
@@ -80,7 +80,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getStockHistory"))
+                if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
                 {
                     return Ok(_marketDataService.GetPriceHistory(ticker));
                 } 
@@ -102,7 +102,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getStockHistory"))
+                if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
                 {
                     return Ok(_marketDataService.GetActiveStocks());
                 } 
@@ -124,7 +124,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getStockPrediction"))
+                if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
                 {
                     return Ok(_marketDataService.getPricePrediction());
                 } 

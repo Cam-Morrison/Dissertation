@@ -1,8 +1,9 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MyDataService } from '../shared/services/data.service';
-import { shareReplay } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, shareReplay, switchMap } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-stocks',
@@ -11,49 +12,57 @@ import { Router } from '@angular/router';
 })
 export class StocksComponent implements OnInit, AfterViewInit {
   dataPoints: any[] = [];
-  displayedColumns: string[] = ['Ticker', 'Volume', 'Open', 'Close', 'Change'];
+  displayedColumns: string[] = ['Ticker', 'PE ratio', 'Price', 'Rating', 'Change'];
   dataSource: any;
   isLoading = true;
 
+  searchForm:FormGroup = new FormGroup({
+    search:new FormControl('')
+  })
+  public stockList:Array<any> = [];
+  
   constructor
   (
     private MyDataService: MyDataService,
     private router: Router,
-  )  { }
+  )  { 
+    this.searchForm.get('search')?.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged(),
+      switchMap((v) => this.MyDataService.getStocksBySearch(v)),
+    )
+    .subscribe((resp: any) => {
+      this.stockList = resp;
+    })
+  }
 
   ngOnInit() {
     //Read in ticker
     var count = 0;
-    let resp = this.MyDataService.getAllStocks().pipe(shareReplay());
+    let resp = this.MyDataService.getAllMovers().pipe(shareReplay());
     resp.subscribe(
-      (data: any) => {
-        for (var key in data['results']) {
-          var dt = data['results'][key];
-          var percentage = Number(this.getPercentageChange(dt['o'], dt['c']));
+      (movers: any) => {
+        console.log(movers);
+        for (var key in movers["quotes"]) {
+          var item = movers["quotes"][key];
           var stock: any = {
-            T: dt['T'],
-            V: dt['v'],
-            O: dt['o'],
-            C: dt['c'],
-            M: percentage,
+            T: item['shortName'],
+            PE: item['trailingPE'],
+            P: item['regularMarketPrice'],
+            R: item['averageAnalystRating'],
+            C: item['currency'],
+            S: item['symbol'],
+            M: item['regularMarketChangePercent']
           };
-          this.isLoading = false;
           this.dataPoints.push(stock);
-          count++;
-          if (count === 100) {
-            break;
-          }
         }
         this.dataSource = new MatTableDataSource(this.dataPoints);
+        this.isLoading = false;
       },
       (error) => {
         console.log('error is: ' + error);
       }
     );
-  }
-
-  getPercentageChange(oldNumber: number, newNumber: number) {
-    return (((newNumber - oldNumber) / oldNumber) * 100).toFixed(2);
   }
 
   ngAfterViewInit() {}

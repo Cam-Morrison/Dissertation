@@ -36,7 +36,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getNewsSentiment"))
+                if(await _featureFlag.GetFeatureFlagAsync("newsFeature"))
                 {
                     return Ok(_newsService.GetDailyNews());
                 } 
@@ -58,7 +58,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getNewsSentiment"))
+                if(await _featureFlag.GetFeatureFlagAsync("newsFeature"))
                 {
                     return Ok(_newsService.GetSentiment(text));
                 } 

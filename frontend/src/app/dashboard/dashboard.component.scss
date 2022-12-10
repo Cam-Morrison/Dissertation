@@ -1,0 +1,110 @@
+@use '@angular/material' as mat;
+
+
+
+@media screen and (min-width: 1301px){
+    .dashboard {
+        width: 65vw;
+  }
+}
+@media screen and (max-width: 1300px){
+    .dashboard {
+        width: 85vw;
+  }
+}
+@media screen and (max-width: 1000px){
+    .dashboard {
+        width: 95vw;
+  }
+}
+
+.content {
+    height:100vh !important;
+    padding:0 !important;
+    margin: 0 !important;
+    background: transparent;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    overflow-y:scroll;
+
+    .dashboard {
+        background-color:white !important;
+        position:relative;
+        padding:0.3em;
+    }
+}
+
+a:link, a:hover, a:active, a:visited { 
+    text-decoration: none; 
+    color:white;
+}
+.watchlistHeader {
+    padding:0.05em;
+    margin-top:0;
+    border-radius:20px;
+    background-color:#74b9ff;
+}
+
+h1 {
+    font-size:20px;
+}
+h2 {
+    font-size:18px;
+}
+.p, mat-label, mat-select {
+    font-size: 16px;
+}
+
+.mat-card, .mat-card-header, .mat-card-subtitle, .mat-card-title-group {
+    color:white;
+    display:block;
+    background-color: #002b5c;
+
+    .p {
+        padding:0.5rem !important;
+        color:white;
+    }
+
+
+}
+
+.mat-card {
+    background-color: transparent;
+    padding:0;
+    margin-bottom:0.5em;
+    text-align: center;
+    justify-content:center;
+    height:auto;
+    flex:none;
+    @include mat.elevation(0);
+
+    .mat-card-content {
+        @include mat.elevation(8);
+        max-width:700px;
+        margin:auto;
+        background-color: #07203d;
+    }
+    .mat-card-header {
+        margin:0;
+        text-decoration: bold; 
+     }
+}
+
+h2 {
+    padding-left:0.5rem;
+  }
+  
+  mat-form-field  {
+    display:flex;
+    float: right;
+  }
+  
+  .movement {
+    width:3rem;
+    padding:1rem;
+    display:flex;
+    float: left;
+    text-shadow:2px;
+  }
+

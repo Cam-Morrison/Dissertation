@@ -26,10 +26,9 @@ export class NewsComponent implements OnInit {
           }
           this.newsList.push(data[key])
         }
-        this.isLoading == false
-        console.log(this.newsList)
     },   
     (error: any) => {});  
+    this.isLoading = false;
   }
 
 }

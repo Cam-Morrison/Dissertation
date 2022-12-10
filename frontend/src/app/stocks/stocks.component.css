@@ -17,11 +17,6 @@ th.mat-sort-header-sorted, th {
   border-bottom-style:ridge;
 }
 
-.searchBar {
-  width:10rem;
-  padding-left:1rem;
-}
-
 form {
   padding-top:0.5rem;
 }
@@ -29,4 +24,15 @@ form {
 .mat-header-row {
   background-color:white;
   z-index:2;
+}
+
+mat-form-field {
+  width:30em;
+}
+
+.center {
+  padding:2rem;
+  justify-content: center;
+  align-items:center;
+  text-align:center;
 }

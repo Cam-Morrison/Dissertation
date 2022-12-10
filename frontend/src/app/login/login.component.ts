@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     })
     .subscribe((response) => {
       localStorage.setItem('token', response);
-      this.router.navigate(['/stocks'])
+      this.router.navigate(['/dashboard'])
     },
     (error: HttpErrorResponse) => {
       var resp = error.error;

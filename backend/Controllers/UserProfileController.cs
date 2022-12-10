@@ -108,7 +108,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("postRegistration"))
+                if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
                 {
                     var resp = _userService.AddToWatchlist(HttpContext.User.Identity.Name, ticker);
                     return Ok(resp);
@@ -131,7 +131,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("postRegistration"))
+                if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
                 {
                     var resp = _userService.GetWatchlist(HttpContext.User.Identity.Name);
                     return Ok(resp);
@@ -154,7 +154,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("postRegistration"))
+                if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
                 {
                     var resp = _userService.RemoveFromWatchList(HttpContext.User.Identity.Name, ticker);
                     return Ok(resp);
@@ -177,7 +177,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("postRegistration"))
+                if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
                 {
                     var resp = _userService.UpdateWatchListTitle(HttpContext.User.Identity.Name, newTitle);
                     return Ok(resp);

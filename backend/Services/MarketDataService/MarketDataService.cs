@@ -11,7 +11,7 @@ namespace backend.services
         private readonly IConfiguration Configuration;
         private string marketDataKey;
         private string finnHubKey;
-        private static string marketData;
+        private static string activeStocks;
         private static string homePagePrices;
         private static string mostRecentPriceHistory; //Used for AI prediction
         private string yesterday = DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd");
@@ -64,8 +64,11 @@ namespace backend.services
         }
 
         public string GetActiveStocks() {
-            var url = "https://yahoo-finance15.p.rapidapi.com/api/yahoo/co/collections/day_gainers";
-            return callUrl(url, false);
+            if(activeStocks == null) {
+                var url = "https://yahoo-finance15.p.rapidapi.com/api/yahoo/co/collections/day_gainers";
+                activeStocks = callUrl(url, false);
+            } 
+            return activeStocks!.ToString();
         }
 
         public string GetStockDetail(string ticker)

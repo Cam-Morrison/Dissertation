@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
@@ -36,7 +37,7 @@ export class StockDetailComponent implements OnInit {
     priceCall.subscribe(
       (priceResp: any) => {
         console.log(priceResp)
-        if (priceResp['resultsCount'] === 0) {
+        if (priceResp['error'] != null) {
           this.pageNotFound();
         }
         for (var key in priceResp['items']) {
@@ -53,27 +54,26 @@ export class StockDetailComponent implements OnInit {
         }
         this.isLoading = false;
       },
-      (error) => {
+      (error: any) => {
         //If stock doesn't exist go back to stock listings
         console.log('error is: ' + error);
-        this.onBack(true);
+        this.pageNotFound();
       });
     var detailsCall = this.MyDataService.getStockDetails(this.ticker!).pipe(
       shareReplay()
     );
     detailsCall.subscribe(
       (detailsResp: any) => {
-        var dt = detailsResp['results'];
+        console.log(detailsResp)
+        var dt = detailsResp['assetProfile'];
         this.details = {
-          "isMarketOpen": dt['active'],
-          "description": dt['description'],
-          "companyUrl": dt['homepage_url'],
-          "listDate": dt['list_date'],
-          "marketCap": dt['market_cap'],
-          "name": dt['name'],
-          "primaryExchange": dt['primary_exchange'],
-          "sic_description": dt['sic_description'],
-          "employees": dt['total_employees']
+          "description": dt['longBusinessSummary'],
+          "companyUrl": dt['website'],
+          "sector": dt['industry'],
+          "name": this.ticker,
+          "country": dt['country'],
+          "city": dt['city'],
+          "employees": dt['fullTimeEmployees']
         };    
         this.detailsLoaded = true;
       },
@@ -98,24 +98,7 @@ export class StockDetailComponent implements OnInit {
     });
   }
 
-  onBack(isError: boolean): void {
-    if(isError == false) 
-    {
-      this.router.navigate(['/stocks']);
-    }
-    else 
-    {
-      this.router.navigate(['/stocks']).then(() => {
-        this.matSnackBar.open(
-          'There was an issue loading this stock, please try again later.',
-          'Close',
-          {
-            duration: 5000,
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
-          }
-        );
-      });
-    }
+  onBack(): void {
+    this.router.navigate(['/stocks']);
   }
 }
