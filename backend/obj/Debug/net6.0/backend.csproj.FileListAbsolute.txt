@@ -101,3 +101,10 @@ C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.Identit
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Scrutor.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll

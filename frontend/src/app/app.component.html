@@ -1,5 +1,5 @@
 <!-- Top navigation toolbar -->
-<mat-toolbar class="flexbox" (click)="sidenav.toggle()" fixed>
+<mat-toolbar class="flexbox" (click)="sideNavToggle()" fixed>
   <button class="mobileButton" mat-icon-button *ngIf="sidenav.mode === 'over'">
     <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
     <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
@@ -24,7 +24,7 @@
         (click)="sidenav.toggle()"
         routerLink="{{ data.routeLink }}"
         [routerLinkActive]="'active'"
-        [routerLinkActiveOptions]="{exact:true}"
+        [routerLinkActiveOptions]="{ exact: true }"
         ariaCurrentWhenActive="page"
       >
         <mat-icon>{{ data.icon }}</mat-icon>
@@ -34,7 +34,7 @@
 
     <mat-divider></mat-divider>
 
-    <button mat-button class="menu-button" (click)="logout()">
+    <button *ngIf="loggedIn" mat-button class="menu-button" (click)="logout()">
       <mat-icon>logout</mat-icon>
       <span>Sign out</span>
     </button>
@@ -47,26 +47,30 @@
     <div class="flexbox horizontalNav">
       <div *ngFor="let data of navData">
         <button
-          mat-button
-          mat-ripple
           class="horizontalButtons"
-          (click)="scrollToTop()"
+          mat-button
+          mat-ripple  
           routerLink="{{ data.routeLink }}"
           [routerLinkActive]="'active'"
-          [routerLinkActiveOptions]="{exact:true}"
+          [routerLinkActiveOptions]="{ exact: true }"
           ariaCurrentWhenActive="page"
         >
           <mat-icon>{{ data.icon }}</mat-icon>
           <span> {{ data.label }}</span>
         </button>
       </div>
+      <button
+        class="horizontalButtons"
+        mat-button
+        mat-ripple    
+        *ngIf="loggedIn"
+        mat-button
+        (click)="logout()"
+      >
+        <mat-icon>logout</mat-icon>
+        <span>Sign out</span>
+      </button>
     </div>
     <router-outlet #outlet="outlet"></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<footer>
-  <div class="flexbox">
-    <p class="copyright">Copyright © Mr. Morrison 2831609</p>
-  </div>
-</footer>

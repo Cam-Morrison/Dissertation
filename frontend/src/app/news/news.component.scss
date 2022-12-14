@@ -1,0 +1,71 @@
+@use '@angular/material' as mat;
+
+a:link, a:hover, a:active, a:visited { 
+    text-decoration: none; 
+    color:black;
+}
+
+h1 {
+    font-size:20px;
+}
+h2 {
+    font-size:18px;
+}
+.p {
+    font-size: 16px;
+}
+
+.mat-card, .mat-card-header, .mat-card-subtitle, .mat-card-content, .mat-card-title-group {
+    color:black;
+    display:block;
+}
+
+.mat-card {
+    background-color: transparent;
+    padding:0;
+    margin-bottom:1em;
+    text-align: center;
+    justify-content:center;
+    height:auto;
+    flex:none;
+    @include mat.elevation(0);
+
+    .mat-card-content {
+        background-color: white;
+        @include mat.elevation(8);
+        max-width:700px;
+        margin:auto;
+        padding:1rem;
+    }
+    .mat-card-header {
+        margin:0;
+        text-decoration: bold; 
+     }
+}
+
+
+@media screen and (max-width: 1300px){
+    .card-container-center {
+        width: 60vw;
+  }
+}
+@media screen and (max-width: 1000px){
+    .card-container-center {
+        width: 75vw;
+  }
+}
+@media screen and (max-width: 550px){
+    .card-container-center {
+        width: 90vw;
+  }
+}
+
+.content {
+    height:100vh !important;
+    padding:0 !important;
+    margin: 0 !important;
+    background: transparent;
+}
+
+
+

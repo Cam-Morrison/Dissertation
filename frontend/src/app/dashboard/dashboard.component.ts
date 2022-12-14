@@ -1,46 +1,56 @@
 import { MyDataService } from '../shared/services/data.service';
-import { Component, OnInit, AfterViewInit, ViewChild } from "@angular/core";
-import { map, shareReplay } from 'rxjs/operators';
-import { interval } from 'rxjs/internal/observable/interval';
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { shareReplay } from 'rxjs/operators';
+import { Observable } from 'rxjs/internal/Observable';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
-  styleUrls: ["./dashboard.component.css"]
+  styleUrls: ["./dashboard.component.scss"]
 })
 
 export class DashboardComponent implements OnInit, AfterViewInit {
 
-  dataPoints:any = [];
-  ticker = "VOO";
-  tickerTitle = "S&P 500";
-  showFiller = false;
+  stocks: any[] = [];
+  watchlistTitle: string = "";
+  public chartTitle: string = "Portfolio movement";
   isLoading = true;
-  dailyMovement: any;
-  myChartService:any;
-  selectedChart: string = "area";
   private sub: any;
 
-  ngOnInit():void {
-    //Read in ticker, get its price datapoints and daily movement
-    let resp = this.MyDataService.getStockHistory(this.ticker).pipe(shareReplay());
-    this.sub =  resp.subscribe((data: any)=> {
-        for (var key in data['results']) {
-          var dt = data['results'][key];
-          this.dataPoints.push([[new Date(dt["t"])],
-          [Number(dt["o"]), Number(dt["h"]), Number(dt["l"]), Number(dt["c"])]]);
-        }
-        this.isLoading = false;
-        var today = this.dataPoints[this.dataPoints.length-1][1];
-        var closeValue = today[3];
-        var openValue = today[1];
-        this.dailyMovement = (((closeValue - openValue) / openValue) * 100).toFixed(2);
-    },   
-    (error) => {});  
-  }
+  dailyMovement: number = 0;
+  ticker?: string | null;
+  tickerValid: boolean = true;
+  dataPoints: any = [];
+  selectedChart: any = 'area';
+  previousCloses: any[] = [];
+  currentPrices: any[] = [];
+
+  public editmode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public editmodeObs: Observable<boolean> = this.editmode.asObservable();
 
   constructor(private MyDataService: MyDataService) {}
   
+  ngOnInit():void {
+    // Read in ticker, get its price datapoints and daily movement
+    let resp = this.MyDataService.getWatchList().pipe(shareReplay());
+    this.sub =  resp.subscribe((data: any)=> {
+      console.log(data)
+      this.watchlistTitle = data["title"];
+      this.stocks = data["stocks"];
+      console.log(this.stocks);
+
+      for (let i = 0; i < this.stocks.length; i++) {
+        this.dailyMovement += this.stocks[i]["regularMarketChangePercent"];
+        this.previousCloses.push(this.stocks[i]["regularMarketPreviousClose"])
+        this.currentPrices.push(this.stocks[i]["regularMarketPrice"])
+
+      }
+
+      this.isLoading = false;
+    },   
+    (error) => {console.log(error)});  
+  }
 
   ngOnDestroy() {
     this.sub.unsubscribe();

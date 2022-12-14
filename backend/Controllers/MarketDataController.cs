@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using backend.services;
 using Serilog;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class MarketDataController : ControllerBase
     {
@@ -34,7 +36,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getStockPrice"))
+                if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
                 {
                     return Ok(_marketDataService.GetStockPrice(ticker));
                 } 
@@ -56,7 +58,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getStockDetail"))
+                if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
                 {
                     return Ok(_marketDataService.GetStockDetail(ticker));
                 } 
@@ -78,7 +80,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getStockHistory"))
+                if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
                 {
                     return Ok(_marketDataService.GetPriceHistory(ticker));
                 } 
@@ -92,6 +94,28 @@ namespace backend.Controllers
         }
 
         [HttpGet]
+        [Route("/movers")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(Summary = "Gets the most active stocks")]
+        public async Task<IActionResult> GetActiveStocks()
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
+                {
+                    return Ok(_marketDataService.GetActiveStocks());
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("MarketDataController.GetActiveStocks()");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet]
         [Route("/timeSeriesForecasting")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -100,7 +124,7 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getStockPrediction"))
+                if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
                 {
                     return Ok(_marketDataService.getPricePrediction());
                 } 

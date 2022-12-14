@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
@@ -10,7 +11,6 @@ import { MyDataService } from 'src/app/shared/services/data.service';
   templateUrl: './stock-detail.component.html',
   styleUrls: ['./stock-detail.component.css'],
 })
-
 export class StockDetailComponent implements OnInit {
   ticker?: string | null;
   tickerValid: boolean = true;
@@ -35,45 +35,46 @@ export class StockDetailComponent implements OnInit {
     );
     priceCall.subscribe(
       (priceResp: any) => {
-        if (priceResp['resultsCount'] === 0) {
+        console.log(priceResp);
+        if (priceResp['error'] != null) {
           this.pageNotFound();
         }
-        for (var key in priceResp['results']) {
-          var dt = priceResp['results'][key];
+        for (var key in priceResp['items']) {
+          var dt = priceResp['items'][key];
           this.dataPoints.push([
-            [new Date(dt['t'])],
+            [new Date(dt['date'])],
             [
-              Number(dt['o']),
-              Number(dt['h']),
-              Number(dt['l']),
-              Number(dt['c']),
+              Number(dt['open']),
+              Number(dt['high']),
+              Number(dt['low']),
+              Number(dt['close']),
             ],
           ]);
         }
         this.isLoading = false;
       },
-      (error) => {
+      (error: any) => {
         //If stock doesn't exist go back to stock listings
         console.log('error is: ' + error);
-        this.onBack(true);
-      });
+        this.pageNotFound();
+      }
+    );
     var detailsCall = this.MyDataService.getStockDetails(this.ticker!).pipe(
       shareReplay()
     );
     detailsCall.subscribe(
       (detailsResp: any) => {
-        var dt = detailsResp['results'];
+        console.log(detailsResp);
+        var dt = detailsResp['assetProfile'];
         this.details = {
-          "isMarketOpen": dt['active'],
-          "description": dt['description'],
-          "companyUrl": dt['homepage_url'],
-          "listDate": dt['list_date'],
-          "marketCap": dt['market_cap'],
-          "name": dt['name'],
-          "primaryExchange": dt['primary_exchange'],
-          "sic_description": dt['sic_description'],
-          "employees": dt['total_employees']
-        };    
+          description: dt['longBusinessSummary'],
+          companyUrl: dt['website'],
+          sector: dt['industry'],
+          name: this.ticker,
+          country: dt['country'],
+          city: dt['city'],
+          employees: dt['fullTimeEmployees'],
+        };
         this.detailsLoaded = true;
       },
       (error) => {
@@ -81,7 +82,6 @@ export class StockDetailComponent implements OnInit {
       }
     );
   }
-
 
   pageNotFound() {
     this.router.navigate(['/stocks']).then(() => {
@@ -97,24 +97,31 @@ export class StockDetailComponent implements OnInit {
     });
   }
 
-  onBack(isError: boolean): void {
-    if(isError == false) 
-    {
-      this.router.navigate(['/stocks']);
-    }
-    else 
-    {
-      this.router.navigate(['/stocks']).then(() => {
-        this.matSnackBar.open(
-          'There was an issue loading this stock, please try again later.',
-          'Close',
-          {
-            duration: 5000,
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
-          }
-        );
-      });
-    }
+  onBack(): void {
+    this.router.navigate(['/stocks']);
+  }
+
+  addToWatchlist() {
+    var resp = this.MyDataService.AddToWatchlist(this.ticker!).pipe(
+      shareReplay()
+    );
+    resp.subscribe(
+      (response: any) => {
+        this.matSnackBar.open(`${response.toString()}`, 'Close', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
+        console.log(response);
+      },
+      (error) => {
+        this.matSnackBar.open(`${error.error.text.toString()}`, 'Close', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
+        console.log(error);
+      }
+    );
   }
 }

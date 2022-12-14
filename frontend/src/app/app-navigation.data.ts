@@ -18,10 +18,5 @@ export const navigationData = [
         routeLink: '',
         icon: 'memory',
         label: 'Predictive Learning'
-    },
-    {
-        routeLink: '',
-        icon: 'account_box',
-        label: 'My Account'
     }
 ]

@@ -1,6 +1,5 @@
 mat-form-field  {
   display:flex;
-  width:15rem;
   float: right;
 }
 mat-expansion-panel {

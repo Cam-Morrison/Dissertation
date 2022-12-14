@@ -193,10 +193,4 @@ import {
         this.initCandleChart();
       }
   }
-
-  public updateOptions(option: any): void {
-    this.activeOptionButton = option;
-    this.chart.updateOptions(this.updateOptionsData["1y"], false, true, true);
-  }
-
 }

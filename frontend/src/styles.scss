@@ -1,17 +1,33 @@
-body {
-  overflow-x: hidden;
-  font-size:16px;
-}
-
 html, body { 
   height: 100%; 
+}
+
+@media screen and (max-width: 768px){
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+  }
 }
 
 body { 
   margin: 0; 
   font-family: Roboto, "Helvetica Neue", sans-serif; 
   background-color: #FFFFFF;
+  overflow-x: hidden;
+  font-size:16px;
+}
 
+body::-webkit-scrollbar {
+  width: 1em;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
 }
 
 mat-sidenav-content {
@@ -56,7 +72,9 @@ mat-sidenav-content {
   justify-content: center; 
   align-items: center;
   width:100%;
-  padding-top:20rem; 
+  padding-top:10rem; 
+  padding-bottom:10rem;
+  transition: opacity .8s ease-in-out;
   zoom: 0.5;
 }
 
@@ -66,4 +84,33 @@ mat-sidenav-content {
   align-items: center;
   text-align: center;
   min-height: 80vh;
+}
+
+::-webkit-scrollbar-track
+{
+	background-color: #07203d;
+}
+
+::-webkit-scrollbar
+{
+	width: 15px;
+	background-color: black;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #74b9ff;
+	border-radius: 3px;
+}
+
+.menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1rem;
+
+  mat-icon {
+    margin-right: 8px;
+  }
 }

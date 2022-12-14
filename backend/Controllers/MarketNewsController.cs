@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using backend.services;
 using Serilog;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class MarketNewsController : ControllerBase
     {
@@ -26,6 +28,28 @@ namespace backend.Controllers
         }
 
         [HttpGet]      
+        [Route("/news/daily")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(Summary = "Returns a list of the daily news.")]
+        public async Task<IActionResult> GetDailyNews()
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("newsFeature"))
+                {
+                    return Ok(_newsService.GetDailyNews());
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("MarketNewsController.GetDailyNews()");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet]      
         [Route("/sentiment/{text}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -34,9 +58,9 @@ namespace backend.Controllers
         {
             try
             {
-                if(await _featureFlag.GetFeatureFlagAsync("getNewsSentiment"))
+                if(await _featureFlag.GetFeatureFlagAsync("newsFeature"))
                 {
-                    return Ok(_newsService.getSentiment(text));
+                    return Ok(_newsService.GetSentiment(text));
                 } 
                 return Ok("Feature not implemented");
             }

@@ -1,10 +1,13 @@
 global using Microsoft.OpenApi.Models;
 global using Microsoft.EntityFrameworkCore;
+
 using backend.services;
-using Microsoft.Net.Http.Headers;
+using System.Text;
+using Swashbuckle.AspNetCore.Filters;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -20,6 +23,7 @@ builder.Services.AddSingleton<IFeatureFlagService, FeatureFlagService>();
 builder.Services.AddSingleton<IMarketDataService, MarketDataService>();
 builder.Services.AddSingleton<INewsService, NewsService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<MarketDataService>();
 
 // Configuring swagger
 builder.Services.AddSwaggerGen(c => 
@@ -31,8 +35,29 @@ builder.Services.AddSwaggerGen(c =>
         Title = "CM Investment Analytics",
         Description = "My backend operation to retrieve organised market data."
     });
+    //Securing swagger, requires bearer to test endpoints
+    c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme 
+    {
+        Description = "Authorization using the bearer token from login. Type 'bearer {JWT token}'",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+    c.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(Options => {
+        Options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    }
+);
 
 //Building
 var app = builder.Build();
@@ -46,8 +71,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
+app.UseHttpsRedirection();
 app.MapControllers();
-
 app.Run();

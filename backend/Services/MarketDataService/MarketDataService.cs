@@ -10,7 +10,8 @@ namespace backend.services
     {
         private readonly IConfiguration Configuration;
         private string marketDataKey;
-        private static string marketData;
+        private string finnHubKey;
+        private static string activeStocks;
         private static string homePagePrices;
         private static string mostRecentPriceHistory; //Used for AI prediction
         private string yesterday = DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd");
@@ -25,57 +26,77 @@ namespace backend.services
         public void initialise()
         {
            this.marketDataKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("marketDataKey");
-            if(marketData == null)
-            {            
-                UpdateMarketData();
-            }
+           this.finnHubKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("finnHubKey");
+            // if(marketData == null)
+            // {            
+            //     UpdateMarketData();
+            // }
         }
 
-        public void UpdateMarketData(){
-            string marketDataUrl = $"https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/{yesterday}?adjusted=true&include_otc=false&apiKey=";
-            string updatedMarketData = callUrl(marketDataUrl);
-            if(updatedMarketData != "Issue with API Call")
-            {
-                marketData = updatedMarketData;
-            } 
-        }
+        // public void UpdateMarketData(){
+        //     string marketDataUrl = $"https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/{yesterday}?adjusted=true&include_otc=false&apiKey=";
+        //     string updatedMarketData = callUrl(marketDataUrl);
+        //     if(updatedMarketData != "Issue with API Call")
+        //     {
+        //         marketData = updatedMarketData;
+        //     } 
+        // }
 
         public string GetStockPrice(string ticker)
         {       
-            try
-            {
-                var data = (JObject)JsonConvert.DeserializeObject(marketData);
-                JToken selection = data.SelectToken("$.results[?(@.T == '"+ ticker +"')]");
-                return selection.ToString(Formatting.None);
-            }
-            catch(Exception ex) 
-            {
-                return ex.ToString();
-            }
+            var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/{ticker}";
+            return callUrl(url, false);
+        }
+
+        public string GetListPrices(string stocks)
+        {       
+            var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/{stocks}";
+            return callUrl(url, false);
         }
 
         public string GetPriceHistory(string ticker)
         {
-            var url = $"https://api.polygon.io/v2/aggs/ticker/{ticker}/range/1/day/2018-01-01/{today}?adjusted=true&sort=asc&apiKey=";
-            if(ticker == "VOO")
-            {
-                if(homePagePrices == null)
-                {
-                    homePagePrices = callUrl(url);
-                }
-                return homePagePrices;
-            }
-            else
-            {
-                mostRecentPriceHistory = callUrl(url);
-                return mostRecentPriceHistory;
-            }    
+            //Currently set to one update per week
+            string updateInterval = "1wk";
+            var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/hi/history/{ticker}/{updateInterval}?diffandsplits=false";
+            mostRecentPriceHistory = callUrl(url, false);
+            return mostRecentPriceHistory;
+        }
+
+        public string GetActiveStocks() {
+            if(activeStocks == null) {
+                var url = "https://yahoo-finance15.p.rapidapi.com/api/yahoo/co/collections/day_gainers";
+                activeStocks = callUrl(url, false);
+            } 
+            return activeStocks!.ToString();
         }
 
         public string GetStockDetail(string ticker)
         {
-           string stockDetailUrl = $"https://api.polygon.io/v3/reference/tickers/{ticker}?apiKey=";
-           return callUrl(stockDetailUrl);
+           var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/{ticker}/asset-profile";
+           return callUrl(url, false);
+        }
+
+        public string GetStockFinancials(string ticker)
+        {
+           var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/{ticker}/default-key-statistics";
+           return callUrl(url, false);
+        }
+
+        public string findStockTickerByName(string name)
+        {
+            var url = $"https://finnhub.io/api/v1/stock/symbol?exchange=US&token={finnHubKey}";
+            return callUrl(url, true);
+        }
+
+        public bool isStockValid(string ticker) {
+            var call = callUrl($"https://finnhub.io/api/v1/search?q={ticker}&token={finnHubKey}", true);
+            JObject json = JObject.Parse(call);
+            if(json["count"].Value<int>() == 0)
+            {
+                return false;
+            } 
+            return true;     
         }
 
         public string getPricePrediction()
@@ -83,16 +104,19 @@ namespace backend.services
             return "£430";
         }
 
-        private string callUrl(string inputUrl)
+        private string callUrl(string inputUrl, bool keyTwo)
         {
-            string url = inputUrl + marketDataKey;
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(url);
+            client.BaseAddress = new Uri(inputUrl);
+            if(!keyTwo) {
+                client.DefaultRequestHeaders.Add("X-RapidAPI-Key", this.marketDataKey);
+                client.DefaultRequestHeaders.Add("X-RapidAPI-Host", "yahoo-finance15.p.rapidapi.com");
+            } 
             // Add an Accept header for JSON format.
             client.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json"));
             // List data response.
-            HttpResponseMessage response = client.GetAsync(url).Result;  // Blocking call! Program will wait here until a response is received or a timeout occurs.
+            HttpResponseMessage response = client.GetAsync(inputUrl).Result;  // Blocking call! Program will wait here until a response is received or a timeout occurs.
             if (response.IsSuccessStatusCode)
             {
                 // Parse the response body.

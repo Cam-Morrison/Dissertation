@@ -4,33 +4,40 @@ using Serilog;
 using Swashbuckle.AspNetCore.Annotations;
 using backend.entity;
 using backend.model;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace backend.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class UserProfileController : ControllerBase
     {
         private readonly ILogger<UserProfileController> _logger;
         private readonly IFeatureFlagService _featureFlag;
         private IUserService _userService;
+        private  IMarketDataService _marketDataService;
         private readonly IConfiguration _configuration;
+
 
         public UserProfileController
         (
             ILogger<UserProfileController> logger, 
             IFeatureFlagService featureFlag,
             IUserService userService,
-            IConfiguration configuration
+            IConfiguration configuration,
+            IMarketDataService marketDataService
         )
         {
             _logger = logger;
             _featureFlag = featureFlag;
             _userService = userService;
+            _marketDataService = marketDataService;
             _configuration = configuration;
         }
 
-        [HttpPost]      
+        [HttpPost, AllowAnonymous]      
         [Route("/login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -61,7 +68,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost]      
+        [HttpPost, AllowAnonymous]      
         [Route("/register")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -87,6 +94,99 @@ namespace backend.Controllers
             catch(Exception ex)
             {
                 Log.Information("UserProfileController.Register(Register input)");
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+        }
+
+        [HttpGet] 
+        [Route("/addToWatchlist/{ticker}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [SwaggerOperation(Summary = "Adds a stock to a user's watchlist")]
+        public async Task<IActionResult> AddToWatchlist(string ticker)
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
+                {
+                    var resp = _userService.AddToWatchlist(HttpContext.User.Identity.Name, ticker.ToUpper());
+                    return Ok(resp);
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("UserProfileController.AddToWatchlist(String ticker)");
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+        }
+
+        [HttpGet]   
+        [Route("/getWatchlist")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Gets a list of watchlist stocks.")]
+        public async Task<IActionResult> GetWatchlist()
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
+                {
+                    var resp = _userService.GetWatchlist(HttpContext.User.Identity.Name);
+                    return Ok(resp);
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("UserProfileController.GetWatchlist()");
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+        }
+
+        [HttpPost]   
+        [Route("/removeFromWatchlist")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Remove ticker from watch list.")]
+        public async Task<IActionResult> RemoveFromWatchlist(string ticker)
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
+                {
+                    var resp = _userService.RemoveFromWatchList(HttpContext.User.Identity.Name, ticker.ToUpper());
+                    return Ok(resp);
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("UserProfileController.RemoveFromWatchList(string ticker)");
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+        }
+
+        [HttpPost]   
+        [Route("/updateWatchlistTitle")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Updates the title of user's watchlist.")]
+        public async Task<IActionResult> UpdateWatchlistTitle(string newTitle)
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
+                {
+                    var resp = _userService.UpdateWatchListTitle(HttpContext.User.Identity.Name, newTitle);
+                    return Ok(resp);
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("UserProfileController.UpdateWatchListTitle(string newTitle)");
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
         }

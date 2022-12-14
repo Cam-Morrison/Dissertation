@@ -1,10 +1,15 @@
 <div class="content mat-elevation-z5">
 
   <div>
-    <button mat-button color="primary" (click)="onBack(false)">
+    <button mat-button color="primary" (click)="onBack()">
       <mat-icon>arrow_back</mat-icon>
       <p>Go back</p>
     </button>
+    <button mat-button color="primary" (click)="addToWatchlist()">
+      <mat-icon>add</mat-icon>
+      <p>Add to watchlist</p>
+    </button>
+
     <mat-form-field appearance="fill">
       <mat-label>Change chart</mat-label>
       <mat-select [(value)]="selectedChart">
@@ -31,7 +36,7 @@
     </mat-expansion-panel-header>
     <div *ngIf="detailsLoaded">
       <h3>
-        <span *ngIf="details.name"> {{details.name}} </span>
+        <span *ngIf="details.name"> <strong>{{details.name}} </strong></span>
         <span *ngIf="details.name == null"> There is no information on this security</span>
       </h3>
       <p>
@@ -39,11 +44,10 @@
       </p>
       <div class="flexbox"> 
         <p>
-          <span *ngIf="details.sic_description"> Industry - {{details.sic_description}} </span>
+          <span *ngIf="details.sector"> Sector - {{details.sector}} </span>
           <span *ngIf="details.primaryExchange"> Primary exchange  - {{details.primaryExchange}} </span>
           <span *ngIf="details.employees">  Employes - {{details.employees}} </span>
-          <span *ngIf="details.sic_description"> Market cap of {{details.marketCap | currency:'USD':'symbol':"1.2-3"}} </span>
-          <span *ngIf="details.listDate"> Initial public offering happened {{details.listDate | date}}</span>
+          <span *ngIf="details.country"> Based in - {{details.city}}, {{details.country}}</span>
           <span *ngIf="details.companyUrl"><a href={{details.companyUrl}}> {{details.companyUrl}}</a></span>
         </p>
       </div>  
