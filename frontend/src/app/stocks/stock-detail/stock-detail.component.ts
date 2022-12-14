@@ -11,7 +11,6 @@ import { MyDataService } from 'src/app/shared/services/data.service';
   templateUrl: './stock-detail.component.html',
   styleUrls: ['./stock-detail.component.css'],
 })
-
 export class StockDetailComponent implements OnInit {
   ticker?: string | null;
   tickerValid: boolean = true;
@@ -36,7 +35,7 @@ export class StockDetailComponent implements OnInit {
     );
     priceCall.subscribe(
       (priceResp: any) => {
-        console.log(priceResp)
+        console.log(priceResp);
         if (priceResp['error'] != null) {
           this.pageNotFound();
         }
@@ -58,23 +57,24 @@ export class StockDetailComponent implements OnInit {
         //If stock doesn't exist go back to stock listings
         console.log('error is: ' + error);
         this.pageNotFound();
-      });
+      }
+    );
     var detailsCall = this.MyDataService.getStockDetails(this.ticker!).pipe(
       shareReplay()
     );
     detailsCall.subscribe(
       (detailsResp: any) => {
-        console.log(detailsResp)
+        console.log(detailsResp);
         var dt = detailsResp['assetProfile'];
         this.details = {
-          "description": dt['longBusinessSummary'],
-          "companyUrl": dt['website'],
-          "sector": dt['industry'],
-          "name": this.ticker,
-          "country": dt['country'],
-          "city": dt['city'],
-          "employees": dt['fullTimeEmployees']
-        };    
+          description: dt['longBusinessSummary'],
+          companyUrl: dt['website'],
+          sector: dt['industry'],
+          name: this.ticker,
+          country: dt['country'],
+          city: dt['city'],
+          employees: dt['fullTimeEmployees'],
+        };
         this.detailsLoaded = true;
       },
       (error) => {
@@ -82,7 +82,6 @@ export class StockDetailComponent implements OnInit {
       }
     );
   }
-
 
   pageNotFound() {
     this.router.navigate(['/stocks']).then(() => {
@@ -100,5 +99,29 @@ export class StockDetailComponent implements OnInit {
 
   onBack(): void {
     this.router.navigate(['/stocks']);
+  }
+
+  addToWatchlist() {
+    var resp = this.MyDataService.AddToWatchlist(this.ticker!).pipe(
+      shareReplay()
+    );
+    resp.subscribe(
+      (response: any) => {
+        this.matSnackBar.open(`${response.toString()}`, 'Close', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
+        console.log(response);
+      },
+      (error) => {
+        this.matSnackBar.open(`${error.error.text.toString()}`, 'Close', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
+        console.log(error);
+      }
+    );
   }
 }

@@ -5,6 +5,11 @@
       <mat-icon>arrow_back</mat-icon>
       <p>Go back</p>
     </button>
+    <button mat-button color="primary" (click)="addToWatchlist()">
+      <mat-icon>add</mat-icon>
+      <p>Add to watchlist</p>
+    </button>
+
     <mat-form-field appearance="fill">
       <mat-label>Change chart</mat-label>
       <mat-select [(value)]="selectedChart">
@@ -32,7 +37,7 @@
     <div *ngIf="detailsLoaded">
       <h3>
         <span *ngIf="details.name"> <strong>{{details.name}} </strong></span>
-        <!-- <span *ngIf="details.name == null"> There is no information on this security</span> -->
+        <span *ngIf="details.name == null"> There is no information on this security</span>
       </h3>
       <p>
         <span *ngIf="details.description"> {{details.description}} </span>

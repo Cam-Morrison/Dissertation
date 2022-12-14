@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -36,5 +36,9 @@ export class MyDataService
 
   getStocksBySearch(ticker: string) {
     return this.http.get(`${this.myBackEndService}/stocks/search?q=${ticker}`);
+  }
+
+  AddToWatchlist(ticker:string) {
+    return this.http.get(`${this.myBackEndService}/addToWatchlist/${ticker}`);
   }
 }

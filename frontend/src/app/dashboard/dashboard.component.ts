@@ -1,6 +1,8 @@
 import { MyDataService } from '../shared/services/data.service';
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { shareReplay } from 'rxjs/operators';
+import { Observable } from 'rxjs/internal/Observable';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Component({
   selector: "app-dashboard",
@@ -16,13 +18,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   isLoading = true;
   private sub: any;
 
-  dailyMovement: any;
+  dailyMovement: number = 0;
   ticker?: string | null;
   tickerValid: boolean = true;
   dataPoints: any = [];
   selectedChart: any = 'area';
+  previousCloses: any[] = [];
+  currentPrices: any[] = [];
 
-  editMode: boolean = false;
+  public editmode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public editmodeObs: Observable<boolean> = this.editmode.asObservable();
 
   constructor(private MyDataService: MyDataService) {}
   
@@ -34,9 +39,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.watchlistTitle = data["title"];
       this.stocks = data["stocks"];
       console.log(this.stocks);
-      this.isLoading = false;
 
-      this.dailyMovement = (((10 - 9.7) / 9.7) * 100).toFixed(2);
+      for (let i = 0; i < this.stocks.length; i++) {
+        this.dailyMovement += this.stocks[i]["regularMarketChangePercent"];
+        this.previousCloses.push(this.stocks[i]["regularMarketPreviousClose"])
+        this.currentPrices.push(this.stocks[i]["regularMarketPrice"])
+
+      }
+
+      this.isLoading = false;
     },   
     (error) => {console.log(error)});  
   }

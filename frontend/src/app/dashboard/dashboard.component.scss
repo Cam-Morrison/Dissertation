@@ -27,11 +27,11 @@
     display: flex;
     justify-content: center;
     overflow-y:scroll;
-
     .dashboard {
-        background-color:white !important;
+        background: white;
+        height:max-content;
         position:relative;
-        padding:0.3em;
+        height:100vh;
     }
 }
 
@@ -49,11 +49,24 @@ a:link, a:hover, a:active, a:visited {
 h1 {
     font-size:20px;
 }
+.fundTitle {
+    margin:0.2em;
+    margin-left:calc(+4rem);
+    justify-content: center;
+    display:inline-flex;
+}
+
 h2 {
     font-size:18px;
 }
 .p, mat-label, mat-select {
     font-size: 16px;
+}
+
+.toTheSideBtn {
+    width:2rem;
+    margin-left:1rem;
+    padding-bottom:1em;
 }
 
 .mat-card, .mat-card-header, .mat-card-subtitle, .mat-card-title-group {
@@ -65,8 +78,6 @@ h2 {
         padding:0.5rem !important;
         color:white;
     }
-
-
 }
 
 .mat-card {
@@ -108,3 +119,16 @@ h2 {
     text-shadow:2px;
   }
 
+  .center {
+    text-align:center;
+    background-color:transparent;
+    overflow: hidden;
+  }
+
+.cardScroll {
+    background-color: white;
+    overflow:auto;
+    max-height:auto;
+    margin-bottom:10em;
+
+}

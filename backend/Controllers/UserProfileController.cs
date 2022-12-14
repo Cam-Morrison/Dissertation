@@ -98,8 +98,8 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost] 
-        [Route("/addToWatchlist")]
+        [HttpGet] 
+        [Route("/addToWatchlist/{ticker}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -110,7 +110,7 @@ namespace backend.Controllers
             {
                 if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
                 {
-                    var resp = _userService.AddToWatchlist(HttpContext.User.Identity.Name, ticker);
+                    var resp = _userService.AddToWatchlist(HttpContext.User.Identity.Name, ticker.ToUpper());
                     return Ok(resp);
                 } 
                 return Ok("Feature not implemented");
@@ -156,7 +156,7 @@ namespace backend.Controllers
             {
                 if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
                 {
-                    var resp = _userService.RemoveFromWatchList(HttpContext.User.Identity.Name, ticker);
+                    var resp = _userService.RemoveFromWatchList(HttpContext.User.Identity.Name, ticker.ToUpper());
                     return Ok(resp);
                 } 
                 return Ok("Feature not implemented");

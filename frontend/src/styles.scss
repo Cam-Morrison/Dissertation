@@ -102,3 +102,15 @@ mat-sidenav-content {
 	background-color: #74b9ff;
 	border-radius: 3px;
 }
+
+.menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1rem;
+
+  mat-icon {
+    margin-right: 8px;
+  }
+}
