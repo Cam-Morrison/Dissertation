@@ -2,10 +2,11 @@ namespace backend.services
 {
     public interface IMarketDataService
     {
+        List<String> SearchForStock(string userEntry);
         string GetStockPrice(string ticker);
         string GetStockDetail(string ticker);
         string GetPriceHistory(string ticker);
         string GetActiveStocks();
-        string getPricePrediction();
+        string GetPricePrediction();
     }
 }

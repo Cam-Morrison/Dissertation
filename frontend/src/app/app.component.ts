@@ -13,8 +13,8 @@ import { AuthGuard } from './shared/services/auth.guard';
 })
 export class AppComponent {
   public navData = navigationData;
-  userRole = 'Administrator';
-  userName = 'Cameron Morrison';
+  userRole = 'User';
+  userName = '';
   public innerWidth: any;
   mobile = false;
   loggedIn = false;
@@ -27,7 +27,6 @@ export class AppComponent {
       } else {
         this.loggedIn = true;
       }
-
     }); 
   }
 

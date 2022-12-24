@@ -10,7 +10,9 @@ namespace backend.services
     {
         private readonly IConfiguration Configuration;
         private string marketDataKey;
+        private static string tickerList;
         private string finnHubKey;
+        private string polygonKey;
         private static string activeStocks;
         private static string homePagePrices;
         private static string mostRecentPriceHistory; //Used for AI prediction
@@ -27,31 +29,60 @@ namespace backend.services
         {
            this.marketDataKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("marketDataKey");
            this.finnHubKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("finnHubKey");
-            // if(marketData == null)
-            // {            
-            //     UpdateMarketData();
-            // }
+           this.polygonKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("polygonKey");
+            if(tickerList == null)
+            {            
+                UpdateMarketData();
+            }
         }
 
-        // public void UpdateMarketData(){
-        //     string marketDataUrl = $"https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/{yesterday}?adjusted=true&include_otc=false&apiKey=";
-        //     string updatedMarketData = callUrl(marketDataUrl);
-        //     if(updatedMarketData != "Issue with API Call")
-        //     {
-        //         marketData = updatedMarketData;
-        //     } 
-        // }
+        private void UpdateMarketData(){
+            string marketDataUrl = $"https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/{yesterday}?adjusted=true&include_otc=false&apiKey={polygonKey}";
+            string updatedMarketData = CallUrl(marketDataUrl, true);
+            if(updatedMarketData != "Issue with API Call")
+            {
+                tickerList = updatedMarketData;
+                Console.Write(tickerList.ToString());
+            } 
+            Console.WriteLine(updatedMarketData);
+        }
+
+        public List<String> SearchForStock(string userEntry) {
+            var results = new List<string>();
+
+            if(tickerList.Contains(userEntry)) {
+                JObject json = JObject.Parse(tickerList);
+                var list = json["results"]!.Where(t => t["T"].Value<string>().Contains(userEntry))!.ToList();
+                Console.WriteLine(list);
+                Console.WriteLine(list[0].ToString());
+                int i = 0;
+                foreach(var stock in list) {
+                    i++;
+                    results.Add((string)stock["T"]);
+                    //Limit results to 5 options
+                    if(i == 5) {
+                        break;
+                    }
+                }
+                return (List<string>)results;
+
+            } else { 
+                 results.Add("No results");
+                 return results;
+                // return getStockTicker(userEntry);;
+            }
+        }
 
         public string GetStockPrice(string ticker)
         {       
             var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/{ticker}";
-            return callUrl(url, false);
+            return CallUrl(url, false);
         }
 
         public string GetListPrices(string stocks)
         {       
             var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/{stocks}";
-            return callUrl(url, false);
+            return CallUrl(url, false);
         }
 
         public string GetPriceHistory(string ticker)
@@ -59,14 +90,14 @@ namespace backend.services
             //Currently set to one update per week
             string updateInterval = "1wk";
             var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/hi/history/{ticker}/{updateInterval}?diffandsplits=false";
-            mostRecentPriceHistory = callUrl(url, false);
+            mostRecentPriceHistory = CallUrl(url, false);
             return mostRecentPriceHistory;
         }
 
         public string GetActiveStocks() {
             if(activeStocks == null) {
                 var url = "https://yahoo-finance15.p.rapidapi.com/api/yahoo/co/collections/day_gainers";
-                activeStocks = callUrl(url, false);
+                activeStocks = CallUrl(url, false);
             } 
             return activeStocks!.ToString();
         }
@@ -74,23 +105,35 @@ namespace backend.services
         public string GetStockDetail(string ticker)
         {
            var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/{ticker}/asset-profile";
-           return callUrl(url, false);
+           return CallUrl(url, false);
         }
 
         public string GetStockFinancials(string ticker)
         {
            var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/{ticker}/default-key-statistics";
-           return callUrl(url, false);
+           return CallUrl(url, false);
         }
 
-        public string findStockTickerByName(string name)
-        {
-            var url = $"https://finnhub.io/api/v1/stock/symbol?exchange=US&token={finnHubKey}";
-            return callUrl(url, true);
-        }
+        // public List<String> getStockTicker(string name) {
+        //     var call = CallUrl($"https://finnhub.io/api/v1/search?q={name.ToLower()}&token={finnHubKey}", true);
+        //     JObject json = JObject.Parse(call);
+        //     var results = new List<string>();
+        //     if(json["count"].Value<int>() > 0)
+        //     {
+        //         for(int i = 0; i < json["count"].Value<int>(); i++) {
+        //             results.Add(json["result"][i]["symbol"].ToString());
+        //             if(i == 5) {
+        //                 break;
+        //             }
+        //         }
+        //     } else {
+        //         results.Add("No results");
+        //     }
+        //     return results;  
+        // }
 
-        public bool isStockValid(string ticker) {
-            var call = callUrl($"https://finnhub.io/api/v1/search?q={ticker}&token={finnHubKey}", true);
+        public bool IsStockValid(string ticker) {
+            var call = CallUrl($"https://finnhub.io/api/v1/search?q={ticker}&token={finnHubKey}", true);
             JObject json = JObject.Parse(call);
             if(json["count"].Value<int>() == 0)
             {
@@ -99,12 +142,12 @@ namespace backend.services
             return true;     
         }
 
-        public string getPricePrediction()
+        public string GetPricePrediction()
         {
             return "£430";
         }
 
-        private string callUrl(string inputUrl, bool keyTwo)
+        private string CallUrl(string inputUrl, bool keyTwo)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(inputUrl);

@@ -19,6 +19,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { AuthGuard } from '../shared/services/auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../shared/services/token.interceptor';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { TokenInterceptor } from '../shared/services/token.interceptor';
     MatIconModule,
     myChartModule,
     MatSortModule,
+    MatAutocompleteModule,
     MatRippleModule,
     MatExpansionModule,
     MatSnackBarModule,

@@ -8,7 +8,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-stocks',
   templateUrl: './stocks.component.html',
-  styleUrls: ['./stocks.component.css'],
+  styleUrls: ['./stocks.component.scss'],
 })
 export class StocksComponent implements OnInit, AfterViewInit {
   dataPoints: any[] = [];
@@ -28,10 +28,10 @@ export class StocksComponent implements OnInit, AfterViewInit {
   )  { 
     this.searchForm.get('search')?.valueChanges.pipe(
       debounceTime(1000),
-      distinctUntilChanged(),
       switchMap((v) => this.MyDataService.getStocksBySearch(v)),
     )
     .subscribe((resp: any) => {
+      console.log(resp)
       this.stockList = resp;
     })
   }

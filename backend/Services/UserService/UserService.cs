@@ -110,7 +110,7 @@ using System.Text.Json;
         {
             try {
                 int userId = (int)_context.Users.FirstOrDefaultAsync(u => u.UserName == user).Result!.UserId!;
-                if (_marketDataService.isStockValid(ticker))
+                if (_marketDataService.IsStockValid(ticker))
                 {
                     var watchlist = _context.Watchlists.FirstOrDefaultAsync(u => u.UserId == userId).Result;
                     if (watchlist == null)

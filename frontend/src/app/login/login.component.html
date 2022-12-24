@@ -27,11 +27,11 @@
             <div>
             <mat-divider></mat-divider>
 
-            <button mat-raised-button color="primary" [disabled]="!userForm.valid" (click)="openDialog()">
+            <button mat-raised-button type="button" color="primary" [disabled]="!userForm.valid" (click)="openDialog()">
                 <mat-icon>how_to_reg</mat-icon>
                 Register
             </button>
-            <button mat-raised-button color="primary" [disabled]="!userForm.valid" (click)="login()">
+            <button mat-raised-button type="submit" color="primary" [disabled]="!userForm.valid" (click)="login()">
                 <mat-icon>lock_open</mat-icon>
                 Sign in
             </button>

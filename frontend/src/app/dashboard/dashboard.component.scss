@@ -123,6 +123,9 @@ h2 {
     text-align:center;
     background-color:transparent;
     overflow: hidden;
+    .mat-button {
+        margin-bottom:1em;
+    }
   }
 
 .cardScroll {
@@ -130,5 +133,4 @@ h2 {
     overflow:auto;
     max-height:auto;
     margin-bottom:10em;
-
 }

@@ -145,8 +145,8 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost]   
-        [Route("/removeFromWatchlist")]
+        [HttpGet]   
+        [Route("/removeFromWatchlist/{ticker}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [SwaggerOperation(Summary = "Remove ticker from watch list.")]
