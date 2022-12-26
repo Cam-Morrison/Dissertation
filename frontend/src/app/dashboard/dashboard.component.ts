@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.isLoading = false;
   }
 
-  removeFromWatchlist(ticker: any) {
+  removeFromWatchlist(ticker: any, index: number) {
     let resp = this.MyDataService.RemoveFromWatchlist(ticker).pipe(
       shareReplay()
     );
@@ -72,6 +72,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         });
       }
     );
+    window.location.reload();
   }
 
   ngOnDestroy() {

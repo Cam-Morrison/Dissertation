@@ -1,9 +1,5 @@
 <div class="content">
-  <div class="spinbox" *ngIf="isLoading">
-    <mat-progress-spinner color="primary" mode="indeterminate">
-    </mat-progress-spinner>
-  </div>
-  <div class="dashboard" *ngIf="!isLoading">
+  <div class="dashboard">
     <div>
       <div
         class="movement"
@@ -38,9 +34,16 @@
       [dataPoints]="dataPoints"
       [ticker]="chartTitle"
       [chartType]="selectedChart"
+      *ngIf="!isLoading"
     ></stockChart>
 
-    <div class="center" *ngIf="loadingError == false">
+    <div class="spinbox" *ngIf="isLoading == true">
+      <mat-progress-spinner color="primary" mode="indeterminate">
+      </mat-progress-spinner>
+    </div>
+
+    <div class="center" *ngIf="loadingError == false && isLoading == false">
+      
       <div class="fundTitle">
         <h1>
           <strong>
@@ -53,7 +56,7 @@
           class="toTheSideBtn"
           (click)="editmode.next(true)"
         >
-          <mat-icon>editMode</mat-icon>
+          <mat-icon *ngIf="loadingError == false">editMode</mat-icon>
         </button>
         <button
           *ngIf="(editmodeObs | async) == true"
@@ -104,7 +107,7 @@
                 <button
                   class="remove"
                   mat-button
-                  (click)="removeFromWatchlist(item['symbol'])"
+                  (click)="removeFromWatchlist(item['symbol'], i)"
                 >
                   <h3>Remove {{ item["symbol"] }} from watchlist</h3>
                 </button>

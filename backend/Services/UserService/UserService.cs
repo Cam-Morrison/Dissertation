@@ -18,7 +18,8 @@ using System.Text.Json;
         private readonly IConfiguration _configuration;
         private MarketDataService _marketDataService;
 
-        private static JToken testVariable;
+        private static JToken watchListCached;
+        private Boolean watchListChange = true;
 
         public UserService(IConfiguration configration, MarketDataService marketDataService){
             _configuration = configration;
@@ -124,6 +125,7 @@ using System.Text.Json;
                         };
                         _context.Watchlists.Add(entry);
                         _context.SaveChanges();
+                        watchListChange = true;
                         return "Added to watchlist.";
                     }
                     else
@@ -135,6 +137,7 @@ using System.Text.Json;
                             watchlist.Stocks = string.Join(",", result);
                             _context.Update(watchlist);
                             _context.SaveChanges();
+                            watchListChange = true;
                             return "Added to watchlist.";
                         }
                         return "Stock is already in watchlist.";
@@ -157,14 +160,13 @@ using System.Text.Json;
             {
                 return "There are no items in the watchlist.";
             }
-
-
             var itemToAdd = new JObject();
             itemToAdd["title"] = watchlist.WatchListName;
-            if(testVariable == null) {
-                testVariable = (JToken?)JsonConvert.DeserializeObject<Object>(_marketDataService.GetListPrices(watchlist.Stocks!.ToString()));
+            if(watchListChange == true) {
+                watchListCached = (JToken?)JsonConvert.DeserializeObject<Object>(_marketDataService.GetListPrices(watchlist.Stocks!.ToString()));
+                watchListChange = false;
             } 
-            itemToAdd["stocks"] = testVariable;
+            itemToAdd["stocks"] = watchListCached;
             
             var jsonToOutput = JsonConvert.SerializeObject(itemToAdd, Formatting.Indented);
             return jsonToOutput;
@@ -182,6 +184,7 @@ using System.Text.Json;
                     watchlist.Stocks = string.Join(",", result);
                     _context.Watchlists.Update(watchlist);
                     _context.SaveChanges();
+                    watchListChange = true;
                     return "Watchlist updated.";
                 }
                 return "That stock is not in the watchlist.";

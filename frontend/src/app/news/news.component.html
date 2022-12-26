@@ -7,7 +7,7 @@
     <ng-template ngFor let-item [ngForOf]="newsList" let-i="index">
       <mat-card>
         <mat-card-content>
-          <a href="{{ item['url'] }}">
+          <a href="{{ item['url'] }}" >
             <mat-card-header>
               <mat-card-title-group>
                 <mat-card-title
@@ -24,7 +24,7 @@
             <p>{{ item["summary"] }}</p>
           </a>
           <mat-card-actions>
-            <button mat-button color="primary"><b>SHARE</b></button>
+            <button mat-button color="primary" [cdkCopyToClipboard]="item['url']" (click)="linkCoppied()"><b>SHARE</b></button>
             <button mat-button color="primary">
               <b>ADD TO READING LIST</b>
             </button>

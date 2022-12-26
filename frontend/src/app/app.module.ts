@@ -23,15 +23,16 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatSelectModule } from '@angular/material/select';
 import { myChartModule } from './shared/component/charts/chart.module';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule} from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './shared/services/auth.guard';
 import { AdminComponent } from './admin/admin.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialog } from './login/confirmation-dialog.component';
 import { TokenInterceptor } from './shared/services/token.interceptor';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { TokenInterceptor } from './shared/services/token.interceptor';
     MatInputModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    ClipboardModule,
     MatSidenavModule,
     MatButtonModule,
     MatIconModule,

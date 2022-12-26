@@ -69,6 +69,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(this.stockList.toString())
   }
 
   onBack(): void {
