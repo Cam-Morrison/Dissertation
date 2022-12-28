@@ -1,7 +1,12 @@
-namespace backend.services 
+namespace backend.services
 {
-    using System.Net.Http.Headers;
     using Sentiment.Model;
+    using System;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+    using System.Linq;
 
     public class NewsService : INewsService
     {
@@ -9,14 +14,15 @@ namespace backend.services
         private readonly IConfiguration Configuration;
         private static string? TodaysNews;
         private string newsToken;
- 
+
         public NewsService(IConfiguration configuration)
         {
             Configuration = configuration;
             this.newsToken = Configuration.GetSection("ClientConfiguration").GetValue<string>("finnHubKey");
         }
 
-        public string GetSentiment(string articleText) {
+        public string GetSentiment(string articleText)
+        {
 
             ModelInput sampleData = new ModelInput()
             {
@@ -24,16 +30,34 @@ namespace backend.services
             };
             // Make a single prediction on the sample data and print results
             var predictionResult = ConsumeModel.Predict(sampleData);
-            
-            return $"Predicted sentiment of {predictionResult.Prediction}, Predicted Sentiment scores: {String.Join(",", predictionResult.Score)}.";
+
+            return predictionResult.Prediction;
         }
 
-        public string GetDailyNews() {
+        public string GetDailyNews()
+        {
 
-            if(TodaysNews == null){
+            if (TodaysNews == null)
+            {
                 var url = $"https://finnhub.io/api/v1/news?category=general&token={newsToken}";
-                TodaysNews = callUrl(url);
-            } 
+                var call = callUrl(url);
+
+                JArray jArr = (JArray)JsonConvert.DeserializeObject(call);
+                foreach (JObject item in jArr)
+                {
+                    var sentimentScore = GetSentiment(item["summary"].ToString());
+                    var textSentiment = "Neutral";
+                    if(sentimentScore == "-1") {
+                        textSentiment = "Negative";
+                    } else {
+                        textSentiment = "Positive";
+                    }
+                    item.Add(new JProperty("sentiment", textSentiment));
+                }
+
+                TodaysNews = jArr.ToString();
+            }
+
             return TodaysNews;
         }
 
@@ -45,7 +69,7 @@ namespace backend.services
             client.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json"));
             // Blocking call! Program will wait here until a response is received or a timeout occurs.
-            HttpResponseMessage response = client.GetAsync(inputUrl).Result;  
+            HttpResponseMessage response = client.GetAsync(inputUrl).Result;
             if (response.IsSuccessStatusCode)
             {
                 // Parse the response body.

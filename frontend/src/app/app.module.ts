@@ -33,6 +33,7 @@ import { MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialog } from './login/confirmation-dialog.component';
 import { TokenInterceptor } from './shared/services/token.interceptor';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     BrowserModule,
     CdkMenuModule,
     NgApexchartsModule,
+    MatTooltipModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,

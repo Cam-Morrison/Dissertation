@@ -66,6 +66,11 @@ using System.Text.Json;
          }
 
         private string CreateToken(User user) {
+            var role = "User";
+            if(user.UserIsAdmin == true) {
+                role = "Administrator";
+            }
+
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName)
@@ -79,6 +84,11 @@ using System.Text.Json;
                 expires: DateTime.Now.AddDays(7),
                 signingCredentials: cred
             );
+
+            token.Payload["user"] = user.UserName;
+            token.Payload["role"] = role;
+            token.Payload["AIpreference"] = user.UserAiSwitchedOnPreference.ToString();
+            
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             
             return jwt;

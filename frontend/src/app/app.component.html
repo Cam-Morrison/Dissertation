@@ -11,10 +11,11 @@
 <mat-sidenav-container>
   <!-- Profile -->
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <h4 class="name">{{ userName }}</h4>
-    <p class="designation">{{ userRole }}</p>
-
-    <mat-divider></mat-divider>
+    <span *ngIf="loggedIn">
+      <h4 class="name">{{ userName | titlecase }}</h4>
+      <p class="designation">{{ userRole }}</p>
+      <mat-divider></mat-divider>
+    </span>
 
     <!-- Navigation pages -->
     <div *ngFor="let data of navData">
@@ -32,22 +33,21 @@
       </button>
     </div>
 
-    <mat-divider></mat-divider>
-
     <button *ngIf="loggedIn" mat-button class="menu-button" (click)="logout()">
+      <mat-divider></mat-divider>
       <mat-icon>logout</mat-icon>
       <span>Sign out</span>
     </button>
   </mat-sidenav>
 
   <!-- Main page content -->
-  <mat-sidenav-content> 
+  <mat-sidenav-content>
     <div class="flexbox horizontalNav">
       <div *ngFor="let data of navData">
         <button
           class="horizontalButtons"
           mat-button
-          mat-ripple  
+          mat-ripple
           routerLink="{{ data.routeLink }}"
           [routerLinkActive]="'active'"
           [routerLinkActiveOptions]="{ exact: true }"
@@ -60,7 +60,7 @@
       <button
         class="horizontalButtons"
         mat-button
-        mat-ripple    
+        mat-ripple
         *ngIf="loggedIn"
         mat-button
         (click)="logout()"

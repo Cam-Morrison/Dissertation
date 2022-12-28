@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import jwt_decode from 'jwt-decode';
 import {
   Router,
   CanActivate,
@@ -40,5 +41,14 @@ export class AuthGuard implements CanActivate {
 
   public getToken() {
     return localStorage.getItem('token')
+  }
+
+  public getDecodedToken(): any {
+    try {
+      var token = this.getToken();
+      return jwt_decode(token!);
+    } catch(Error) {
+      return null;
+    }
   }
 }

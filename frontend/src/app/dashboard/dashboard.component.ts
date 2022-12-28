@@ -27,7 +27,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   selectedChart: any = 'area';
   previousCloses: any[] = [];
   currentPrices: any[] = [];
-
+  public portfolioChart = "treemap";
+  public portfolioDataPoints: any[] = [];
   public editmode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public editmodeObs: Observable<boolean> = this.editmode.asObservable();
 
@@ -44,6 +45,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.dailyMovement += this.stocks[i]["regularMarketChangePercent"];
         this.previousCloses.push(this.stocks[i]["regularMarketPreviousClose"])
         this.currentPrices.push(this.stocks[i]["regularMarketPrice"])
+        this.portfolioDataPoints.push([{x: `${this.stocks[i]["symbol"]}`, y: Number(this.stocks[i]["regularMarketChangePercent"].toFixed(2))}]);
       }
     },   
     (error) => {

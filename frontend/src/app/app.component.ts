@@ -24,6 +24,11 @@ export class AppComponent {
         this.loggedIn = false;
       } else {
         this.loggedIn = true;
+        try{
+          var userObj = auth.getDecodedToken();
+          this.userName = userObj.user;
+          this.userRole = userObj.role;
+        }catch(Exception){}
       }
     }); 
   }

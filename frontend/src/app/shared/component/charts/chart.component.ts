@@ -5,13 +5,15 @@ import {
     ApexYAxis,
     ApexXAxis,
     ApexTitleSubtitle,
+    ApexLegend,
     ApexFill,
     ApexMarkers,
     ApexTooltip,
     ApexDataLabels,
     ApexStroke,
     ChartComponent,
-    ApexAnnotations
+    ApexAnnotations,
+    ApexPlotOptions
   } from "ng-apexcharts";
   
   export type ChartOptions = {
@@ -28,6 +30,8 @@ import {
      annotations: ApexAnnotations;
      colors: any;
      toolbar: any;
+     legend: ApexLegend;
+     plotOptions: ApexPlotOptions;
   };
 
   @Component({
@@ -47,40 +51,6 @@ import {
     @Input() dataPoints: any;
     @Input() ticker?: string;
     @Input() chartType?: string;
-
-    public activeOptionButton = "all";
-    public updateOptionsData = {
-      "1m": {
-        xaxis: {
-          min: this.lastMonthsDate.getTime(),
-          max: this.today.getTime()
-        }
-      },
-      "6m": {
-        xaxis: {
-          min: this.halfYearDate.getTime(),
-          max: this.today.getTime()
-        }
-      },
-      "1y": {
-        xaxis: {
-          min: this.lastYearDate.getTime(),
-          max: this.today.getTime()
-        }
-      },
-      "3y": {
-        xaxis: {
-          min: this.threeYearDate.getTime(),
-          max: this.today.getTime()
-        }
-      },
-      all: {
-        xaxis: {
-          min: undefined,
-          max: undefined
-        }
-      }
-    };
 
     public initCandleChart(): void {
         this.chartOptions = {
@@ -152,14 +122,7 @@ import {
         align: 'center',
       },
       fill: {
-        type: 'gradient',
-        gradient: {
-          shadeIntensity: 1,
-          inverseColors: false,
-          opacityFrom: 1,
-          opacityTo: 0.5,
-          stops: [0, 100],
-        },
+        opacity: 1
       },
       stroke: {
         curve: 'straight',
@@ -181,6 +144,53 @@ import {
     };
   }
 
+  public initTreemap(): void {
+    this.chartOptions = {
+      series: [
+        {
+          data: this.dataPoints,
+        }
+      ],
+      legend: {
+        show: false
+      },
+      chart: {
+        height: 350,
+        type: "treemap"
+      },
+      title: {
+        text: "Treemap of daily performance",
+        align: 'center'
+      },
+      dataLabels: {
+        enabled: true,
+
+        offsetY: -3
+      },
+      plotOptions: {
+        treemap: {
+          enableShades: true,
+          shadeIntensity: 0.5,
+          reverseNegativeShade: true,
+          colorScale: {
+            ranges: [
+              {
+                from: -6,
+                to: 0,
+                color: "#CD363A"
+              },
+              {
+                from: 0.001,
+                to: 6,
+                color: "#52B12C"
+              }
+            ]
+          }
+        }
+      }
+    };
+  }
+
   @ViewChild('chart', { static: true }) chart!: ChartComponent;
 
   ngOnChanges(): void {
@@ -190,7 +200,11 @@ import {
       } 
       else 
       {
-        this.initCandleChart();
+        if(this.chartType === "treemap"){
+          this.initTreemap();
+        } else{
+          this.initCandleChart();
+        }
       }
   }
 }

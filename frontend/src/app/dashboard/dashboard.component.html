@@ -43,7 +43,6 @@
     </div>
 
     <div class="center" *ngIf="loadingError == false && isLoading == false">
-      
       <div class="fundTitle">
         <h1>
           <strong>
@@ -69,7 +68,7 @@
       </div>
       <div class="center" *ngIf="(editmodeObs | async) == true">
         <button mat-button (click)="openDialog()">Change title</button>
-      </div>  
+      </div>
       <div class="cardScroll">
         <ng-template ngFor let-item [ngForOf]="stocks" let-i="index">
           <mat-card>
@@ -115,6 +114,13 @@
             </mat-card-content>
           </mat-card>
         </ng-template>
+        <!-- Treemap -->
+        <!-- <stockChart
+          *ngIf="!isLoading"
+          [dataPoints]="portfolioDataPoints"
+          [ticker]="chartTitle"
+          [chartType]="portfolioChart"
+        ></stockChart> -->
       </div>
     </div>
     <div class="center" *ngIf="loadingError == true">
