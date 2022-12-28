@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 export class MyDataService 
 {
   private myBackEndService: string = "https://localhost:7299";
+  private searchError: string[] = []
 
   constructor(private http: HttpClient){}
 
@@ -35,10 +36,17 @@ export class MyDataService
   }
 
   getStocksBySearch(ticker: string) {
-    return this.http.get(`${this.myBackEndService}/stocks/search?q=${ticker}`);
+    if(ticker.length >= 1) {
+      return this.http.get(`${this.myBackEndService}/tickers/search/${ticker}`);
+    }
+    return this.searchError;
   }
 
   AddToWatchlist(ticker:string) {
     return this.http.get(`${this.myBackEndService}/addToWatchlist/${ticker}`);
+  }
+
+  RemoveFromWatchlist(ticker:string) {
+    return this.http.get(`${this.myBackEndService}/removeFromWatchlist/${ticker}`)
   }
 }

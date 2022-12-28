@@ -36,3 +36,16 @@ mat-form-field {
   align-items:center;
   text-align:center;
 }
+
+.searchResults {
+  position:absolute;
+  background:white;
+  box-shadow: 1px black;
+  padding:2rem;
+  width:30em;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}

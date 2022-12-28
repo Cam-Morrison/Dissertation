@@ -41,9 +41,7 @@
   </mat-sidenav>
 
   <!-- Main page content -->
-  <mat-sidenav-content
-    [@fadeAnimation]="outlet.isActivated ? outlet.activatedRoute : ''"
-  >
+  <mat-sidenav-content> 
     <div class="flexbox horizontalNav">
       <div *ngFor="let data of navData">
         <button

@@ -1,9 +1,5 @@
 <div class="content">
-  <div class="spinbox" *ngIf="isLoading">
-    <mat-progress-spinner color="primary" mode="indeterminate">
-    </mat-progress-spinner>
-  </div>
-  <div class="dashboard" *ngIf="!isLoading">
+  <div class="dashboard">
     <div>
       <div
         class="movement"
@@ -38,22 +34,42 @@
       [dataPoints]="dataPoints"
       [ticker]="chartTitle"
       [chartType]="selectedChart"
+      *ngIf="!isLoading"
     ></stockChart>
 
-    <div class="center">
+    <div class="spinbox" *ngIf="isLoading == true">
+      <mat-progress-spinner color="primary" mode="indeterminate">
+      </mat-progress-spinner>
+    </div>
+
+    <div class="center" *ngIf="loadingError == false && isLoading == false">
+      
       <div class="fundTitle">
         <h1>
           <strong>
             {{ watchlistTitle }}
           </strong>
         </h1>
-        <button *ngIf="(editmodeObs | async) == false" mat-button class="toTheSideBtn" (click)="editmode.next(true)">
-          <mat-icon>editMode</mat-icon>
+        <button
+          *ngIf="(editmodeObs | async) == false"
+          mat-button
+          class="toTheSideBtn"
+          (click)="editmode.next(true)"
+        >
+          <mat-icon *ngIf="loadingError == false">editMode</mat-icon>
         </button>
-        <button *ngIf="(editmodeObs | async) == true" mat-button class="toTheSideBtn" (click)="editmode.next(false)">
+        <button
+          *ngIf="(editmodeObs | async) == true"
+          mat-button
+          class="toTheSideBtn"
+          (click)="editmode.next(false)"
+        >
           <mat-icon>cancel</mat-icon>
         </button>
       </div>
+      <div class="center" *ngIf="(editmodeObs | async) == true">
+        <button mat-button (click)="openDialog()">Change title</button>
+      </div>  
       <div class="cardScroll">
         <ng-template ngFor let-item [ngForOf]="stocks" let-i="index">
           <mat-card>
@@ -79,21 +95,30 @@
                         | currency : item["currency"]
                     }}
                     . Current price:
-                    {{ item["regularMarketPrice"] | currency : item["currency"] }}
-                    . Change: 
-                    {{ item["regularMarketChangePercent"].toFixed(2)}}%
+                    {{
+                      item["regularMarketPrice"] | currency : item["currency"]
+                    }}
+                    . Change:
+                    {{ item["regularMarketChangePercent"].toFixed(2) }}%
                   </h3>
                 </div>
               </a>
               <span *ngIf="editmodeObs | async">
-              <button class="remove" mat-button>
-                <h3>Remove {{item["symbol"]}} from watchlist</h3>
-              </button>
+                <button
+                  class="remove"
+                  mat-button
+                  (click)="removeFromWatchlist(item['symbol'], i)"
+                >
+                  <h3>Remove {{ item["symbol"] }} from watchlist</h3>
+                </button>
               </span>
             </mat-card-content>
           </mat-card>
         </ng-template>
       </div>
+    </div>
+    <div class="center" *ngIf="loadingError == true">
+      <h1>To create a portfolio, add a stock to your watchlist!</h1>
     </div>
   </div>
 </div>

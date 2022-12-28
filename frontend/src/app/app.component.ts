@@ -2,19 +2,17 @@ import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { navigationData } from './app-navigation.data';
-import { fadeAnimation } from './shared/component/routing-animation';
 import { AuthGuard } from './shared/services/auth.guard';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  animations: [fadeAnimation],
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   public navData = navigationData;
-  userRole = 'Administrator';
-  userName = 'Cameron Morrison';
+  userRole = 'User';
+  userName = '';
   public innerWidth: any;
   mobile = false;
   loggedIn = false;
@@ -27,7 +25,6 @@ export class AppComponent {
       } else {
         this.loggedIn = true;
       }
-
     }); 
   }
 

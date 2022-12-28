@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MyDataService } from '../shared/services/data.service';
-import { shareReplay } from 'rxjs/operators'
+import { shareReplay } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-news',
@@ -8,12 +9,13 @@ import { shareReplay } from 'rxjs/operators'
   styleUrls: ['./news.component.scss']
 })
 export class NewsComponent implements OnInit {
+[x: string]: any;
   sub: any;
   dataPoints: any;
   newsList: any = [];
   isLoading: boolean = true;
 
-  constructor(private MyDataService: MyDataService) { }
+  constructor(private MyDataService: MyDataService, private matSnackBar: MatSnackBar) { }
 
   ngOnInit():void {
     let resp = this.MyDataService.getDailyNews().pipe(shareReplay());
@@ -31,4 +33,15 @@ export class NewsComponent implements OnInit {
     this.isLoading = false;
   }
 
+  linkCoppied() {
+    this.matSnackBar.open(
+      'Link copied to clipboard',
+      'Close',
+      {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      }
+    );
+  }
 }

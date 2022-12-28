@@ -28,6 +28,28 @@ namespace backend.Controllers
         }
 
         [HttpGet]      
+        [Route("/tickers/search/{ticker}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(Summary = "Searches for any stocks using {ticker} which is the user entered value.")]
+        public async Task<IActionResult> SearchForStock(string ticker)
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
+                {
+                    return Ok(_marketDataService.SearchForStock(ticker.ToUpper()));
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("MarketDataController.SearchForStock()");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet]      
         [Route("/price/{ticker}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -126,7 +148,7 @@ namespace backend.Controllers
             {
                 if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
                 {
-                    return Ok(_marketDataService.getPricePrediction());
+                    return Ok(_marketDataService.GetPricePrediction());
                 } 
                 return Ok("Feature not implemented");
             }
