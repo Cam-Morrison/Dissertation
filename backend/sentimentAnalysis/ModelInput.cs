@@ -12,7 +12,5 @@ namespace Sentiment.Model
 
         [ColumnName("Sentiment"), LoadColumn(1)]
         public string Sentiment { get; set; }
-
-
     }
 }

@@ -27,7 +27,6 @@ export class NewsComponent implements OnInit {
           {
             data[key]["image"] = null
           }
-          console.log(data[key]);
           this.newsList.push(data[key])
         }
     },   

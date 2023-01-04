@@ -1,0 +1,22 @@
+@use '@angular/material' as mat;
+.content {
+    height:100vh !important;
+    margin: auto !important;
+    background: transparent;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    text-align:center;
+    overflow-y:scroll;
+    @include mat.elevation(8);
+    .dashboard {
+        padding:2.5em;
+        background: white;
+        height:max-content;
+        position:relative;
+        height:fit-content;
+        min-height:100vh;
+        max-height:auto;
+        margin-bottom:10em;
+    }
+}

@@ -126,6 +126,7 @@ namespace backend.Controllers
         [Route("/getWatchlist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [SwaggerOperation(Summary = "Gets a list of watchlist stocks.")]
         public async Task<IActionResult> GetWatchlist()
         {
@@ -149,6 +150,7 @@ namespace backend.Controllers
         [Route("/removeFromWatchlist/{ticker}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [SwaggerOperation(Summary = "Remove ticker from watch list.")]
         public async Task<IActionResult> RemoveFromWatchlist(string ticker)
         {
@@ -168,14 +170,15 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost]   
-        [Route("/updateWatchlistTitle")]
+        [HttpGet]   
+        [Route("/updateWatchlistTitle/{newTitle}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [SwaggerOperation(Summary = "Updates the title of user's watchlist.")]
         public async Task<IActionResult> UpdateWatchlistTitle(string newTitle)
         {
-            try
+            try 
             {
                 if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
                 {

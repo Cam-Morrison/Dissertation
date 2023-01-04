@@ -1,0 +1,46 @@
+<div class="content">
+  <div class="dashboard">
+      <h1>What does A.I. assist do?</h1>
+      <br />
+      <h2>Stock Price Prediction</h2>
+      <h3>Time Series Forecasting</h3>
+      <p>
+        AI assist time series forecasting is a trial feature that utilises
+        regression models from Microsoft's ML.NET code integration in an attempt
+        to aid long term investment strategies by giving a rough estimate of
+        trend based on historical prices. However, historical prices is not an
+        accurate indicator of future performance and AI assist should not be
+        taken as investment advise.
+      </p>
+      <br />
+      <h2>News Sentiment</h2>
+      <h3>Natural Language Processing</h3>
+      <p>
+        AI assist sentiment analysis is a trial feature that utilises natural
+        language processing from Microsoft's ML.NET code integration in an
+        attempt to group news articles into positive or negative sentiment. It
+        does this by reading the description of a news article and determining
+        the mood. This feature is designed to improve user experience by
+        allowing a user to avoid negative news or filter the articles to find
+        where the market is prosperous. However, AI assist can be clumsy and try
+        to hard to classify neutral (interpretable) headlines.
+      </p>
+      <mat-divider></mat-divider>
+      <br />
+      <h2>Change preference</h2>
+      <p>
+        If you find these features misleading you can turn them off here and you
+        will not come across them until turned back on.
+      </p>
+      <b>
+        <mat-slide-toggle
+          (change)="toggle($event)"
+          color="primary"
+          [(ngModel)]="AiAssist"
+          >A.I. Assistance is
+          <span *ngIf="AiAssist == true">on</span>
+          <span *ngIf="!AiAssist">off</span>
+        </mat-slide-toggle>
+      </b>
+  </div>
+</div>

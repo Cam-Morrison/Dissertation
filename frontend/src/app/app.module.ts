@@ -34,6 +34,11 @@ import { ConfirmationDialog } from './login/confirmation-dialog.component';
 import { TokenInterceptor } from './shared/services/token.interceptor';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { editNameDialog } from './dashboard/edit-title.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { PreferencesPageComponent } from './preferences-page/preferences-page.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -42,7 +47,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     NewsComponent,
     LoginComponent,
     AdminComponent,
-    ConfirmationDialog
+    ConfirmationDialog,
+    editNameDialog,
+    PreferencesPageComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +61,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AppRoutingModule,
     BrowserAnimationsModule,
     myChartModule,
+    FormsModule,
     MatDialogModule,
+    MatSlideToggleModule,
     MatCardModule,
     MatToolbarModule,
     MatTableModule,
@@ -69,6 +78,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatButtonModule,
     MatIconModule,
     A11yModule,
+    MatFormFieldModule,
     MatDividerModule,
     OverlayModule,
     ReactiveFormsModule,
@@ -79,7 +89,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }
+    },
+    DashboardComponent
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
