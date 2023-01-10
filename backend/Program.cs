@@ -23,6 +23,7 @@ builder.Services.AddSingleton<IFeatureFlagService, FeatureFlagService>();
 builder.Services.AddSingleton<IMarketDataService, MarketDataService>();
 builder.Services.AddSingleton<INewsService, NewsService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IAdminService, AdminService>();
 builder.Services.AddTransient<MarketDataService>();
 
 // Configuring swagger
@@ -33,7 +34,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Version = "v1",
         Title = "CM Investment Analytics",
-        Description = "My backend operation to retrieve organised market data."
+        Description = "My backend testing platform to retrieve organised market data."
     });
     //Securing swagger, requires bearer to test endpoints
     c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme 

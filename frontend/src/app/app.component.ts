@@ -3,6 +3,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { navigationData } from './app-navigation.data';
 import { AuthGuard } from './shared/services/auth.guard';
+import { MyDataService } from './shared/services/data.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,11 @@ export class AppComponent {
   mobile = false;
   loggedIn = false;
 
-  constructor(private router: Router, private auth: AuthGuard) {
+  constructor(
+    private router: Router, 
+    private auth: AuthGuard,
+    private myDataService: MyDataService
+    ) {
     router.events.subscribe((val) => {
       if(router.url == "/login")
       {
@@ -57,7 +62,8 @@ export class AppComponent {
     }
   }
 
-  logout() {
+  async logout() {
+    await this.myDataService.logSignOut();
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }

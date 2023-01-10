@@ -17,17 +17,18 @@ using System.Text.Json;
         public static string SessionIdToken = "session-id";
         private readonly IConfiguration _configuration;
         private MarketDataService _marketDataService;
-
+        private AdminService log;
         private static JToken watchListCached;
         private Boolean watchListChange = true;
 
         public UserService(IConfiguration configration, MarketDataService marketDataService){
             _configuration = configration;
             _marketDataService = marketDataService;
+            this.log = new AdminService(_configuration);
         }
 
         public async Task<string> Login(Login input) {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == input.UserName);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == input.UserName);
             if(user == null)
             {
                 return "Username invalid.";
@@ -36,7 +37,16 @@ using System.Text.Json;
             {
                 return "Password invalid.";
             }
+            if(isAccountLocked(input.UserName) == true) {
+                return "Account locked by admin.";
+            }
+            AdminService log = new AdminService(_configuration);
+            log.logEvent(1, input.UserName);
             return CreateToken(user);
+        }
+
+        public Boolean isAccountLocked(string username) {
+            return (bool)_context.Users.FirstOrDefaultAsync(u => u.UserName == username).Result.UserIsAccountLocked;
         }
 
          public async Task<string> Register(Register input) {
@@ -61,7 +71,7 @@ using System.Text.Json;
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            
+            log.logEvent(2, input.UserName);
             return CreateToken(user);
          }
 
@@ -136,6 +146,7 @@ using System.Text.Json;
                         _context.Watchlists.Add(entry);
                         _context.SaveChanges();
                         watchListChange = true;
+                        log.logEvent(4, user);
                         return "Added to watchlist.";
                     }
                     else
@@ -148,6 +159,7 @@ using System.Text.Json;
                             _context.Update(watchlist);
                             _context.SaveChanges();
                             watchListChange = true;
+                            log.logEvent(4, user);
                             return "Added to watchlist.";
                         }
                         return "Stock is already in watchlist.";
@@ -195,6 +207,7 @@ using System.Text.Json;
                     _context.Watchlists.Update(watchlist);
                     _context.SaveChanges();
                     watchListChange = true;
+                    log.logEvent(5, username);
                     return "Watchlist updated.";
                 }
                 return "That stock is not in the watchlist.";
@@ -216,9 +229,15 @@ using System.Text.Json;
                 watchlist.WatchListName = newTitle;
                 _context.Watchlists.Update(watchlist);
                 _context.SaveChanges();
+                log.logEvent(6, username);
                 return $"Watchlist title is now {newTitle}.";
             }
             return "Watchlist hasn't been created yet.";
+        }
+
+        public string LogSignOut(string username) {
+            log.logEvent(3, username);
+            return "Action Logged";
         }
     }
 }

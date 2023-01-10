@@ -5,6 +5,7 @@ namespace backend.services
     {
        public Task<string> Register(Register input);
        public Task<string> Login(Login input);
+       public string LogSignOut(string user);
        public string AddToWatchlist(string user, string ticker);
        public string GetWatchlist(string user);
        public string RemoveFromWatchList(string user, string ticker);

@@ -57,4 +57,16 @@ export class MyDataService
   updateWatchListTitle(ticker:string) {
     return this.http.get(`${this.myBackEndService}/updateWatchlistTitle/${ticker}`)
   }
+
+  getAuditLog() {
+    return this.http.get(`${this.myBackEndService}/getTasks`);
+  }
+
+  lockAccount(UserID:number) {
+    return this.http.get(`${this.myBackEndService}/toggleAccountLock/${UserID}`)
+  }
+
+  logSignOut() {
+    this.http.get(`${this.myBackEndService}/logSignOut`)
+  }
 }

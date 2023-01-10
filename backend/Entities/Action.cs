@@ -12,9 +12,6 @@ namespace backend.entity
 
         public int ActionId { get; set; }
         public string Action1 { get; set; } = null!;
-        public int UserId { get; set; }
-
-        public virtual User User { get; set; } = null!;
         public virtual ICollection<Task> Tasks { get; set; }
     }
 }

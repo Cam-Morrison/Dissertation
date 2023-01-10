@@ -50,7 +50,7 @@ namespace backend.Controllers
                 if(await _featureFlag.GetFeatureFlagAsync("postlogin"))
                 {
                     var response = await _userService.Login(input);
-                    if(response == "Username invalid." || response == "Password invalid.") 
+                    if(response == "Username invalid." || response == "Password invalid." || response == "Account locked by admin.") 
                     {
                         return Unauthorized(response);
                     }
@@ -94,6 +94,29 @@ namespace backend.Controllers
             catch(Exception ex)
             {
                 Log.Information("UserProfileController.Register(Register input)");
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+        }
+
+        [HttpGet] 
+        [Route("/logSignOut")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Adds a log of a user's logged out action to tasks table for administrators to view.")]
+        public async Task<IActionResult> LogSignOut()
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("adminFunctionality"))
+                {
+                    var resp = _userService.LogSignOut(HttpContext.User.Identity.Name);
+                    return Ok(resp);
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("UserProfileController.LogSignOut()");
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
         }

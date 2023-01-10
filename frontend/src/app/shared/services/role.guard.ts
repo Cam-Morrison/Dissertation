@@ -1,19 +1,27 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AuthGuard } from './auth.guard';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleGuard implements CanActivate {
+
+  constructor (private auth: AuthGuard, private router: Router) {}
+
   canActivate() 
   {
-    let role = "Admin";
-    if(role == "Admin") 
+    var userObj = this.auth.getDecodedToken();
+    let role = userObj.role;
+    if(role == "User") 
     {
+      this.router.navigate(['dashboard']);
+      return false;
+    } 
+    else {
       return true;
     }
-    return false;
   }
 
 }
