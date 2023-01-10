@@ -32,9 +32,22 @@
         <span> {{ data.label }}</span>
       </button>
     </div>
+    <button
+      *ngIf="userRole != 'User'"
+      mat-button
+      class="menu-button"
+      routerLink="admin"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      ariaCurrentWhenActive="page"
+    >
+      <mat-icon>remove_red_eye</mat-icon>
+      <span>Admin Panel</span>
+    </button>
+
+    <mat-divider></mat-divider>
 
     <button *ngIf="loggedIn" mat-button class="menu-button" (click)="logout()">
-      <mat-divider></mat-divider>
       <mat-icon>logout</mat-icon>
       <span>Sign out</span>
     </button>
@@ -57,6 +70,21 @@
           <span> {{ data.label }}</span>
         </button>
       </div>
+
+      <button
+        *ngIf="userRole != 'User' && loggedIn"
+        mat-button
+        mat-ripple
+        class="horizontalButtons"
+        routerLink="admin"
+        [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        ariaCurrentWhenActive="page"
+      >
+        <mat-icon>remove_red_eye</mat-icon>
+        <span>Admin Panel</span>
+      </button>
+
       <button
         class="horizontalButtons"
         mat-button
