@@ -99,6 +99,29 @@ namespace backend.Controllers
         }
 
         [HttpGet] 
+        [Route("/toggleAIpreference")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Toggles A.I. assist feature (on/off) for signed in user.")]
+        public async Task<IActionResult> toggleAIpreference()
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("postlogin"))
+                {
+                    var resp = _userService.toggleAIpreference(HttpContext.User.Identity.Name);
+                    return Ok(resp);
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("UserProfileController.toggleAIpreference()");
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+        }
+
+        [HttpGet] 
         [Route("/logSignOut")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

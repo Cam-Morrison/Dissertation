@@ -234,6 +234,21 @@ using System.Text.Json;
             }
             return "Watchlist hasn't been created yet.";
         }
+        
+        public string toggleAIpreference(string username) {
+            var user = _context.Users.FirstOrDefaultAsync(u => u.UserName == username).Result!;
+            user.UserAiSwitchedOnPreference = !user.UserAiSwitchedOnPreference;
+            _context.Users.Update(user);
+            _context.SaveChanges();
+            var msg = "";
+            if(user.UserAiSwitchedOnPreference == true) {
+                log.logEvent(8, username);
+                return msg = "AI assist turned on";
+            } else {
+                log.logEvent(7, username);
+                return msg = "AI assist turned off";
+            }
+        }
 
         public string LogSignOut(string username) {
             log.logEvent(3, username);

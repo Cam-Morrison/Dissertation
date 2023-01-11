@@ -58,6 +58,10 @@ export class MyDataService
     return this.http.get(`${this.myBackEndService}/updateWatchlistTitle/${ticker}`)
   }
 
+  toggleAIpreference() {
+    return this.http.get(`${this.myBackEndService}/toggleAIpreference`);
+  }
+  
   getAuditLog() {
     return this.http.get(`${this.myBackEndService}/getTasks`);
   }

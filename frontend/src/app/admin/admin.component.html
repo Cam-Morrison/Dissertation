@@ -23,7 +23,7 @@
       <ng-container matColumnDef="User">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.UN }}
+          {{ element.UN | titlecase }}
         </td>
       </ng-container>
   
