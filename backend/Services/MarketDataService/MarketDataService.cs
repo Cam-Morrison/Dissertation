@@ -30,10 +30,10 @@ namespace backend.services
            this.marketDataKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("marketDataKey");
            this.finnHubKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("finnHubKey");
            this.polygonKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("polygonKey");
-            if(tickerList == null)
-            {            
-                UpdateMarketData();
-            }
+            // if(tickerList == null)
+            // {            
+            //     UpdateMarketData();
+            // }
         }
 
         private void UpdateMarketData(){
@@ -158,7 +158,8 @@ namespace backend.services
 
         public string GetPricePrediction()
         {
-            var prices = GetPriceHistory("tsla");
+            // var prices = GetPriceHistory("tsla");
+            var prices = File.ReadAllText("C:/Users/Cam-M/Documents/Dissertation/backend/Services/MarketDataService/testdata.txt");
             predictionModel pm = new predictionModel(prices);
             return "£430";
         }

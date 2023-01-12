@@ -69,7 +69,11 @@
             },
             "Microsoft.ML": {
               "target": "Package",
-              "version": "[1.7.1, )"
+              "version": "[1.5.0-preview, )"
+            },
+            "Microsoft.ML.TimeSeries": {
+              "target": "Package",
+              "version": "[1.5.0-preview, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
