@@ -5,6 +5,7 @@ namespace backend.services
     using System.Net.Http.Headers; 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+    using TimeSeries.Model;
 
     public class MarketDataService : IMarketDataService
     {
@@ -157,6 +158,8 @@ namespace backend.services
 
         public string GetPricePrediction()
         {
+            var prices = GetPriceHistory("tsla");
+            predictionModel pm = new predictionModel(prices);
             return "£430";
         }
 

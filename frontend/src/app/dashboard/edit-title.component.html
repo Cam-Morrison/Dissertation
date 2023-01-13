@@ -1,17 +1,35 @@
-<div>
-  <h1>Would you like to change your watchlist's title?</h1>
-  <input
-    type="text"
-    matInput
-    placeholder="New watchlist title"
-    formControlName="input"
-    required
-  />
-</div>
 <div class="center">
+  <h1>Would you like to change your watchlist's title?</h1>
+  <form>
+    <mat-form-field>
+      <mat-label>Watchlist title</mat-label>
+      <input
+        type="text"
+        class="inputTitle"
+        matInput
+        [formControl]="titleFormControl"
+        [errorStateMatcher]="matcher"
+        placeholder="Ex. Growth fund"
+      />
+      <mat-error *ngIf="titleFormControl.hasError('minlength')">
+        Title must be more than 3 characters.
+      </mat-error>
+      <mat-error *ngIf="titleFormControl.hasError('maxlength')">
+        Title must be less than 16 characters.
+      </mat-error>
+      <mat-error *ngIf="titleFormControl.hasError('required')">
+        Watchlist title is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </form>
+  <mat-divider></mat-divider>
+  <button mat-button type="button" (click)="onNoClick()">Cancel</button>
   <button
     mat-button
-    type="button"
-  ></button>
-  <button mat-button color="primary" type="submit"></button>
+    type="submit"
+    [disabled]="!titleFormControl.valid"
+    (click)="change()"
+  >
+    Update title
+  </button>
 </div>

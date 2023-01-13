@@ -11,10 +11,11 @@
 <mat-sidenav-container>
   <!-- Profile -->
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <h4 class="name">{{ userName }}</h4>
-    <p class="designation">{{ userRole }}</p>
-
-    <mat-divider></mat-divider>
+    <span *ngIf="loggedIn">
+      <h4 class="name">{{ userName | titlecase }}</h4>
+      <p class="designation">{{ userRole }}</p>
+      <mat-divider></mat-divider>
+    </span>
 
     <!-- Navigation pages -->
     <div *ngFor="let data of navData">
@@ -31,6 +32,18 @@
         <span> {{ data.label }}</span>
       </button>
     </div>
+    <button
+      *ngIf="userRole != 'User'"
+      mat-button
+      class="menu-button"
+      routerLink="admin"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      ariaCurrentWhenActive="page"
+    >
+      <mat-icon>remove_red_eye</mat-icon>
+      <span>Admin Panel</span>
+    </button>
 
     <mat-divider></mat-divider>
 
@@ -41,13 +54,13 @@
   </mat-sidenav>
 
   <!-- Main page content -->
-  <mat-sidenav-content> 
+  <mat-sidenav-content>
     <div class="flexbox horizontalNav">
       <div *ngFor="let data of navData">
         <button
           class="horizontalButtons"
           mat-button
-          mat-ripple  
+          mat-ripple
           routerLink="{{ data.routeLink }}"
           [routerLinkActive]="'active'"
           [routerLinkActiveOptions]="{ exact: true }"
@@ -57,10 +70,25 @@
           <span> {{ data.label }}</span>
         </button>
       </div>
+
+      <button
+        *ngIf="userRole != 'User' && loggedIn"
+        mat-button
+        mat-ripple
+        class="horizontalButtons"
+        routerLink="admin"
+        [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        ariaCurrentWhenActive="page"
+      >
+        <mat-icon>remove_red_eye</mat-icon>
+        <span>Admin Panel</span>
+      </button>
+
       <button
         class="horizontalButtons"
         mat-button
-        mat-ripple    
+        mat-ripple
         *ngIf="loggedIn"
         mat-button
         (click)="logout()"

@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators, FormGroupDirective, NgForm } from '
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { MyDataService } from '../shared/services/data.service';
 import { ConfirmationDialog } from './confirmation-dialog.component';
 
 @Component({
@@ -13,7 +14,6 @@ import { ConfirmationDialog } from './confirmation-dialog.component';
 })
 export class LoginComponent implements OnInit {
 
-  private myBackEndService: string = "https://localhost:7299";
   errorMessage: string = "";
   userForm = new FormGroup({
     username: new FormControl('', 
@@ -34,14 +34,15 @@ export class LoginComponent implements OnInit {
   constructor(
     private HTTP : HttpClient,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private backend: MyDataService
     ) { }
 
   ngOnInit(): void {
   }
 
   login() {
-    this.HTTP.post(`${this.myBackEndService}/login/`, 
+    this.HTTP.post(`${this.backend.getBackEndService()}/login/`, 
     {
       userName: this.userForm.get('username')?.value,
       password: this.userForm.get('password')?.value
@@ -76,7 +77,7 @@ export class LoginComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmationDialog,{
       data:{
         message: 'Please confirm your new password.',
-        url: this.myBackEndService,
+        url: this.backend.getBackEndService(),
         username: this.userForm.get('username')?.value,
         password: this.userForm.get('password')?.value,
         buttonText: {

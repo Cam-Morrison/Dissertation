@@ -11,6 +11,10 @@ export class MyDataService
 
   constructor(private http: HttpClient){}
 
+  getBackEndService() {
+    return this.myBackEndService;
+  }
+
   getWatchList() {
     return this.http.get(`${this.myBackEndService}/getWatchlist`);
   }
@@ -48,5 +52,25 @@ export class MyDataService
 
   RemoveFromWatchlist(ticker:string) {
     return this.http.get(`${this.myBackEndService}/removeFromWatchlist/${ticker}`)
+  }
+
+  updateWatchListTitle(ticker:string) {
+    return this.http.get(`${this.myBackEndService}/updateWatchlistTitle/${ticker}`)
+  }
+
+  toggleAIpreference() {
+    return this.http.get(`${this.myBackEndService}/toggleAIpreference`);
+  }
+  
+  getAuditLog() {
+    return this.http.get(`${this.myBackEndService}/getTasks`);
+  }
+
+  lockAccount(UserID:number) {
+    return this.http.get(`${this.myBackEndService}/toggleAccountLock/${UserID}`)
+  }
+
+  logSignOut() {
+    this.http.get(`${this.myBackEndService}/logSignOut`)
   }
 }

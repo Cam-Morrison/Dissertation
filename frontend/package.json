@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
     "apexcharts": "^3.35.4",
+    "jwt-decode": "^3.1.2",
     "ng-apexcharts": "^1.7.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

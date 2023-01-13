@@ -15,7 +15,7 @@ export const navigationData = [
         label: 'Search Stocks'
     },
     {
-        routeLink: '',
+        routeLink: 'assistance',
         icon: 'memory',
         label: 'Predictive Learning'
     }

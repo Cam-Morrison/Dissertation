@@ -1,2 +1,72 @@
-<p>admin works!</p>
-<h2> passwords: eeeee2323131 </h2>
+<div class="content">
+  <div class="dashboard">
+    <h1>{{username | titlecase}}'s administration panel</h1>
+
+    <table *ngIf="!isLoading" mat-table [dataSource]="dataSource" matSort matSortActive="Time" matSortDirection="desc" matSortDisableClear>
+      <!-- Time Column -->
+      <ng-container matColumnDef="Time">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Time</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.T | date:'medium' }}
+        </td>
+      </ng-container>
+  
+      <!-- UserID Column -->
+      <ng-container matColumnDef="UserID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>UserID</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.UID }}
+        </td>
+      </ng-container>
+  
+      <!-- Username Column -->
+      <ng-container matColumnDef="User">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.UN | titlecase }}
+        </td>
+      </ng-container>
+  
+      <!-- Action name Column -->
+      <ng-container matColumnDef="Action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.AN }}
+        </td>
+      </ng-container>
+  
+      <!-- Account lock Column -->
+      <ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [ngClass]="{
+            unlocked: element.L == false,
+            locked: element.L == true
+          }"
+        >
+          <span *ngIf="element.L == false">
+            <button mat-button color="primary" (click)="lock(element.UID)">Lock</button>
+          </span>
+          <span *ngIf="element.L == true">
+            <button mat-button color="primary" (click)="lock(element.UID)">Unlock</button>
+          </span>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+      ></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[25]"></mat-paginator>
+    
+  </div>
+  <!-- Loader -->
+  <div class="spinbox" *ngIf="isLoading">
+    <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
+</div>

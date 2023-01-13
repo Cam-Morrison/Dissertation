@@ -1,0 +1,57 @@
+@use '@angular/material' as mat;
+.content {
+    height:100vh !important;
+    margin: auto !important;
+    background: transparent;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    text-align:center;
+    overflow-y:scroll;
+    @include mat.elevation(8);
+    .dashboard {
+        padding:2.5em;
+        background: white;
+        height:max-content;
+        position:relative;
+        height:fit-content;
+        min-height:100vh;
+        max-height:auto;
+        margin-bottom:10em;
+    }
+}
+
+table, .mat-table {
+    width: 100%;
+    background-color:inherit !important;
+  }
+  
+  tr.mat-row:hover { 
+    cursor:grab !important;
+    background-color:rgba(0,74,159, 0.2);
+    text-shadow: 0 0 1px black;
+  }
+  
+  th.mat-sort-header-sorted, th {
+    color: black;
+    font-weight:bold;
+    font-size:16px;
+    border-bottom:0.1em #07203d;
+    border-bottom-style:ridge;
+  }
+  
+  form {
+    padding-top:0.5rem;
+  }
+  th.mat-header-cell {
+    text-align:center;
+  }
+
+  .mat-header-row {
+    background-color:white;
+    z-index:2;
+  }
+  
+  mat-form-field {
+    width:30em;
+  }

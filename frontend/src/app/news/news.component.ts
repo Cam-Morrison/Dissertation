@@ -9,11 +9,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./news.component.scss']
 })
 export class NewsComponent implements OnInit {
-[x: string]: any;
+  [x: string]: any;
   sub: any;
   dataPoints: any;
   newsList: any = [];
   isLoading: boolean = true;
+  public AIassistance = true;
 
   constructor(private MyDataService: MyDataService, private matSnackBar: MatSnackBar) { }
 

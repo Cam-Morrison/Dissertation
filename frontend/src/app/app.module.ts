@@ -33,6 +33,12 @@ import { MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialog } from './login/confirmation-dialog.component';
 import { TokenInterceptor } from './shared/services/token.interceptor';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { editNameDialog } from './dashboard/edit-title.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { PreferencesPageComponent } from './preferences-page/preferences-page.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -41,18 +47,23 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     NewsComponent,
     LoginComponent,
     AdminComponent,
-    ConfirmationDialog
+    ConfirmationDialog,
+    editNameDialog,
+    PreferencesPageComponent
   ],
   imports: [
     CommonModule,
     BrowserModule,
     CdkMenuModule,
     NgApexchartsModule,
+    MatTooltipModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     myChartModule,
+    FormsModule,
     MatDialogModule,
+    MatSlideToggleModule,
     MatCardModule,
     MatToolbarModule,
     MatTableModule,
@@ -67,6 +78,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatButtonModule,
     MatIconModule,
     A11yModule,
+    MatFormFieldModule,
     MatDividerModule,
     OverlayModule,
     ReactiveFormsModule,
@@ -77,7 +89,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }
+    },
+    DashboardComponent
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

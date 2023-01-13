@@ -1,23 +1,5 @@
 @use '@angular/material' as mat;
 
-
-
-@media screen and (min-width: 1301px){
-    .dashboard {
-        width: 65vw;
-  }
-}
-@media screen and (max-width: 1300px){
-    .dashboard {
-        width: 85vw;
-  }
-}
-@media screen and (max-width: 1000px){
-    .dashboard {
-        width: 95vw;
-  }
-}
-
 .content {
     height:100vh !important;
     padding:0 !important;
@@ -106,7 +88,7 @@ h2 {
     padding-left:0.5rem;
   }
   
-  mat-form-field  {
+  .ChartSelector  {
     display:flex;
     float: right;
   }
@@ -125,6 +107,11 @@ h2 {
     overflow: hidden;
     .mat-button {
         margin-bottom:1em;
+        font-size:18px;
+    }
+    .mat-form-field {
+        width:75% !important;
+        margin-bottom:1em;
     }
   }
 
@@ -133,4 +120,9 @@ h2 {
     overflow:auto;
     max-height:auto;
     margin-bottom:10em;
+}
+
+.inlineLink {
+    color:#07203d !important;
+    text-decoration:bold;
 }

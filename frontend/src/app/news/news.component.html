@@ -7,7 +7,7 @@
     <ng-template ngFor let-item [ngForOf]="newsList" let-i="index">
       <mat-card>
         <mat-card-content>
-          <a href="{{ item['url'] }}" >
+          <a href="{{ item['url'] }}">
             <mat-card-header>
               <mat-card-title-group>
                 <mat-card-title
@@ -23,8 +23,28 @@
             <img mat-card-image src="{{ item['image'] }}" />
             <p>{{ item["summary"] }}</p>
           </a>
+          <div *ngIf="AIassistance == true">
+            <p>
+              A.I. assist has predicted a {{ item["sentiment"] }} sentiment.
+              <mat-icon
+                class="info"
+                [matTooltipClass]="{ 'tool-tip': true }"
+                aria-label="Icon that displays a tooltip when focused or hovered over"
+                matTooltip="A.I. assist is in its beta trial and could display incorrect answers. It should not be interpreted as investment advice."
+              >
+                information
+              </mat-icon>
+            </p>
+          </div>
           <mat-card-actions>
-            <button mat-button color="primary" [cdkCopyToClipboard]="item['url']" (click)="linkCoppied()"><b>SHARE</b></button>
+            <button
+              mat-button
+              color="primary"
+              [cdkCopyToClipboard]="item['url']"
+              (click)="linkCoppied()"
+            >
+              <b>SHARE</b>
+            </button>
             <button mat-button color="primary">
               <b>ADD TO READING LIST</b>
             </button>

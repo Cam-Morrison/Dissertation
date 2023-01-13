@@ -29,13 +29,7 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("ActionId");
-
-                    b.HasIndex("UserId");
-
                     b.ToTable("Actions");
                 });
 
@@ -122,7 +116,6 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.entity.User", "User")
                         .WithMany("Actions")
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

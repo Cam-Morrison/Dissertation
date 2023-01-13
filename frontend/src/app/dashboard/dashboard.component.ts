@@ -1,10 +1,14 @@
 import { MyDataService } from '../shared/services/data.service';
-import { Component, OnInit, AfterViewInit, Inject} from "@angular/core";
+import { Component, OnInit, AfterViewInit} from "@angular/core";
 import { shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogActions, MatDialogContent} from '@angular/material/dialog';
+import { MatDialog} from '@angular/material/dialog';
+import { editNameDialog } from './edit-title.component';
+import { of } from 'rxjs/internal/observable/of';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { AuthGuard } from '../shared/services/auth.guard';
 
 @Component({
   selector: "app-dashboard",
@@ -19,6 +23,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public isLoading = true;
   loadingError = false;
   private sub: any;
+  public username: string | undefined;
 
   dailyMovement: number = 0;
   ticker?: string | null;
@@ -27,12 +32,23 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   selectedChart: any = 'area';
   previousCloses: any[] = [];
   currentPrices: any[] = [];
-
+  public portfolioChart = "treemap";
+  public portfolioDataPoints: any[] = [];
   public editmode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public editmodeObs: Observable<boolean> = this.editmode.asObservable();
 
-  constructor(private MyDataService: MyDataService, private matSnackBar: MatSnackBar, public dialog: MatDialog) {}
-  
+  constructor(
+    private MyDataService: MyDataService, 
+    private matSnackBar: MatSnackBar, 
+    private auth: AuthGuard,
+    public dialog: MatDialog) 
+    {
+      try{
+        var userObj = auth.getDecodedToken();
+        this.username = userObj.user;
+      }catch(Exception){}
+    }
+
   ngOnInit():void {
     // Read in ticker, get its price datapoints and daily movement
     let resp = this.MyDataService.getWatchList().pipe(shareReplay());
@@ -44,12 +60,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.dailyMovement += this.stocks[i]["regularMarketChangePercent"];
         this.previousCloses.push(this.stocks[i]["regularMarketPreviousClose"])
         this.currentPrices.push(this.stocks[i]["regularMarketPrice"])
+        this.portfolioDataPoints.push([{x: `${this.stocks[i]["symbol"]}`, y: Number(this.stocks[i]["regularMarketChangePercent"].toFixed(2))}]);
       }
     },   
     (error) => {
       this.loadingError = true;
     });  
     this.isLoading = false;
+    console.log(this.stocks);
   }
 
   removeFromWatchlist(ticker: any, index: number) {
@@ -83,34 +101,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(editNameDialog, {
-      data: {name: this.watchlistTitle},
-    });
+    const dialogRef = this.dialog.open(editNameDialog, {});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       let newName = result;
     });
-  }
-}
-
-export interface DialogData {
-  animal: string;
-  name: string;
-}
-
-@Component({
-  selector: 'editNameDialog',
-  templateUrl: 'edit-title.component.html',
-  styleUrls: ["./dashboard.component.scss"]
-})
-export class editNameDialog {
-  constructor(
-    public dialogRef: MatDialogRef<editNameDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 }

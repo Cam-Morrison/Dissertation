@@ -50,7 +50,7 @@ namespace backend.Controllers
                 if(await _featureFlag.GetFeatureFlagAsync("postlogin"))
                 {
                     var response = await _userService.Login(input);
-                    if(response == "Username invalid." || response == "Password invalid.") 
+                    if(response == "Username invalid." || response == "Password invalid." || response == "Account locked by admin.") 
                     {
                         return Unauthorized(response);
                     }
@@ -99,6 +99,52 @@ namespace backend.Controllers
         }
 
         [HttpGet] 
+        [Route("/toggleAIpreference")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Toggles A.I. assist feature (on/off) for signed in user.")]
+        public async Task<IActionResult> toggleAIpreference()
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("postlogin"))
+                {
+                    var resp = _userService.toggleAIpreference(HttpContext.User.Identity.Name);
+                    return Ok(resp);
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("UserProfileController.toggleAIpreference()");
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+        }
+
+        [HttpGet] 
+        [Route("/logSignOut")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Adds a log of a user's logged out action to tasks table for administrators to view.")]
+        public async Task<IActionResult> LogSignOut()
+        {
+            try
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("adminFunctionality"))
+                {
+                    var resp = _userService.LogSignOut(HttpContext.User.Identity.Name);
+                    return Ok(resp);
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("UserProfileController.LogSignOut()");
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+        }
+
+        [HttpGet] 
         [Route("/addToWatchlist/{ticker}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -126,6 +172,7 @@ namespace backend.Controllers
         [Route("/getWatchlist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [SwaggerOperation(Summary = "Gets a list of watchlist stocks.")]
         public async Task<IActionResult> GetWatchlist()
         {
@@ -149,6 +196,7 @@ namespace backend.Controllers
         [Route("/removeFromWatchlist/{ticker}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [SwaggerOperation(Summary = "Remove ticker from watch list.")]
         public async Task<IActionResult> RemoveFromWatchlist(string ticker)
         {
@@ -168,14 +216,15 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost]   
-        [Route("/updateWatchlistTitle")]
+        [HttpGet]   
+        [Route("/updateWatchlistTitle/{newTitle}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [SwaggerOperation(Summary = "Updates the title of user's watchlist.")]
         public async Task<IActionResult> UpdateWatchlistTitle(string newTitle)
         {
-            try
+            try 
             {
                 if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
                 {

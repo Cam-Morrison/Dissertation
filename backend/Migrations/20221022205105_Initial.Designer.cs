@@ -120,17 +120,6 @@ namespace backend.Migrations
                     b.ToTable("Watchlists");
                 });
 
-            modelBuilder.Entity("backend.entity.Action", b =>
-                {
-                    b.HasOne("backend.entity.User", "User")
-                        .WithMany("Actions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("backend.entity.Task", b =>
                 {
                     b.HasOne("backend.entity.Action", "Action")

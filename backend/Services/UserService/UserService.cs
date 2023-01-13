@@ -17,17 +17,18 @@ using System.Text.Json;
         public static string SessionIdToken = "session-id";
         private readonly IConfiguration _configuration;
         private MarketDataService _marketDataService;
-
+        private AdminService log;
         private static JToken watchListCached;
         private Boolean watchListChange = true;
 
         public UserService(IConfiguration configration, MarketDataService marketDataService){
             _configuration = configration;
             _marketDataService = marketDataService;
+            this.log = new AdminService(_configuration);
         }
 
         public async Task<string> Login(Login input) {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == input.UserName);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == input.UserName);
             if(user == null)
             {
                 return "Username invalid.";
@@ -36,7 +37,16 @@ using System.Text.Json;
             {
                 return "Password invalid.";
             }
+            if(isAccountLocked(input.UserName) == true) {
+                return "Account locked by admin.";
+            }
+            AdminService log = new AdminService(_configuration);
+            log.logEvent(1, input.UserName);
             return CreateToken(user);
+        }
+
+        public Boolean isAccountLocked(string username) {
+            return (bool)_context.Users.FirstOrDefaultAsync(u => u.UserName == username).Result.UserIsAccountLocked;
         }
 
          public async Task<string> Register(Register input) {
@@ -61,11 +71,16 @@ using System.Text.Json;
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            
+            log.logEvent(2, input.UserName);
             return CreateToken(user);
          }
 
         private string CreateToken(User user) {
+            var role = "User";
+            if(user.UserIsAdmin == true) {
+                role = "Administrator";
+            }
+
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName)
@@ -79,6 +94,11 @@ using System.Text.Json;
                 expires: DateTime.Now.AddDays(7),
                 signingCredentials: cred
             );
+
+            token.Payload["user"] = user.UserName;
+            token.Payload["role"] = role;
+            token.Payload["AIpreference"] = user.UserAiSwitchedOnPreference.ToString();
+            
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             
             return jwt;
@@ -126,6 +146,7 @@ using System.Text.Json;
                         _context.Watchlists.Add(entry);
                         _context.SaveChanges();
                         watchListChange = true;
+                        log.logEvent(4, user);
                         return "Added to watchlist.";
                     }
                     else
@@ -138,6 +159,7 @@ using System.Text.Json;
                             _context.Update(watchlist);
                             _context.SaveChanges();
                             watchListChange = true;
+                            log.logEvent(4, user);
                             return "Added to watchlist.";
                         }
                         return "Stock is already in watchlist.";
@@ -185,6 +207,7 @@ using System.Text.Json;
                     _context.Watchlists.Update(watchlist);
                     _context.SaveChanges();
                     watchListChange = true;
+                    log.logEvent(5, username);
                     return "Watchlist updated.";
                 }
                 return "That stock is not in the watchlist.";
@@ -206,9 +229,30 @@ using System.Text.Json;
                 watchlist.WatchListName = newTitle;
                 _context.Watchlists.Update(watchlist);
                 _context.SaveChanges();
+                log.logEvent(6, username);
                 return $"Watchlist title is now {newTitle}.";
             }
             return "Watchlist hasn't been created yet.";
+        }
+        
+        public string toggleAIpreference(string username) {
+            var user = _context.Users.FirstOrDefaultAsync(u => u.UserName == username).Result!;
+            user.UserAiSwitchedOnPreference = !user.UserAiSwitchedOnPreference;
+            _context.Users.Update(user);
+            _context.SaveChanges();
+            var msg = "";
+            if(user.UserAiSwitchedOnPreference == true) {
+                log.logEvent(8, username);
+                return msg = "AI assist turned on";
+            } else {
+                log.logEvent(7, username);
+                return msg = "AI assist turned off";
+            }
+        }
+
+        public string LogSignOut(string username) {
+            log.logEvent(3, username);
+            return "Action Logged";
         }
     }
 }

@@ -7,7 +7,6 @@ namespace backend.entity
     {
         public User()
         {
-            Actions = new HashSet<Action>();
             Tasks = new HashSet<Task>();
             Watchlists = new HashSet<Watchlist>();
         }
@@ -20,7 +19,6 @@ namespace backend.entity
         public bool? UserIsAccountLocked { get; set; }
         public bool? UserAiSwitchedOnPreference { get; set; }
 
-        public virtual ICollection<Action> Actions { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }
         public virtual ICollection<Watchlist> Watchlists { get; set; }
     }
