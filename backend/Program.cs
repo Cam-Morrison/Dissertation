@@ -2,15 +2,32 @@ global using Microsoft.OpenApi.Models;
 global using Microsoft.EntityFrameworkCore;
 
 using backend.services;
-using System.Text;
+using System;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+// //AWS secrets manager
+// using (var sec = new SecretsManagerService()) {
+//     DateTime dt = DateTime.Now;
+
+//     var result = sec.GetSuperSecretPassword("secretname");
+//     result.Wait();
+//     TimeSpan span = DateTime.Now - dt;
+//     Console.WriteLine($"{result.Result.subject} secret is {result.Result.secret} retrieved in {span}");
+
+//     dt = DateTime.Now;
+//     result = sec.GetSuperSecretPassword("");
+//     result.Wait();
+//     span = DateTime.Now - dt;
+//     Console.WriteLine($"{result.Result.subject} secret is {result.Result.secret} retrieved in {span}");
+// }
 
 //DBContext
 var dbConnectionString = builder.Configuration.GetSection("ClientConfiguration").GetValue<string>("dBContextSecret");

@@ -23,5 +23,7 @@
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgMicrosoft_Extensions_ApiDescription_Server Condition=" '$(PkgMicrosoft_Extensions_ApiDescription_Server)' == '' ">C:\Users\Cam-M\.nuget\packages\microsoft.extensions.apidescription.server\3.0.0</PkgMicrosoft_Extensions_ApiDescription_Server>
+    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">C:\Users\Cam-M\.nuget\packages\awssdk.core\3.3.101.1</PkgAWSSDK_Core>
+    <PkgAWSSDK_SecretsManager Condition=" '$(PkgAWSSDK_SecretsManager)' == '' ">C:\Users\Cam-M\.nuget\packages\awssdk.secretsmanager\3.3.100.10</PkgAWSSDK_SecretsManager>
   </PropertyGroup>
 </Project>

@@ -30,20 +30,20 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <stockChart
-      [dataPoints]="dataPoints"
-      [ticker]="chartTitle"
-      [chartType]="selectedChart"
-      *ngIf="!isLoading"
-    ></stockChart>
+  <!-- Loader -->
+  <div class="spinbox" *ngIf="isLoading">
+    <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
+  <stockChart
+    *ngIf="!isLoading"
+    [dataPoints]="dataPoints"
+    [ticker]="chartTitle!"
+    [chartType]="selectedChart"
+  ></stockChart>
 
     <mat-divider></mat-divider>
-
-    <div class="spinbox" *ngIf="isLoading == true">
-      <mat-progress-spinner color="primary" mode="indeterminate">
-      </mat-progress-spinner>
-    </div>
-
+    <br>
     <div class="center" *ngIf="loadingError == false && isLoading == false && stocks.length > 0">
       <div class="fundTitle">
         <h1>

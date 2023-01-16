@@ -41,15 +41,17 @@ export class StockDetailComponent implements OnInit {
         }
         for (var key in priceResp['items']) {
           var dt = priceResp['items'][key];
-          this.dataPoints.push([
-            [new Date(dt['date'])],
-            [
-              Number(dt['open']),
-              Number(dt['high']),
-              Number(dt['low']),
-              Number(dt['close']),
-            ],
-          ]);
+          if(Number(dt["open"]) != 0.00) {
+            this.dataPoints.push([
+              [new Date(dt['date'])],
+              [
+                Number(dt['open']),
+                Number(dt['high']),
+                Number(dt['low']),
+                Number(dt['close']),
+              ],
+            ]);
+          }
         }
         this.isLoading = false;
       },

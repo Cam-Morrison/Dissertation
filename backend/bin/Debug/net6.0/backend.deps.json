@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "backend/1.0.0": {
         "dependencies": {
+          "AWSSDK.SecretsManager.Caching": "1.0.2",
           "AspNetCoreRateLimit": "4.0.2",
           "ConfigCat.Client": "6.5.2",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.0",
@@ -39,6 +40,37 @@
           "lib/net6.0/AspNetCoreRateLimit.dll": {
             "assemblyVersion": "4.0.2.0",
             "fileVersion": "4.0.2.0"
+          }
+        }
+      },
+      "AWSSDK.Core/3.3.101.1": {
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.101.1"
+          }
+        }
+      },
+      "AWSSDK.SecretsManager/3.3.100.10": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.101.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.SecretsManager.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.100.10"
+          }
+        }
+      },
+      "AWSSDK.SecretsManager.Caching/1.0.2": {
+        "dependencies": {
+          "AWSSDK.SecretsManager": "3.3.100.10",
+          "Microsoft.Extensions.Caching.Memory": "6.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Amazon.SecretsManager.Extensions.Caching.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -1290,6 +1322,27 @@
       "sha512": "sha512-FzXAJFgaRjKfnKAVwjEEC7OAGQM5v/I3sQw2tpzmR0yHTCGhUAxZzDuwZiXTk8XLrI6vovzkqKkfKmiDl3nYMg==",
       "path": "aspnetcoreratelimit/4.0.2",
       "hashPath": "aspnetcoreratelimit.4.0.2.nupkg.sha512"
+    },
+    "AWSSDK.Core/3.3.101.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8GH4/DXzPUHGgtxskYMOmo2NpOnf6AyR67B1xrFMUG9w6yhlN5nDjurtz/hROLnGldG0X1/Y+lesIA6i3ZUULA==",
+      "path": "awssdk.core/3.3.101.1",
+      "hashPath": "awssdk.core.3.3.101.1.nupkg.sha512"
+    },
+    "AWSSDK.SecretsManager/3.3.100.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hImw68WzSyv3gatAmARolyqUhcBXkqy3jEYa0FTIrmc3dYE5jyM89/uviyrmCYfrclQnCtou80Sapq5RZWXbcQ==",
+      "path": "awssdk.secretsmanager/3.3.100.10",
+      "hashPath": "awssdk.secretsmanager.3.3.100.10.nupkg.sha512"
+    },
+    "AWSSDK.SecretsManager.Caching/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZAXLJxhuPP4yZjStdbzF0VTbhjlQeU1FG25bRmesJyaEGFdP53fsdua3hCbC1fbrS1UThzRmTtgULEBP8xRxgg==",
+      "path": "awssdk.secretsmanager.caching/1.0.2",
+      "hashPath": "awssdk.secretsmanager.caching.1.0.2.nupkg.sha512"
     },
     "ConfigCat.Client/6.5.2": {
       "type": "package",

@@ -20,6 +20,48 @@
           "Microsoft.AspNetCore.App"
         ]
       },
+      "AWSSDK.Core/3.3.101.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/AWSSDK.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "AWSSDK.SecretsManager/3.3.100.10": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[3.3.101.1, 3.4.0)"
+        },
+        "compile": {
+          "lib/netstandard2.0/AWSSDK.SecretsManager.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.SecretsManager.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "AWSSDK.SecretsManager.Caching/1.0.2": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.SecretsManager": "3.3.100.10",
+          "Microsoft.Extensions.Caching.Memory": "2.2.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Amazon.SecretsManager.Extensions.Caching.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Amazon.SecretsManager.Extensions.Caching.dll": {}
+        }
+      },
       "ConfigCat.Client/6.5.2": {
         "type": "package",
         "dependencies": {
@@ -2297,6 +2339,108 @@
         "lib/net6.0/AspNetCoreRateLimit.dll",
         "lib/netcoreapp3.1/AspNetCoreRateLimit.dll",
         "lib/netstandard2.0/AspNetCoreRateLimit.dll"
+      ]
+    },
+    "AWSSDK.Core/3.3.101.1": {
+      "sha512": "8GH4/DXzPUHGgtxskYMOmo2NpOnf6AyR67B1xrFMUG9w6yhlN5nDjurtz/hROLnGldG0X1/Y+lesIA6i3ZUULA==",
+      "type": "package",
+      "path": "awssdk.core/3.3.101.1",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "awssdk.core.3.3.101.1.nupkg.sha512",
+        "awssdk.core.nuspec",
+        "lib/MonoAndroid10/AWSSDK.Core.XML",
+        "lib/MonoAndroid10/AWSSDK.Core.dll",
+        "lib/MonoAndroid10/AWSSDK.Core.pdb",
+        "lib/MonoTouch10/AWSSDK.Core.XML",
+        "lib/MonoTouch10/AWSSDK.Core.dll",
+        "lib/Xamarin.Mac20/AWSSDK.Core.XML",
+        "lib/Xamarin.Mac20/AWSSDK.Core.dll",
+        "lib/Xamarin.iOS10/AWSSDK.Core.XML",
+        "lib/Xamarin.iOS10/AWSSDK.Core.dll",
+        "lib/net35/AWSSDK.Core.dll",
+        "lib/net35/AWSSDK.Core.pdb",
+        "lib/net35/AWSSDK.Core.xml",
+        "lib/net45/AWSSDK.Core.dll",
+        "lib/net45/AWSSDK.Core.pdb",
+        "lib/net45/AWSSDK.Core.xml",
+        "lib/netstandard1.3/AWSSDK.Core.dll",
+        "lib/netstandard1.3/AWSSDK.Core.pdb",
+        "lib/netstandard1.3/AWSSDK.Core.xml",
+        "lib/netstandard2.0/AWSSDK.Core.dll",
+        "lib/netstandard2.0/AWSSDK.Core.pdb",
+        "lib/netstandard2.0/AWSSDK.Core.xml",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.Core.XML",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.Core.dll",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.Core.pdb",
+        "lib/uap/AWSSDK.Core.XML",
+        "lib/uap/AWSSDK.Core.dll",
+        "lib/uap/AWSSDK.Core.pdb",
+        "lib/win8/AWSSDK.Core.XML",
+        "lib/win8/AWSSDK.Core.dll",
+        "lib/win8/AWSSDK.Core.pdb",
+        "lib/wp8/AWSSDK.Core.XML",
+        "lib/wp8/AWSSDK.Core.dll",
+        "lib/wp8/AWSSDK.Core.pdb",
+        "lib/wpa81/AWSSDK.Core.XML",
+        "lib/wpa81/AWSSDK.Core.dll",
+        "lib/wpa81/AWSSDK.Core.pdb",
+        "tools/account-management.ps1"
+      ]
+    },
+    "AWSSDK.SecretsManager/3.3.100.10": {
+      "sha512": "hImw68WzSyv3gatAmARolyqUhcBXkqy3jEYa0FTIrmc3dYE5jyM89/uviyrmCYfrclQnCtou80Sapq5RZWXbcQ==",
+      "type": "package",
+      "path": "awssdk.secretsmanager/3.3.100.10",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/AWSSDK.SecretsManager.CodeAnalysis.dll",
+        "awssdk.secretsmanager.3.3.100.10.nupkg.sha512",
+        "awssdk.secretsmanager.nuspec",
+        "lib/MonoAndroid10/AWSSDK.SecretsManager.XML",
+        "lib/MonoAndroid10/AWSSDK.SecretsManager.dll",
+        "lib/MonoTouch10/AWSSDK.SecretsManager.XML",
+        "lib/MonoTouch10/AWSSDK.SecretsManager.dll",
+        "lib/MonoTouch10/AWSSDK.SecretsManager.pdb",
+        "lib/Xamarin.iOS10/AWSSDK.SecretsManager.XML",
+        "lib/Xamarin.iOS10/AWSSDK.SecretsManager.dll",
+        "lib/net35/AWSSDK.SecretsManager.dll",
+        "lib/net35/AWSSDK.SecretsManager.pdb",
+        "lib/net35/AWSSDK.SecretsManager.xml",
+        "lib/net45/AWSSDK.SecretsManager.dll",
+        "lib/net45/AWSSDK.SecretsManager.pdb",
+        "lib/net45/AWSSDK.SecretsManager.xml",
+        "lib/netstandard1.3/AWSSDK.SecretsManager.dll",
+        "lib/netstandard1.3/AWSSDK.SecretsManager.pdb",
+        "lib/netstandard1.3/AWSSDK.SecretsManager.xml",
+        "lib/netstandard2.0/AWSSDK.SecretsManager.dll",
+        "lib/netstandard2.0/AWSSDK.SecretsManager.pdb",
+        "lib/netstandard2.0/AWSSDK.SecretsManager.xml",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.SecretsManager.XML",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.SecretsManager.dll",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.SecretsManager.pdb",
+        "lib/uap/AWSSDK.SecretsManager.XML",
+        "lib/uap/AWSSDK.SecretsManager.dll",
+        "lib/uap/AWSSDK.SecretsManager.pdb",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "AWSSDK.SecretsManager.Caching/1.0.2": {
+      "sha512": "ZAXLJxhuPP4yZjStdbzF0VTbhjlQeU1FG25bRmesJyaEGFdP53fsdua3hCbC1fbrS1UThzRmTtgULEBP8xRxgg==",
+      "type": "package",
+      "path": "awssdk.secretsmanager.caching/1.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "awssdk.secretsmanager.caching.1.0.2.nupkg.sha512",
+        "awssdk.secretsmanager.caching.nuspec",
+        "lib/net461/Amazon.SecretsManager.Extensions.Caching.dll",
+        "lib/netstandard2.0/Amazon.SecretsManager.Extensions.Caching.dll"
       ]
     },
     "ConfigCat.Client/6.5.2": {
@@ -6797,6 +6941,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "AWSSDK.SecretsManager.Caching >= 1.0.2",
       "AspNetCoreRateLimit >= 4.0.2",
       "ConfigCat.Client >= 6.5.2",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.0",
@@ -6860,6 +7005,10 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
+          "AWSSDK.SecretsManager.Caching": {
+            "target": "Package",
+            "version": "[1.0.2, )"
+          },
           "AspNetCoreRateLimit": {
             "target": "Package",
             "version": "[4.0.2, )"

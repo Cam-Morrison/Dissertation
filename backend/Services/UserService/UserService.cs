@@ -13,7 +13,7 @@ using System.Text.Json;
 
     public class UserService : IUserService
     {
-        private static readonly dbContext _context = new dbContext();
+        private readonly dbContext _context = new dbContext();
         public static string SessionIdToken = "session-id";
         private readonly IConfiguration _configuration;
         private MarketDataService _marketDataService;
@@ -42,6 +42,7 @@ using System.Text.Json;
             }
             AdminService log = new AdminService(_configuration);
             log.logEvent(1, input.UserName);
+
             return CreateToken(user);
         }
 
@@ -103,6 +104,7 @@ using System.Text.Json;
             
             return jwt;
          }
+
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
@@ -243,11 +245,11 @@ using System.Text.Json;
             var msg = "";
             if(user.UserAiSwitchedOnPreference == true) {
                 log.logEvent(8, username);
-                return msg = "AI assist turned on";
             } else {
                 log.logEvent(7, username);
-                return msg = "AI assist turned off";
             }
+            return CreateToken(user);
+            
         }
 
         public string LogSignOut(string username) {

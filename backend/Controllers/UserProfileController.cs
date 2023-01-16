@@ -102,7 +102,7 @@ namespace backend.Controllers
         [Route("/toggleAIpreference")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [SwaggerOperation(Summary = "Toggles A.I. assist feature (on/off) for signed in user.")]
+        [SwaggerOperation(Summary = "Toggles A.I. assist feature (on/off) for signed in user and returns updated JWT.")]
         public async Task<IActionResult> toggleAIpreference()
         {
             try

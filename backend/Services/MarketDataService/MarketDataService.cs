@@ -30,10 +30,10 @@ namespace backend.services
            this.marketDataKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("marketDataKey");
            this.finnHubKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("finnHubKey");
            this.polygonKey = Configuration.GetSection("ClientConfiguration").GetValue<string>("polygonKey");
-            // if(tickerList == null)
-            // {            
-            //     UpdateMarketData();
-            // }
+            if(tickerList == null)
+            {            
+                UpdateMarketData();
+            }
         }
 
         private void UpdateMarketData(){
@@ -55,6 +55,7 @@ namespace backend.services
             string updatedMarketData = CallUrl(marketDataUrl, true);
             if(updatedMarketData != "Issue with API Call")
             {
+                Console.WriteLine(updatedMarketData);
                 tickerList = updatedMarketData;
                 Console.Write(tickerList.ToString());
             } 
@@ -160,8 +161,8 @@ namespace backend.services
         {
             // var prices = GetPriceHistory("tsla");
             var prices = File.ReadAllText("C:/Users/Cam-M/Documents/Dissertation/backend/Services/MarketDataService/testdata.txt");
-            predictionModel pm = new predictionModel(prices);
-            return "£430";
+            predictionModel pm = new predictionModel();
+            return pm.getForecast(prices);;
         }
 
         private string CallUrl(string inputUrl, bool keyTwo)

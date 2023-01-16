@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "qzFT+lAe8/8pcRvajb1mLLBebdsk9XsZk0tlbw8KntxeD2iLLwEi9TKkye5l8m4AD6kmReRHfs0a8jxL7jm8lw==",
+  "dgSpecHash": "haUEq8PKzPnGvHaLkL/1Dr3cy5RfqCc8bXTamuB5bLXO2WxLCZAJw9Pp/j0ML2CxIVvtI+jMskivp4K49oNt1w==",
   "success": true,
   "projectFilePath": "C:\\Users\\Cam-M\\Documents\\Dissertation\\backend\\backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Cam-M\\.nuget\\packages\\aspnetcoreratelimit\\4.0.2\\aspnetcoreratelimit.4.0.2.nupkg.sha512",
+    "C:\\Users\\Cam-M\\.nuget\\packages\\awssdk.core\\3.3.101.1\\awssdk.core.3.3.101.1.nupkg.sha512",
+    "C:\\Users\\Cam-M\\.nuget\\packages\\awssdk.secretsmanager\\3.3.100.10\\awssdk.secretsmanager.3.3.100.10.nupkg.sha512",
+    "C:\\Users\\Cam-M\\.nuget\\packages\\awssdk.secretsmanager.caching\\1.0.2\\awssdk.secretsmanager.caching.1.0.2.nupkg.sha512",
     "C:\\Users\\Cam-M\\.nuget\\packages\\configcat.client\\6.5.2\\configcat.client.6.5.2.nupkg.sha512",
     "C:\\Users\\Cam-M\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Cam-M\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.0\\microsoft.aspnetcore.authentication.jwtbearer.6.0.0.nupkg.sha512",

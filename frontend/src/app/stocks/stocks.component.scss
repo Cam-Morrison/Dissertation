@@ -49,3 +49,13 @@ mat-form-field {
   right: 0;
   text-align: center;
 }
+
+.info {
+  font-size:14px !important;
+  display:inline-grid;
+}
+
+td.mat-cell {
+  font-size:auto;
+  padding:0.5em;
+}
