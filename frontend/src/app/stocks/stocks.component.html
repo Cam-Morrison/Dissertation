@@ -11,12 +11,12 @@
       <mat-icon matPrefix>search</mat-icon>
       <mat-autocomplete #auto="matAutocomplete">
         <ng-container *ngIf="stockList.length && stockList[0] != 'No results'; else notFound">
-        <mat-option *ngFor="let stock of stockList" [value]="stock" [routerLink]="['/stocks', stock]">
+        <mat-option  #found *ngFor="let stock of stockList" [value]="stock" [routerLink]="['/stocks', stock]">
           {{stock}}
         </mat-option>
         </ng-container>
         <ng-template #notFound>
-          <mat-option>
+          <mat-option #noResults>
             No results
           </mat-option>
         </ng-template>

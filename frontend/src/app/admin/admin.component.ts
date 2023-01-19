@@ -22,6 +22,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   dataSource: any;
   isLoading: boolean | undefined;
   sortedData: any[] = [];
+  respMsg: string | undefined;
 
   @ViewChild(MatTable, {static: false}) table : any 
   @ViewChild(MatSort)sort: MatSort = new MatSort();
@@ -80,26 +81,14 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   public lock(element: any) {
     let resp = this.myDataService.lockAccount(Number(element.UID)).pipe(shareReplay());
-    element.L = !element.L;
-    this.table.renderRows();
     resp.subscribe(
       (response: any) => {
-        this.matSnackBar.open(`${response.toString()}`, 'Close', {
-          duration: 5000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-        });
-        console.log(response);
+        this.respMsg = response;
       },
       (error) => {
-        console.log(error);
-        this.matSnackBar.open(`${error.error.text.toString()}`, 'Close', {
-          duration: 5000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-        });
-        console.log(error);
+        this.respMsg = error.error.text;
       }
     );
+    window.location.reload(); 
   }
 }

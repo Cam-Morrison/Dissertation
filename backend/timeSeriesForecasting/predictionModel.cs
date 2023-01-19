@@ -17,6 +17,10 @@ namespace TimeSeries.Model
             foreach (JProperty x in (JToken)json["items"])
             {
                 JToken value = x.Value;
+                //Avoid dodgy error
+                if(value.Value<float>("close") == 0) {
+                    continue;
+                }
                 predictionInput pi = new predictionInput
                 {
                     date = value.Value<DateTime>("date"),

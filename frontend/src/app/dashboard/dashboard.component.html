@@ -22,13 +22,13 @@
           {{ dailyMovement.toFixed(2) + "%" }}
         </h2>
       </div>
-      <mat-form-field class="ChartSelector" appearance="fill">
+      <!-- <mat-form-field class="ChartSelector" appearance="fill">
         <mat-label>Change chart</mat-label>
         <mat-select [(value)]="selectedChart">
           <mat-option value="area">Area</mat-option>
           <mat-option value="candlestick">Candle stick</mat-option>
         </mat-select>
-      </mat-form-field>
+      </mat-form-field> -->
     </div>
   <!-- Loader -->
   <div class="spinbox" *ngIf="isLoading">

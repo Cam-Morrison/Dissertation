@@ -1,7 +1,7 @@
 <div class="content">
   <div class="dashboard">
     <h1>{{ username | titlecase }}'s administration panel</h1>
-
+    <h2> {{respMsg}} </h2>
     <table
       *ngIf="!isLoading"
       mat-table
@@ -52,7 +52,7 @@
             locked: element.L == true
           }"
         >
-          <button mat-button color="primary" (click)="lock(element)">
+          <button *ngIf="element.UN != username;" mat-button color="primary" (click)="lock(element)">
             <span>{{ element.L ? "Unlock" : "Lock" }}</span>
           </button>
         </td>

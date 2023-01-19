@@ -20,12 +20,19 @@
                 >
               </mat-card-title-group>
             </mat-card-header>
-            <img mat-card-image src="{{ item['image'] }}" />
+
+            <ngx-picture
+            src="{{ item['image'] }}" 
+            alt="{{item['headline']}}"
+            [lazyLoad]="true"
+            #picture
+            ></ngx-picture>
+
             <p>{{ item["summary"] }}</p>
           </a>
           <div *ngIf="AIassistance == true">
             <p>
-              A.I. assist has predicted a {{ item["sentiment"] }} sentiment.
+              A.I. assist has interpreted this as a {{ item["sentiment"] }} outcome.
               <mat-icon
                 class="info"
                 [matTooltipClass]="{ 'tool-tip': true }"

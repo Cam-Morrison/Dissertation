@@ -106,7 +106,11 @@ namespace backend.services
             string updateInterval = "1wk";
             var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/hi/history/{ticker}/{updateInterval}?diffandsplits=false";
             mostRecentPriceHistory = CallUrl(url, false);
-            return mostRecentPriceHistory;
+            JObject json = JObject.Parse(mostRecentPriceHistory);
+            predictionModel pm = new predictionModel();
+            var forecast = pm.getForecast(mostRecentPriceHistory);
+            json.Add("Prediction", forecast);
+            return json.ToString();
         }
 
         public string GetActiveStocks() {
@@ -162,7 +166,7 @@ namespace backend.services
             // var prices = GetPriceHistory("tsla");
             var prices = File.ReadAllText("C:/Users/Cam-M/Documents/Dissertation/backend/Services/MarketDataService/testdata.txt");
             predictionModel pm = new predictionModel();
-            return pm.getForecast(prices);;
+            return pm.getForecast(prices);
         }
 
         private string CallUrl(string inputUrl, bool keyTwo)

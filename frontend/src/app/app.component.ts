@@ -1,9 +1,10 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { navigationData } from './app-navigation.data';
 import { AuthGuard } from './shared/services/auth.guard';
 import { MyDataService } from './shared/services/data.service';
+
 
 @Component({
   selector: 'app-root',

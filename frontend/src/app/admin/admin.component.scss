@@ -55,3 +55,9 @@ table, .mat-table {
   mat-form-field {
     width:30em;
   }
+
+  td.mat-cell {
+    font-size:auto;
+    padding:0.5em;
+    text-align:left !important;
+  }

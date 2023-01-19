@@ -23,8 +23,8 @@ namespace backend.services
     public class AdminService : IAdminService
     {
         private readonly IConfiguration Configuration;
-        private static readonly dbContext _context = new dbContext();
-        private static readonly dbContext _context2 = new dbContext();
+        private readonly dbContext _context = new dbContext();
+        private readonly dbContext _context2 = new dbContext();
         public List<ResponseMessage> Response { get; set; }
         public AdminService(IConfiguration configuration)
         {
@@ -86,22 +86,23 @@ namespace backend.services
             }
         }
 
-        public bool logEvent(int eventType, string username)
+        public void logEvent(int eventType, string username)
         {
             try{
-                var userId = _context.Users.FirstOrDefaultAsync(u => u.UserName == username).Result.UserId;
-                var entry = new Task
-                {
+                var user = _context.Users.FirstOrDefaultAsync(u => u.UserName == username).Result;
+                if(user.UserIsAdmin == true) {
+                    return;
+                } else {
+                    var entry = new Task
+                    {
                     TaskTime = DateTime.Now,
                     ActionId = eventType,
-                    UserId = (int) userId
-                };
-                _context.Tasks.Add(entry);
-                _context.SaveChanges();
-                return true;
-            } catch(Exception) {
-                return false;
-            }
+                    UserId = (int) user.UserId
+                    };
+                    _context.Tasks.Add(entry);
+                    _context.SaveChanges();
+                }
+            } catch(Exception) {}
         }
     }
 }
