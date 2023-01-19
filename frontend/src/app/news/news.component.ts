@@ -3,11 +3,6 @@ import { MyDataService } from '../shared/services/data.service';
 import { shareReplay } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthGuard } from '../shared/services/auth.guard';
-import {
-  DEFAULT_BREAKPOINTS,
-  ImageFormat,
-  NgxPictureModule
-} from 'ngx-picture';
 
 @Component({
   selector: 'app-news',
