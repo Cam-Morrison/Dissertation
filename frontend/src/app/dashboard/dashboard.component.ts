@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public username: string | undefined;
 
   dailyMovement: number = 0;
+  dailyMovementPerc: number = 0;
   ticker?: string | null;
   tickerValid: boolean = true;
   dataPoints: any = [];
@@ -58,11 +59,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.stocks = data["stocks"];
       
       for (let i = 0; i < this.stocks.length; i++) {
-        this.dailyMovement += this.stocks[i]["regularMarketChangePercent"];
         this.previousCloses.push(this.stocks[i]["regularMarketPreviousClose"])
         this.currentPrices.push(this.stocks[i]["regularMarketPrice"])
         this.portfolioDataPoints.push([{x: `${this.stocks[i]["symbol"]}`, y: Number(this.stocks[i]["regularMarketChangePercent"].toFixed(2))}]);
       }
+
       const yesterdayPrices = this.previousCloses.reduce((accumulator, obj) => {
         return accumulator + Number(obj);
       }, 0).toFixed(2);
@@ -70,6 +71,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       const todaysPrices = this.currentPrices.reduce((accumulator, obj) => {
         return accumulator + Number(obj);
       }, 0).toFixed(2);
+
+      this.dailyMovement = ((todaysPrices - yesterdayPrices) / yesterdayPrices) * 100;
 
       const todayDate = new Date(); 
       const yesterdayDate = new Date();  

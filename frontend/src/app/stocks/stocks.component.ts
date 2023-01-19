@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, HostListener } from '@angular/core';
 import { MyDataService } from '../shared/services/data.service';
 import { debounceTime, distinctUntilChanged, shareReplay, switchMap } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,28 +22,20 @@ export class StocksComponent implements OnInit, AfterViewInit {
   })
   public stockList:Array<any> = [];
 
-  @ViewChild('found')
-  public resultDropDown!: MatOption;
-
-  @ViewChild('noResults')
-  public noResultsDropDown!: MatOption;
-  
   constructor
   (
     private MyDataService: MyDataService,
     private router: Router,
   )  { 
-    window.onscroll = () => {
-      this.resultDropDown.setInactiveStyles();
-      this.noResultsDropDown.deselect();
-    }
     this.searchForm.get('search')?.valueChanges.pipe(
       debounceTime(1000),
       switchMap((v) => this.MyDataService.getStocksBySearch(v)),
     )
     .subscribe((resp: any) => {
-      console.log(resp)
-      this.stockList = resp;
+      try{
+        console.log(resp)
+        this.stockList = resp;
+      }catch(Exception) {}
     })
   }
 
