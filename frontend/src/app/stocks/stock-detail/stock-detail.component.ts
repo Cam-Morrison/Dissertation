@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
+import { AuthGuard } from 'src/app/shared/services/auth.guard';
 import { MyDataService } from 'src/app/shared/services/data.service';
 
 @Component({
@@ -20,13 +21,20 @@ export class StockDetailComponent implements OnInit {
   detailsLoaded = false;
   panelOpenState = true;
   details?: any;
+  prediction: any = [];
+  lastPrice?: number;
+  AIassistance: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private MyDataService: MyDataService,
-    private matSnackBar: MatSnackBar
-  ) {}
+    private matSnackBar: MatSnackBar,
+    private auth: AuthGuard
+  ) {
+    var userObj = this.auth.getDecodedToken();
+    this.AIassistance = userObj.AIpreference.toLowerCase() === 'true';
+  }
 
   ngOnInit(): void {
     this.ticker = this.route.snapshot.paramMap.get('ticker');
@@ -35,23 +43,29 @@ export class StockDetailComponent implements OnInit {
     );
     priceCall.subscribe(
       (priceResp: any) => {
-        console.log(priceResp);
         if (priceResp['error'] != null) {
           this.pageNotFound();
-        }
+        } else {
         for (var key in priceResp['items']) {
           var dt = priceResp['items'][key];
-          this.dataPoints.push([
-            [new Date(dt['date'])],
-            [
-              Number(dt['open']),
-              Number(dt['high']),
-              Number(dt['low']),
-              Number(dt['close']),
-            ],
-          ]);
+          if(Number(dt["open"]) != 0.00) {
+            this.dataPoints.push([
+              [new Date(dt['date'])],
+              [
+                Number(dt['open']),
+                Number(dt['high']),
+                Number(dt['low']),
+                Number(dt['close']),
+              ],
+            ]);
+            this.lastPrice = Number(dt['close']);
+          }
         }
+        this.prediction = priceResp['Prediction'].replace("[", ""); 
+        this.prediction = this.prediction.replace("]", ""); 
+        this.prediction = this.prediction.split(',').map(Number);
         this.isLoading = false;
+      }
       },
       (error: any) => {
         //If stock doesn't exist go back to stock listings

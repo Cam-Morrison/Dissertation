@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MyDataService } from '../shared/services/data.service';
 import { shareReplay } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthGuard } from '../shared/services/auth.guard';
+import {
+  DEFAULT_BREAKPOINTS,
+  ImageFormat,
+  NgxPictureModule
+} from 'ngx-picture';
 
 @Component({
   selector: 'app-news',
@@ -16,7 +22,7 @@ export class NewsComponent implements OnInit {
   isLoading: boolean = true;
   public AIassistance = true;
 
-  constructor(private MyDataService: MyDataService, private matSnackBar: MatSnackBar) { }
+  constructor(private MyDataService: MyDataService, private matSnackBar: MatSnackBar, private auth: AuthGuard) { }
 
   ngOnInit():void {
     let resp = this.MyDataService.getDailyNews().pipe(shareReplay());
@@ -29,6 +35,9 @@ export class NewsComponent implements OnInit {
           }
           this.newsList.push(data[key])
         }
+        var userObj = this.auth.getDecodedToken();
+        this.AIassistance = userObj.AIpreference.toLowerCase() === 'true';
+        console.log(this.AIassistance);
     },   
     (error: any) => {});  
     this.isLoading = false;

@@ -39,6 +39,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { PreferencesPageComponent } from './preferences-page/preferences-page.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
+import { NgxPictureModule, CLOUDINARY_CONFIG } from 'ngx-picture';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     BrowserModule,
     CdkMenuModule,
+    NgxPictureModule.forRoot(CLOUDINARY_CONFIG),
     NgApexchartsModule,
     MatTooltipModule,
     HttpClientModule,
@@ -66,11 +68,11 @@ import { FormsModule } from '@angular/forms';
     MatSlideToggleModule,
     MatCardModule,
     MatToolbarModule,
-    MatTableModule,
     MatSnackBarModule,
-    MatSortModule,
     MatSelectModule,
     MatInputModule,
+    MatTableModule,
+    MatSortModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
     ClipboardModule,

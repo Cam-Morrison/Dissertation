@@ -19,8 +19,8 @@ import { AuthGuard } from '../shared/services/auth.guard';
 export class DashboardComponent implements OnInit, AfterViewInit {
   stocks: any[] = [];
   watchlistTitle: string = "";
-  public chartTitle: string = "Portfolio movement";
-  public isLoading = true;
+  chartTitle: string = "Today's performance";
+  isLoading = true;
   loadingError = false;
   private sub: any;
   public username: string | undefined;
@@ -52,21 +52,48 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ngOnInit():void {
     // Read in ticker, get its price datapoints and daily movement
     let resp = this.MyDataService.getWatchList().pipe(shareReplay());
+    let date = new Date();
     this.sub =  resp.subscribe((data: any)=> {
       this.watchlistTitle = data["title"];
       this.stocks = data["stocks"];
-
+      
       for (let i = 0; i < this.stocks.length; i++) {
         this.dailyMovement += this.stocks[i]["regularMarketChangePercent"];
         this.previousCloses.push(this.stocks[i]["regularMarketPreviousClose"])
         this.currentPrices.push(this.stocks[i]["regularMarketPrice"])
         this.portfolioDataPoints.push([{x: `${this.stocks[i]["symbol"]}`, y: Number(this.stocks[i]["regularMarketChangePercent"].toFixed(2))}]);
       }
+      const yesterdayPrices = this.previousCloses.reduce((accumulator, obj) => {
+        return accumulator + Number(obj);
+      }, 0).toFixed(2);
+
+      const todaysPrices = this.currentPrices.reduce((accumulator, obj) => {
+        return accumulator + Number(obj);
+      }, 0).toFixed(2);
+
+      const todayDate = new Date(); 
+      const yesterdayDate = new Date();  
+      const todaysDayOfMonth = todayDate.getDate(); 
+      yesterdayDate.setDate(todaysDayOfMonth - 1); 
+
+      this.dataPoints.push([
+        [new Date(yesterdayDate)],
+        [
+          Number(yesterdayPrices),
+        ]
+      ]);
+      this.dataPoints.push([
+        [new Date(todayDate)],
+        [
+          Number(todaysPrices),
+        ]
+      ]);
+
+      this.isLoading = false;
     },   
     (error) => {
       this.loadingError = true;
     });  
-    this.isLoading = false;
     console.log(this.stocks);
   }
 

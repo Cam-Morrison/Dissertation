@@ -20,6 +20,7 @@ import { AuthGuard } from '../shared/services/auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../shared/services/token.interceptor';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatSnackBarModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatTooltipModule,
     NgApexchartsModule,
     FormsModule,
     ReactiveFormsModule,

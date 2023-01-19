@@ -15,3 +15,35 @@ span {
   height: auto;
   width: auto;
 }
+
+.info {
+  font-size:18px !important;
+  display:inline-grid;
+}
+
+table {
+  border-spacing: 1em 0.5em;
+  border-left: 1em solid #448de0;
+  background-color:#07203d;
+  color:white;
+  margin:1em;
+  width:auto;
+  height:auto;
+}
+th {
+  text-decoration: none;
+  font-size:medium;
+}
+td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.positive, .negative {
+  font-size:24px;
+  text-decoration: bold;
+}
+
+.mat-expansion-panel-header {
+
+}

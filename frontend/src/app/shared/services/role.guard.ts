@@ -12,16 +12,20 @@ export class RoleGuard implements CanActivate {
 
   canActivate() 
   {
-    var userObj = this.auth.getDecodedToken();
-    let role = userObj.role;
-    if(role == "User") 
-    {
+    try {
+      var userObj = this.auth.getDecodedToken();
+      let role = userObj.role;
+      if(role == "User") 
+      {
+        this.router.navigate(['dashboard']);
+        return false;
+      } 
+      else {
+        return true;
+      }
+    } catch(Exception) {
       this.router.navigate(['dashboard']);
       return false;
-    } 
-    else {
-      return true;
     }
   }
-
 }

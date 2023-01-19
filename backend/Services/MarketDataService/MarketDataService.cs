@@ -55,6 +55,7 @@ namespace backend.services
             string updatedMarketData = CallUrl(marketDataUrl, true);
             if(updatedMarketData != "Issue with API Call")
             {
+                Console.WriteLine(updatedMarketData);
                 tickerList = updatedMarketData;
                 Console.Write(tickerList.ToString());
             } 
@@ -105,7 +106,11 @@ namespace backend.services
             string updateInterval = "1wk";
             var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/hi/history/{ticker}/{updateInterval}?diffandsplits=false";
             mostRecentPriceHistory = CallUrl(url, false);
-            return mostRecentPriceHistory;
+            JObject json = JObject.Parse(mostRecentPriceHistory);
+            predictionModel pm = new predictionModel();
+            var forecast = pm.getForecast(mostRecentPriceHistory);
+            json.Add("Prediction", forecast);
+            return json.ToString();
         }
 
         public string GetActiveStocks() {
@@ -158,9 +163,10 @@ namespace backend.services
 
         public string GetPricePrediction()
         {
-            var prices = GetPriceHistory("tsla");
-            predictionModel pm = new predictionModel(prices);
-            return "£430";
+            // var prices = GetPriceHistory("tsla");
+            var prices = File.ReadAllText("C:/Users/Cam-M/Documents/Dissertation/backend/Services/MarketDataService/testdata.txt");
+            predictionModel pm = new predictionModel();
+            return pm.getForecast(prices);
         }
 
         private string CallUrl(string inputUrl, bool keyTwo)

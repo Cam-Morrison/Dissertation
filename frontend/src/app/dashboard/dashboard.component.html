@@ -22,28 +22,28 @@
           {{ dailyMovement.toFixed(2) + "%" }}
         </h2>
       </div>
-      <mat-form-field class="ChartSelector" appearance="fill">
+      <!-- <mat-form-field class="ChartSelector" appearance="fill">
         <mat-label>Change chart</mat-label>
         <mat-select [(value)]="selectedChart">
           <mat-option value="area">Area</mat-option>
           <mat-option value="candlestick">Candle stick</mat-option>
         </mat-select>
-      </mat-form-field>
+      </mat-form-field> -->
     </div>
-    <stockChart
-      [dataPoints]="dataPoints"
-      [ticker]="chartTitle"
-      [chartType]="selectedChart"
-      *ngIf="!isLoading"
-    ></stockChart>
+  <!-- Loader -->
+  <div class="spinbox" *ngIf="isLoading">
+    <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
+  <stockChart
+    *ngIf="!isLoading"
+    [dataPoints]="dataPoints"
+    [ticker]="chartTitle!"
+    [chartType]="selectedChart"
+  ></stockChart>
 
     <mat-divider></mat-divider>
-
-    <div class="spinbox" *ngIf="isLoading == true">
-      <mat-progress-spinner color="primary" mode="indeterminate">
-      </mat-progress-spinner>
-    </div>
-
+    <br>
     <div class="center" *ngIf="loadingError == false && isLoading == false && stocks.length > 0">
       <div class="fundTitle">
         <h1>

@@ -4,6 +4,7 @@ import { debounceTime, distinctUntilChanged, shareReplay, switchMap } from 'rxjs
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatOption } from '@angular/material/core';
 
 @Component({
   selector: 'app-stocks',
@@ -20,12 +21,22 @@ export class StocksComponent implements OnInit, AfterViewInit {
     search:new FormControl('')
   })
   public stockList:Array<any> = [];
+
+  @ViewChild('found')
+  public resultDropDown!: MatOption;
+
+  @ViewChild('noResults')
+  public noResultsDropDown!: MatOption;
   
   constructor
   (
     private MyDataService: MyDataService,
     private router: Router,
   )  { 
+    window.onscroll = () => {
+      this.resultDropDown.setInactiveStyles();
+      this.noResultsDropDown.deselect();
+    }
     this.searchForm.get('search')?.valueChanges.pipe(
       debounceTime(1000),
       switchMap((v) => this.MyDataService.getStocksBySearch(v)),
