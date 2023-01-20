@@ -1,4 +1,4 @@
-import { MyDataService } from '../shared/services/data.service';
+import { MyDataService } from '../../shared/services/data.service';
 import { Component, OnInit, AfterViewInit} from "@angular/core";
 import { shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
@@ -8,7 +8,7 @@ import { MatDialog} from '@angular/material/dialog';
 import { editNameDialog } from './edit-title.component';
 import { of } from 'rxjs/internal/observable/of';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { AuthGuard } from '../shared/services/auth.guard';
+import { AuthGuard } from '../../shared/services/auth.guard';
 
 @Component({
   selector: "app-dashboard",

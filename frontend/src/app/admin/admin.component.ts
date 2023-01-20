@@ -3,19 +3,15 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { shareReplay } from 'rxjs/internal/operators/shareReplay';
 import { AuthGuard } from '../shared/services/auth.guard';
 import { MyDataService } from '../shared/services/data.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { share } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
-import {AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
 })
-export class AdminComponent implements OnInit, AfterViewInit {
+export class AdminComponent implements OnInit {
   displayedColumns: string[] = ['Time', 'UserID', 'User', 'Action', 'Status'];
   public username: any;
   dataPoints: any[] = [];
@@ -25,7 +21,6 @@ export class AdminComponent implements OnInit, AfterViewInit {
   respMsg: string | undefined;
 
   @ViewChild(MatTable, {static: false}) table : any 
-  @ViewChild(MatSort)sort: MatSort = new MatSort();
 
   constructor(
     private auth: AuthGuard, 
@@ -60,23 +55,6 @@ export class AdminComponent implements OnInit, AfterViewInit {
         console.log('error is: ' + error);
       }
     );
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
-
-  /** Announce the change in sort state for assistive technology. */
-  announceSortChange(sortState: Sort) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
   }
 
   public lock(element: any) {

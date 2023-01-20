@@ -54,6 +54,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       },
       { 
         path: 'stocks/:ticker', 
+        loadChildren: () => import('./stocks.module').then(m => m.StocksModule),
         component: StockDetailComponent,
         canActivate: [AuthGuard]
       }

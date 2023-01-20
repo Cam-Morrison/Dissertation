@@ -7,7 +7,7 @@
           positive: dailyMovement > 0,
           negative: dailyMovement < 0
         }"
-        *ngIf="dailyMovement != null"
+        *ngIf="dailyMovement != null && stocks.length != 0"
       >
         <span *ngIf="dailyMovement > 0">
           <mat-icon>trending_up</mat-icon>

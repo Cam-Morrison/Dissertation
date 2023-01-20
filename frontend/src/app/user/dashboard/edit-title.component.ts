@@ -9,7 +9,7 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MyDataService } from '../shared/services/data.service';
+import { MyDataService } from '../../shared/services/data.service';
 import { shareReplay } from 'rxjs/operators';
 import { DashboardComponent } from './dashboard.component';
 

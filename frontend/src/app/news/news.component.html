@@ -22,6 +22,7 @@
             </mat-card-header>
 
             <ngx-picture
+            *ngIf="item['image'] != null"
             src="{{ item['image'] }}" 
             alt="{{item['headline']}}"
             [lazyLoad]="true"
