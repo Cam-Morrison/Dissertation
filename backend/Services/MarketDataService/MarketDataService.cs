@@ -82,9 +82,8 @@ namespace backend.services
                 return (List<string>)results;
 
             } else { 
-                 results.Add("No results");
-                 return results;
-                // return getStockTicker(userEntry);;
+                results.Add("No results");
+                return results;  
             }
         }
 
@@ -140,14 +139,18 @@ namespace backend.services
         //     if(json["count"].Value<int>() > 0)
         //     {
         //         for(int i = 0; i < json["count"].Value<int>(); i++) {
-        //             results.Add(json["result"][i]["symbol"].ToString());
-        //             if(i == 5) {
-        //                 break;
+        //             var resp = json["result"][i]["symbol"].ToString();
+        //             if(resp.Contains(".") == false) {
+        //                 results.Add(resp);
+        //                 if(i == 5) {
+        //                     break;
+        //                 }
         //             }
         //         }
         //     } else {
         //         results.Add("No results");
         //     }
+        //     results.Add("No results");
         //     return results;  
         // }
 

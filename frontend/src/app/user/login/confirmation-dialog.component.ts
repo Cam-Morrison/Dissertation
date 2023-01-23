@@ -54,9 +54,14 @@ export class ConfirmationDialog {
           responseType: 'text' 
         })
         .subscribe((response: string) => {
-          this.dialogRef.close()
-          localStorage.setItem('token', response)
-          this.router.navigate(['/stocks'])
+          console.log(response);
+          if(response == "Please do not use any rude words.") {
+            this.errorMsg = response;
+          } else {
+            this.dialogRef.close()
+            localStorage.setItem('token', response)
+            this.router.navigate(['/stocks'])
+          }
         }, 
         (error: HttpErrorResponse) => {
           this.errorMsg = error.error

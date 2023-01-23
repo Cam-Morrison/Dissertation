@@ -1,10 +1,9 @@
-import { Component, OnInit, AfterViewInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MyDataService } from '../shared/services/data.service';
 import { debounceTime, distinctUntilChanged, shareReplay, switchMap } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatOption } from '@angular/material/core';
 
 @Component({
   selector: 'app-stocks',
@@ -22,6 +21,12 @@ export class StocksComponent implements OnInit, AfterViewInit {
   })
   public stockList:Array<any> = [];
 
+  dropdownVisible = true;
+
+  hideSearchResults() {
+    this.dropdownVisible = false;
+  }
+
   constructor
   (
     private MyDataService: MyDataService,
@@ -38,7 +43,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
       }catch(Exception) {}
     })
   }
-
+  
   ngOnInit() {
     //Read in ticker
     var count = 0;

@@ -79,16 +79,18 @@ export class StockDetailComponent implements OnInit {
     detailsCall.subscribe(
       (detailsResp: any) => {
         console.log(detailsResp);
-        var dt = detailsResp['assetProfile'];
-        this.details = {
-          description: dt['longBusinessSummary'],
-          companyUrl: dt['website'],
-          sector: dt['industry'],
-          name: this.ticker,
-          country: dt['country'],
-          city: dt['city'],
-          employees: dt['fullTimeEmployees'],
-        };
+        try {
+          var dt = detailsResp['assetProfile'];
+          this.details = {
+            companyUrl: dt['website'],
+            sector: dt['industry'],
+            name: this.ticker,
+            country: dt['country'],
+            city: dt['city'],
+            employees: dt['fullTimeEmployees'],
+            description: dt['longBusinessSummary'],
+          };
+        } catch(Exception) {}
         this.detailsLoaded = true;
       },
       (error) => {

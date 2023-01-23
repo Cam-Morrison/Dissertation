@@ -91,13 +91,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           Number(todaysPrices),
         ]
       ]);
-
-      this.isLoading = false;
     },   
     (error) => {
       this.loadingError = true;
     });  
-    console.log(this.stocks);
+    this.isLoading = false;
   }
 
   removeFromWatchlist(ticker: any, index: number) {

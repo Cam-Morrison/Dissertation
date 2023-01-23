@@ -1,15 +1,15 @@
-namespace backend.services 
+namespace backend.services
 {
-using backend.entity;
-using backend.model;
-using System.Security.Cryptography;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text.Json;
+    using backend.entity;
+    using backend.model;
+    using System.Security.Cryptography;
+    using System.Security.Claims;
+    using Microsoft.IdentityModel.Tokens;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Linq;
     using Newtonsoft.Json.Linq;
     using Newtonsoft.Json;
+    using ProfanityFilter;
 
     public class UserService : IUserService
     {
@@ -51,6 +51,10 @@ using System.Text.Json;
         }
 
          public async Task<string> Register(Register input) {
+            var filter = new ProfanityFilter();
+            if(filter.ContainsProfanity(input.UserName) == true) {
+                return "Please do not use any rude words.";
+            }
             if(_context.Users.Any(u => u.UserName == input.UserName)) 
             {
                 return "User already exists.";
@@ -223,6 +227,10 @@ using System.Text.Json;
         public string UpdateWatchListTitle(string username, string newTitle) {
             if(newTitle.Length < 3 || newTitle.Length > 16) {
                 return "Watchlist length is too short or long (3-16)";
+            }
+            var filter = new ProfanityFilter();
+            if(filter.ContainsProfanity(newTitle) == true) {
+                return "Please do not use any rude words.";
             }
             int userId = (int)_context.Users.FirstOrDefaultAsync(u => u.UserName == username).Result!.UserId!;
             var watchlist = _context.Watchlists.FirstOrDefaultAsync(u => u.UserId == userId).Result;

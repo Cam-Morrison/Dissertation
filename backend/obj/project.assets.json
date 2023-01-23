@@ -825,6 +825,15 @@
           }
         }
       },
+      "Profanity.Detector/0.1.8": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/ProfanityFilter.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/ProfanityFilter.dll": {}
+        }
+      },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {
         "type": "package",
         "runtimeTargets": {
@@ -3315,6 +3324,18 @@
         "lib/net6.0/Pomelo.EntityFrameworkCore.MySql.xml",
         "pomelo.entityframeworkcore.mysql.6.0.2.nupkg.sha512",
         "pomelo.entityframeworkcore.mysql.nuspec"
+      ]
+    },
+    "Profanity.Detector/0.1.8": {
+      "sha512": "4rfonJb74vncmdyobz71Wm0N5YeKtReOMIr0P8z/IRP9iJsVcoRfFFfgANopaFjmHI1lZyZL+ps8AKwF1rNjHg==",
+      "type": "package",
+      "path": "profanity.detector/0.1.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/ProfanityFilter.dll",
+        "profanity.detector.0.1.8.nupkg.sha512",
+        "profanity.detector.nuspec"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {
@@ -6951,6 +6972,7 @@
       "Microsoft.ML.TimeSeries >= 1.5.0-preview",
       "Newtonsoft.Json >= 13.0.1",
       "Pomelo.EntityFrameworkCore.MySql >= 6.0.2",
+      "Profanity.Detector >= 0.1.8",
       "Serilog >= 2.11.0",
       "Swashbuckle.AspNetCore >= 6.2.3",
       "Swashbuckle.AspNetCore.Annotations >= 6.4.0",
@@ -7046,6 +7068,10 @@
           "Pomelo.EntityFrameworkCore.MySql": {
             "target": "Package",
             "version": "[6.0.2, )"
+          },
+          "Profanity.Detector": {
+            "target": "Package",
+            "version": "[0.1.8, )"
           },
           "Serilog": {
             "target": "Package",

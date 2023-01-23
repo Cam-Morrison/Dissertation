@@ -36,8 +36,7 @@
     </mat-expansion-panel-header>
     <div *ngIf="detailsLoaded">
       <h3>
-        <span *ngIf="details.name"> <strong>{{details.name}} </strong></span>
-        <span *ngIf="details.name == null"> There is no information on this security</span>
+        <span *ngIf="details.description == null"> There is no description of this security</span>
       </h3>
       <p>
         <span *ngIf="details.description"> {{details.description}} </span>
@@ -71,6 +70,7 @@
           information
         </mat-icon>
         </p>
+        <div class="predictedPerformance">
           <table>
             <tr>
               <th>Current</th>
@@ -85,11 +85,12 @@
               <td>${{prediction[6] | number : '1.2-2'}}</td>
               <td>${{prediction[29] | number : '1.2-2'}}</td>
               <td>
-                <ng-template *ngIf="prediction[29] >= lastPrice!"><mat-icon class="positive">trending_up</mat-icon></ng-template>
-                <ng-template *ngIf="prediction[29] <= lastPrice!"><mat-icon class="negative">trending_down</mat-icon></ng-template>
+                <mat-icon class="positive" *ngIf="prediction[29] >= lastPrice!">trending_up</mat-icon>
+                <mat-icon class="negative" *ngIf="prediction[29] <= lastPrice!">trending_down</mat-icon>
               </td>
             </tr>
           </table>
+        </div>
         <p>
           Based upon current prices, this would be a short term (1 month)
           <ng-template *ngIf="prediction[29] > lastPrice!; else lessTxt">gain.</ng-template>

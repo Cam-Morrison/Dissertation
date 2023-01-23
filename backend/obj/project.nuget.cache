@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "haUEq8PKzPnGvHaLkL/1Dr3cy5RfqCc8bXTamuB5bLXO2WxLCZAJw9Pp/j0ML2CxIVvtI+jMskivp4K49oNt1w==",
+  "dgSpecHash": "49uL+hE+LSHHNlpUo2izsDY1CMOFwipavRg3SYpSMQZVvs4GIzyYYJ9cw8smXLii6+XffWYukmMQPRxyznrwAg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Cam-M\\Documents\\Dissertation\\backend\\backend.csproj",
   "expectedPackageFiles": [
@@ -47,6 +47,7 @@
     "C:\\Users\\Cam-M\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\Cam-M\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\Cam-M\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\6.0.2\\pomelo.entityframeworkcore.mysql.6.0.2.nupkg.sha512",
+    "C:\\Users\\Cam-M\\.nuget\\packages\\profanity.detector\\0.1.8\\profanity.detector.0.1.8.nupkg.sha512",
     "C:\\Users\\Cam-M\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\Cam-M\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\Cam-M\\.nuget\\packages\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
