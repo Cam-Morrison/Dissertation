@@ -12,6 +12,7 @@ namespace TimeSeries.Model
     {
         public string getForecast(string prices)
         {
+            //Clean data and parse to correct format
             JObject json = JObject.Parse(prices);
             List<predictionInput> modelInput = new List<predictionInput>();
             foreach (JProperty x in (JToken)json["items"])
@@ -32,10 +33,12 @@ namespace TimeSeries.Model
             MLContext mlContext = new MLContext(seed: 0);
             IDataView data = mlContext.Data.LoadFromEnumerable<predictionInput>(modelInput);
 
-            // TrainTestData dataSplit = mlContext.Data.TrainTestSplit(data, testFraction: 0.2);
-            // IDataView trainData = dataSplit.TrainSet;
-            // IDataView testData = dataSplit.TestSet;
+            //Data splits
+            TrainTestData dataSplit = mlContext.Data.TrainTestSplit(data, testFraction: 0.2);
+            IDataView trainData = dataSplit.TrainSet;
+            IDataView testData = dataSplit.TestSet;
 
+            //Time series forecasting pipeline 
             var forecastingPipeline = mlContext.Forecasting.ForecastBySsa(
                 outputColumnName: nameof(predictionOutput.ForecastedPrice),
                 inputColumnName: nameof(predictionInput.price),
@@ -47,31 +50,42 @@ namespace TimeSeries.Model
                 confidenceLowerBoundColumn: nameof(predictionOutput.LowerBoundPrice),
                 confidenceUpperBoundColumn: nameof(predictionOutput.UpperBoundPrice));
 
-            var forecaster = forecastingPipeline.Fit(data);
+            var forecaster = forecastingPipeline.Fit(trainData);
             var forecastingEngine = forecaster.CreateTimeSeriesEngine<predictionInput, predictionOutput>(mlContext);
-            var forecasts = forecastingEngine.Predict();
 
+            //Evaluate model performance using test data split
+            Evaluate(testData, forecaster, mlContext);
+
+            //Forecast using all the data
+            var entireForecaster = forecastingPipeline.Fit(data);
+            var forecastEngine = forecaster.CreateTimeSeriesEngine<predictionInput, predictionOutput>(mlContext);
+            var forecasts = forecastEngine.Predict();
+
+            //Format data and return
             List<float> forecastList = new List<float>();
             foreach (var forecast in forecasts.ForecastedPrice)
             {
                 forecastList.Add(forecast);
             }
             var Json = JsonConvert.SerializeObject(forecastList);
+
             return Json.ToString();
         }
 
-        public void Evaluate(IDataView testData, ITransformer model, MLContext mlContext)
+
+        static void Evaluate(IDataView testData, ITransformer model, MLContext mlContext)
         {
             IDataView predictions = model.Transform(testData);
-            IEnumerable<float> actual = mlContext.Data.CreateEnumerable<predictionInput>(testData, true).Select(observed => observed.price);
-
-            IEnumerable<float> forecast = (IEnumerable<float>)mlContext.Data.CreateEnumerable<predictionOutput>(predictions, true).Select(prediction => prediction.ForecastedPrice);
+            IEnumerable<float> actual =
+            mlContext.Data.CreateEnumerable<predictionInput>(testData, true)
+                .Select(observed => observed.price);
+            IEnumerable<float> forecast =
+            mlContext.Data.CreateEnumerable<predictionOutput>(predictions, true)
+                .Select(prediction => prediction.ForecastedPrice[0]);
 
             var metrics = actual.Zip(forecast, (actualValue, forecastValue) => actualValue - forecastValue);
-
             var MAE = metrics.Average(error => Math.Abs(error)); // Mean Absolute Error
             var RMSE = Math.Sqrt(metrics.Average(error => Math.Pow(error, 2))); // Root Mean Squared Error
-
             Console.WriteLine("Evaluation Metrics");
             Console.WriteLine("---------------------");
             Console.WriteLine($"Mean Absolute Error: {MAE:F3}");
