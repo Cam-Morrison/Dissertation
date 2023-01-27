@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { lastValueFrom } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 import { AuthGuard } from 'src/app/shared/services/auth.guard';
 import { MyDataService } from 'src/app/shared/services/data.service';
@@ -21,6 +19,7 @@ export class StockDetailComponent implements OnInit {
   detailsLoaded = false;
   panelOpenState = true;
   details?: any;
+  metrics: any | undefined;
   prediction: any = [];
   lastPrice?: number;
   AIassistance: boolean = true;
@@ -38,16 +37,16 @@ export class StockDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.ticker = this.route.snapshot.paramMap.get('ticker');
-    let priceCall = this.MyDataService.getStockHistory(this.ticker!).pipe(
+    let call = this.MyDataService.GetDetailsPageContent(this.ticker!).pipe(
       shareReplay()
     );
-    priceCall.subscribe(
-      (priceResp: any) => {
-        if (priceResp['error'] != null) {
+    call.subscribe(
+      (resp: any) => {
+        if (resp['error'] != null) {
           this.pageNotFound();
         } else {
-        for (var key in priceResp['items']) {
-          var dt = priceResp['items'][key];
+        for (var key in resp['items']) {
+          var dt = resp['items'][key];
           if(Number(dt["open"]) != 0.00) {
             this.dataPoints.push([
               [new Date(dt['date'])],
@@ -61,9 +60,47 @@ export class StockDetailComponent implements OnInit {
             this.lastPrice = Number(dt['close']);
           }
         }
-        this.prediction = priceResp['Prediction'].replace("[", ""); 
+        //Company description
+        try {
+          dt = resp['details']['assetProfile'];
+          this.details = {
+            companyUrl: dt['website'],
+            sector: dt['industry'],
+            name: this.ticker,
+            country: dt['country'],
+            city: dt['city'],
+            employees: dt['fullTimeEmployees'],
+            description: dt['longBusinessSummary'],
+          };
+        } catch(Exception) {}
+
+        //Company financial metrics
+        try {
+          dt = resp['metrics']['defaultKeyStatistics'];
+          this.metrics = {
+            marketCap: dt['enterpriseValue']['longFmt'],
+            marketCapCompressed: dt['enterpriseValue']['fmt'],
+            forwardPE: dt['forwardPE']['fmt'],
+            profitMargins: dt['profitMargins']['fmt'],
+            sharesOutstanding: dt['sharesOutstanding']['fmt'],
+            sharesHeldByInsider: dt['heldPercentInsiders']['fmt'],
+            sharesHeldByInstituions: dt['heldPercentInstitutions']['fmt'],
+            yield: dt['yield']['fmt'],
+            LastDividEnd: dt['lastDividendDate']['fmt'],
+            lastDividendValue: dt['lastDividendValue']['fmt'],
+          };
+        } catch(Exception) {
+          console.log(Exception)
+        }
+
+        this.detailsLoaded = true;
+
+        //Stock price prediction loading in
+        this.prediction = resp['Prediction'].replace("[", ""); 
         this.prediction = this.prediction.replace("]", ""); 
         this.prediction = this.prediction.split(',').map(Number);
+
+        //All info loaded
         this.isLoading = false;
       }
       },
@@ -73,28 +110,30 @@ export class StockDetailComponent implements OnInit {
         this.pageNotFound();
       }
     );
-    var detailsCall = this.MyDataService.getStockDetails(this.ticker!).pipe(
-      shareReplay()
-    );
-    detailsCall.subscribe(
-      (detailsResp: any) => {
-        console.log(detailsResp);
-        var dt = detailsResp['assetProfile'];
-        this.details = {
-          description: dt['longBusinessSummary'],
-          companyUrl: dt['website'],
-          sector: dt['industry'],
-          name: this.ticker,
-          country: dt['country'],
-          city: dt['city'],
-          employees: dt['fullTimeEmployees'],
-        };
-        this.detailsLoaded = true;
-      },
-      (error) => {
-        //Empty because if stock does not have information on one of these categories it can through an error
-      }
-    );
+    // var detailsCall = this.MyDataService.getStockDetails(this.ticker!).pipe(
+    //   shareReplay()
+    // );
+    // detailsCall.subscribe(
+    //   (detailsResp: any) => {
+    //     console.log(detailsResp);
+    //     try {
+    //       var dt = detailsResp['assetProfile'];
+    //       this.details = {
+    //         companyUrl: dt['website'],
+    //         sector: dt['industry'],
+    //         name: this.ticker,
+    //         country: dt['country'],
+    //         city: dt['city'],
+    //         employees: dt['fullTimeEmployees'],
+    //         description: dt['longBusinessSummary'],
+    //       };
+    //     } catch(Exception) {}
+    //     this.detailsLoaded = true;
+    //   },
+    //   (error) => {
+    //     //Empty because if stock does not have information on one of these categories it can through an error
+    //   }
+    // );
   }
 
   pageNotFound() {

@@ -94,17 +94,18 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Route("/history/{ticker}")]
+        [Route("/detailsPageContent/{ticker}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [SwaggerOperation(Summary = "Gets the historical prices of {ticker}, used for charts and prediction")]
-        public async Task<IActionResult> GetStockHistory(string ticker)
+        [SwaggerOperation(Summary = 
+        "Gets the historical prices of {ticker}, the A.I. predicted price and stock key metrics. All of which are used to populate the stock details page.")]
+        public async Task<IActionResult> GetDetailsPageContent(string ticker)
         {
             try
             {
                 if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
                 {
-                    return Ok(_marketDataService.GetPriceHistory(ticker));
+                    return Ok(_marketDataService.GetDetailsPageContent(ticker));
                 } 
                 return Ok("Feature not implemented");
             }

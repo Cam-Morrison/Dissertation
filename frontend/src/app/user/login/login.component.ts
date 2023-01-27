@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators, FormGroupDirective, NgForm } from '
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { MyDataService } from '../shared/services/data.service';
+import { MyDataService } from '../../shared/services/data.service';
 import { ConfirmationDialog } from './confirmation-dialog.component';
 
 @Component({

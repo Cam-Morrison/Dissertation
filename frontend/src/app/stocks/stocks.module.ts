@@ -21,6 +21,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../shared/services/token.interceptor';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgxHideOnScrollModule } from 'ngx-hide-on-scroll';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatProgressSpinnerModule,
     MatTooltipModule,
     NgApexchartsModule,
+    NgxHideOnScrollModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild([
@@ -54,6 +56,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       },
       { 
         path: 'stocks/:ticker', 
+        loadChildren: () => import('./stocks.module').then(m => m.StocksModule),
         component: StockDetailComponent,
         canActivate: [AuthGuard]
       }

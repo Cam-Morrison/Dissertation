@@ -1,34 +1,24 @@
-using Amazon.SecretsManager;
-using Amazon.SecretsManager.Extensions.Caching;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 
 namespace backend.services
 {
-    public class SecretsManagerService : IDisposable
+    public class SecretsManagerService 
     {
-        private readonly IAmazonSecretsManager secretsManager;
-        private readonly SecretsManagerCache cache;
-
-        public SecretsManagerService() 
-        {
-            this.secretsManager = new AmazonSecretsManagerClient();
-            this.cache = new SecretsManagerCache(this.secretsManager);
+        readonly string tenantId;
+        readonly string clientId;
+        readonly string clientSecret;
+    
+        public SecretsManagerService() {
+            tenantId = "cc0332ed-edc4-4fe2-b412-ae14ffdcefba";
+            clientId = "2de3bdbd-4813-4edb-ad7b-5ccab9a480ed";
+            clientSecret = "YoQ8Q~oYIkHyx2uTlK_g2fSJJ_XJXm~jDYny8aLi";     
         }
 
-        public void Dispose() 
-        {
-            this.secretsManager.Dispose();
-            this.cache.Dispose();
-        }
-
-        public async Task<(string subject, string secret)> GetSuperSecretPassword(string secretId)
-        {
-            var sec = await this.cache.GetSecretString(secretId);
-            var jo = Newtonsoft.Json.Linq.JObject.Parse(sec);
-            return (subject: jo["Subject"].ToString(), secret: jo["Secret"].ToObject<string>());
+        public string GetSecret(string SecretName) {
+            var credentials = new ClientSecretCredential(tenantId, clientId, clientSecret);
+            var client = new SecretClient(vaultUri: new Uri("https://investmentdashboard.vault.azure.net/"), credentials);
+            return client.GetSecret(SecretName).Value.Value;
         }
     }
 }

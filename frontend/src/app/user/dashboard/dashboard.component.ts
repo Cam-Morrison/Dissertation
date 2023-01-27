@@ -1,4 +1,4 @@
-import { MyDataService } from '../shared/services/data.service';
+import { MyDataService } from '../../shared/services/data.service';
 import { Component, OnInit, AfterViewInit} from "@angular/core";
 import { shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
@@ -8,7 +8,7 @@ import { MatDialog} from '@angular/material/dialog';
 import { editNameDialog } from './edit-title.component';
 import { of } from 'rxjs/internal/observable/of';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { AuthGuard } from '../shared/services/auth.guard';
+import { AuthGuard } from '../../shared/services/auth.guard';
 
 @Component({
   selector: "app-dashboard",
@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public username: string | undefined;
 
   dailyMovement: number = 0;
+  dailyMovementPerc: number = 0;
   ticker?: string | null;
   tickerValid: boolean = true;
   dataPoints: any = [];
@@ -58,11 +59,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.stocks = data["stocks"];
       
       for (let i = 0; i < this.stocks.length; i++) {
-        this.dailyMovement += this.stocks[i]["regularMarketChangePercent"];
         this.previousCloses.push(this.stocks[i]["regularMarketPreviousClose"])
         this.currentPrices.push(this.stocks[i]["regularMarketPrice"])
         this.portfolioDataPoints.push([{x: `${this.stocks[i]["symbol"]}`, y: Number(this.stocks[i]["regularMarketChangePercent"].toFixed(2))}]);
       }
+
       const yesterdayPrices = this.previousCloses.reduce((accumulator, obj) => {
         return accumulator + Number(obj);
       }, 0).toFixed(2);
@@ -70,6 +71,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       const todaysPrices = this.currentPrices.reduce((accumulator, obj) => {
         return accumulator + Number(obj);
       }, 0).toFixed(2);
+
+      this.dailyMovement = ((todaysPrices - yesterdayPrices) / yesterdayPrices) * 100;
 
       const todayDate = new Date(); 
       const yesterdayDate = new Date();  
@@ -88,13 +91,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           Number(todaysPrices),
         ]
       ]);
-
-      this.isLoading = false;
     },   
     (error) => {
       this.loadingError = true;
     });  
-    console.log(this.stocks);
+    this.isLoading = false;
   }
 
   removeFromWatchlist(ticker: any, index: number) {

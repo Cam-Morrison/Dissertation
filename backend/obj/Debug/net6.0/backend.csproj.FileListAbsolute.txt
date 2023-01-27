@@ -42,7 +42,6 @@ C:\Users\Cam-M\Documents\Dissertation\backend\obj\Debug\net6.0\backend.MvcApplic
 C:\Users\Cam-M\Documents\Dissertation\backend\obj\Debug\net6.0\backend.dll
 C:\Users\Cam-M\Documents\Dissertation\backend\obj\Debug\net6.0\refint\backend.dll
 C:\Users\Cam-M\Documents\Dissertation\backend\obj\Debug\net6.0\backend.pdb
-C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\appsettings.json
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\backend.exe
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\backend.deps.json
@@ -118,3 +117,13 @@ C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\runtimes\win-x86\
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\AWSSDK.Core.dll
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\AWSSDK.SecretsManager.dll
 C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Amazon.SecretsManager.Extensions.Caching.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\ProfanityFilter.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Azure.Core.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Azure.Identity.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Azure.Security.KeyVault.Secrets.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\System.Memory.Data.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Cam-M\Documents\Dissertation\backend\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll

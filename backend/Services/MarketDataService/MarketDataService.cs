@@ -16,8 +16,10 @@ namespace backend.services
         private string polygonKey;
         private static string activeStocks;
         private static string homePagePrices;
-        private static string mostRecentPriceHistory; //Used for AI prediction
+        private static JObject recentStockDetailsPageCall; 
+        private static string recentTickerCall; 
         private string today = DateTime.Today.AddDays(0).ToString("yyyy-MM-dd");
+        private string lastWeek = DateTime.Today.AddDays(-7).ToString("yyyy-MM-dd");
 
         public MarketDataService(IConfiguration configuration)
         {
@@ -82,11 +84,15 @@ namespace backend.services
                 return (List<string>)results;
 
             } else { 
-                 results.Add("No results");
-                 return results;
-                // return getStockTicker(userEntry);;
+                results.Add("No results");
+                return results;  
             }
         }
+
+        // public string GetIndividualStockNews(string ticker) {
+        //     var resp = CallUrl($"https://finnhub.io/api/v1/company-news?symbol={ticker}&from={lastWeek}&to={today}&token={polygonKey}", true);
+        //     return resp;
+        // }
 
         public string GetStockPrice(string ticker)
         {       
@@ -100,17 +106,31 @@ namespace backend.services
             return CallUrl(url, false);
         }
 
-        public string GetPriceHistory(string ticker)
+        public string GetDetailsPageContent(string ticker)
         {
-            //Currently set to one update per week
-            string updateInterval = "1wk";
-            var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/hi/history/{ticker}/{updateInterval}?diffandsplits=false";
-            mostRecentPriceHistory = CallUrl(url, false);
-            JObject json = JObject.Parse(mostRecentPriceHistory);
-            predictionModel pm = new predictionModel();
-            var forecast = pm.getForecast(mostRecentPriceHistory);
-            json.Add("Prediction", forecast);
-            return json.ToString();
+            if(ticker != recentTickerCall || recentStockDetailsPageCall == null) {
+
+                Console.WriteLine("3 Initial calls to yahoo finance.");
+                string updateInterval = "1wk";
+                var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/hi/history/{ticker}/{updateInterval}?diffandsplits=false";
+                var resp = CallUrl(url, false);
+
+                JObject json = JObject.Parse(resp);
+                predictionModel pm = new predictionModel();
+                var forecast = pm.getForecast(resp);
+                json.Add("Prediction", forecast);
+
+                var metrics = GetStockFinancials(ticker);
+                json.Add("metrics", metrics);
+
+                var details = GetStockDetail(ticker);
+                JObject detailsJson = JObject.Parse(details);
+                json.Add("details", detailsJson);
+
+                recentStockDetailsPageCall = json;
+                recentTickerCall = ticker;
+            }
+            return recentStockDetailsPageCall.ToString();
         }
 
         public string GetActiveStocks() {
@@ -140,14 +160,18 @@ namespace backend.services
         //     if(json["count"].Value<int>() > 0)
         //     {
         //         for(int i = 0; i < json["count"].Value<int>(); i++) {
-        //             results.Add(json["result"][i]["symbol"].ToString());
-        //             if(i == 5) {
-        //                 break;
+        //             var resp = json["result"][i]["symbol"].ToString();
+        //             if(resp.Contains(".") == false) {
+        //                 results.Add(resp);
+        //                 if(i == 5) {
+        //                     break;
+        //                 }
         //             }
         //         }
         //     } else {
         //         results.Add("No results");
         //     }
+        //     results.Add("No results");
         //     return results;  
         // }
 
@@ -182,6 +206,8 @@ namespace backend.services
             new MediaTypeWithQualityHeaderValue("application/json"));
             // List data response.
             HttpResponseMessage response = client.GetAsync(inputUrl).Result;  // Blocking call! Program will wait here until a response is received or a timeout occurs.
+            Console.WriteLine(response.IsSuccessStatusCode);
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             if (response.IsSuccessStatusCode)
             {
                 // Parse the response body.

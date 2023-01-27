@@ -53,6 +53,14 @@
               "target": "Package",
               "version": "[4.0.2, )"
             },
+            "Azure.Identity": {
+              "target": "Package",
+              "version": "[1.8.1, )"
+            },
+            "Azure.Security.KeyVault.Secrets": {
+              "target": "Package",
+              "version": "[4.5.0-beta.1, )"
+            },
             "ConfigCat.Client": {
               "target": "Package",
               "version": "[6.5.2, )"
@@ -86,6 +94,10 @@
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[6.0.2, )"
+            },
+            "Profanity.Detector": {
+              "target": "Package",
+              "version": "[0.1.8, )"
             },
             "Serilog": {
               "target": "Package",

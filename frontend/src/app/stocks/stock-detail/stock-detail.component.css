@@ -44,6 +44,7 @@ td {
   text-decoration: bold;
 }
 
-.mat-expansion-panel-header {
-
+.predictedPerformance {
+  display: flex;
+  justify-content: center;
 }

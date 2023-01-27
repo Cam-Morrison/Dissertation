@@ -1,21 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MyDataService } from '../shared/services/data.service';
 import { shareReplay } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthGuard } from '../shared/services/auth.guard';
-import {
-  DEFAULT_BREAKPOINTS,
-  ImageFormat,
-  NgxPictureModule
-} from 'ngx-picture';
 
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
   styleUrls: ['./news.component.scss']
 })
-export class NewsComponent implements OnInit {
-  [x: string]: any;
+export class NewsComponent implements OnInit, OnDestroy {
   sub: any;
   dataPoints: any;
   newsList: any = [];
@@ -54,4 +48,8 @@ export class NewsComponent implements OnInit {
       }
     );
   }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+ }
 }

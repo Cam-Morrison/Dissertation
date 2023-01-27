@@ -23,12 +23,14 @@ namespace backend.services
     public class AdminService : IAdminService
     {
         private readonly IConfiguration Configuration;
-        private readonly dbContext _context = new dbContext();
-        private readonly dbContext _context2 = new dbContext();
+        private dbContext _context;
+        private dbContext _context2;
         public List<ResponseMessage> Response { get; set; }
         public AdminService(IConfiguration configuration)
         {
             Configuration = configuration;
+            _context = new dbContext(Configuration);
+            _context2 = new dbContext(Configuration);
         }
 
         public string getTaskHistory(string adminName)

@@ -1,10 +1,9 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MyDataService } from '../shared/services/data.service';
 import { debounceTime, distinctUntilChanged, shareReplay, switchMap } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatOption } from '@angular/material/core';
 
 @Component({
   selector: 'app-stocks',
@@ -22,31 +21,29 @@ export class StocksComponent implements OnInit, AfterViewInit {
   })
   public stockList:Array<any> = [];
 
-  @ViewChild('found')
-  public resultDropDown!: MatOption;
+  dropdownVisible = true;
 
-  @ViewChild('noResults')
-  public noResultsDropDown!: MatOption;
-  
+  hideSearchResults() {
+    this.dropdownVisible = false;
+  }
+
   constructor
   (
     private MyDataService: MyDataService,
     private router: Router,
   )  { 
-    window.onscroll = () => {
-      this.resultDropDown.setInactiveStyles();
-      this.noResultsDropDown.deselect();
-    }
     this.searchForm.get('search')?.valueChanges.pipe(
       debounceTime(1000),
       switchMap((v) => this.MyDataService.getStocksBySearch(v)),
     )
     .subscribe((resp: any) => {
-      console.log(resp)
-      this.stockList = resp;
+      try{
+        console.log(resp)
+        this.stockList = resp;
+      }catch(Exception) {}
     })
   }
-
+  
   ngOnInit() {
     //Read in ticker
     var count = 0;

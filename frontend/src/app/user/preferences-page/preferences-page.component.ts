@@ -2,9 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { shareReplay } from 'rxjs/internal/operators/shareReplay';
-import { MyDataService } from '../shared/services/data.service';
+import { MyDataService } from '../../shared/services/data.service';
 import { of, timer, concatMap, interval } from 'rxjs';
-import { AuthGuard } from '../shared/services/auth.guard';
+import { AuthGuard } from '../../shared/services/auth.guard';
 
 @Component({
   selector: 'app-preferences-page',

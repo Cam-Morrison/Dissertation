@@ -19,9 +19,9 @@ export class MyDataService
     return this.http.get(`${this.myBackEndService}/getWatchlist`);
   }
 
-  getStockHistory(ticker: string)
+  GetDetailsPageContent(ticker: string)
   {
-    return this.http.get(`${this.myBackEndService}/history/${ticker}`);
+    return this.http.get(`${this.myBackEndService}/detailsPageContent/${ticker}`);
   }
 
   getStockDetails(ticker: string)
