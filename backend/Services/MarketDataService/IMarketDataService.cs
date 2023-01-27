@@ -5,7 +5,7 @@ namespace backend.services
         List<String> SearchForStock(string userEntry);
         string GetStockPrice(string ticker);
         string GetStockDetail(string ticker);
-        string GetPriceHistory(string ticker);
+        string GetDetailsPageContent(string ticker);
         string GetActiveStocks();
         string GetPricePrediction();
     }

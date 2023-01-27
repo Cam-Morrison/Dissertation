@@ -7,13 +7,16 @@ namespace backend.entity
 {
     public partial class dbContext : DbContext
     {
-        public dbContext()
+        private IConfiguration _config;
+        public dbContext(IConfiguration config)
         {
+            _config = config;
         }
 
         public dbContext(DbContextOptions<dbContext> options)
             : base(options)
         {
+            Console.WriteLine(options.ContextType.Assembly);
         }
 
         public virtual DbSet<Action> Actions { get; set; } = null!;
@@ -25,8 +28,7 @@ namespace backend.entity
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;user=root;password=root;database=investment_dashboard_db;", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.31-mysql"));
+                optionsBuilder.UseMySql(_config.GetValue<string>("ClientConfiguration:dBContextSecret"), Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.31-mysql"));
             }
         }
     }

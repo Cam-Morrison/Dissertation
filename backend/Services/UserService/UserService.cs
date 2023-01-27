@@ -13,7 +13,7 @@ namespace backend.services
 
     public class UserService : IUserService
     {
-        private readonly dbContext _context = new dbContext();
+        private dbContext _context;
         public static string SessionIdToken = "session-id";
         private readonly IConfiguration _configuration;
         private MarketDataService _marketDataService;
@@ -23,6 +23,7 @@ namespace backend.services
 
         public UserService(IConfiguration configration, MarketDataService marketDataService){
             _configuration = configration;
+            _context = new dbContext(_configuration);
             _marketDataService = marketDataService;
             this.log = new AdminService(_configuration);
         }

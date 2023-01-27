@@ -2,7 +2,6 @@ global using Microsoft.OpenApi.Models;
 global using Microsoft.EntityFrameworkCore;
 
 using backend.services;
-using System;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,21 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// //AWS secrets manager
-// using (var sec = new SecretsManagerService()) {
-//     DateTime dt = DateTime.Now;
-
-//     var result = sec.GetSuperSecretPassword("secretname");
-//     result.Wait();
-//     TimeSpan span = DateTime.Now - dt;
-//     Console.WriteLine($"{result.Result.subject} secret is {result.Result.secret} retrieved in {span}");
-
-//     dt = DateTime.Now;
-//     result = sec.GetSuperSecretPassword("");
-//     result.Wait();
-//     span = DateTime.Now - dt;
-//     Console.WriteLine($"{result.Result.subject} secret is {result.Result.secret} retrieved in {span}");
-// }
+//Azure keyvault, dynamically loading in secrets from Microsoft azure into my appsettings for the rest of the program to reference.
+SecretsManagerService mySecrets = new SecretsManagerService();
+builder.Configuration["ClientConfiguration:dBContextSecret"] = mySecrets.GetSecret("dBContextSecret").ToString();
+builder.Configuration["ClientConfiguration:polygonKey"] = mySecrets.GetSecret("polygonKey").ToString();
+builder.Configuration["ClientConfiguration:finnHubKey"] = mySecrets.GetSecret("finnHubKey").ToString();
+builder.Configuration["ClientConfiguration:marketDataKey"] = mySecrets.GetSecret("marketDataKey").ToString();
+builder.Configuration["ClientConfiguration:FeatureFlagSdkKey"] = mySecrets.GetSecret("FeatureFlagSdkKey").ToString();
+builder.Configuration["AppSettings:Token"] = mySecrets.GetSecret("Token").ToString();
 
 //DBContext
 var dbConnectionString = builder.Configuration.GetSection("ClientConfiguration").GetValue<string>("dBContextSecret");
@@ -36,6 +28,7 @@ builder.Services.AddDbContext<DbContext>(
     DbContextOptions => DbContextOptions
         .UseMySql(dbConnectionString, serverVersion));
 
+//MVC setup
 builder.Services.AddSingleton<IFeatureFlagService, FeatureFlagService>();
 builder.Services.AddSingleton<IMarketDataService, MarketDataService>();
 builder.Services.AddSingleton<INewsService, NewsService>();
@@ -64,6 +57,7 @@ builder.Services.AddSwaggerGen(c =>
     c.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+//JWT Authentication 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(Options => {
         Options.TokenValidationParameters = new TokenValidationParameters
@@ -88,7 +82,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+} 
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
