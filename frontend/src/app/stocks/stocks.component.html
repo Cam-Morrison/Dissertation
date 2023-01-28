@@ -21,7 +21,7 @@
           <mat-option
             *ngFor="let stock of stockList"
             [value]="stock"
-            [routerLink]="['/stocks', stock]"
+            [routerLink]="['/stocks', stock.substring(0, stock.indexOf(' '))]"
           >
             {{ stock }}
           </mat-option>

@@ -38,6 +38,26 @@ namespace backend.services
             }
         }
 
+        private static string TickerToCompanyMap(string userEntry) 
+        {
+            var results = new List<string>();
+            string csvFile = "C:/Users/Cam-M/Documents/Dissertation/backend/Services/MarketDataService/companyMapping.csv";
+            try {
+                string[] lines = System.IO.File.ReadAllLines(@csvFile);
+
+                for(int i = 0; i < lines.Length; i++) {
+                    string[] fields = lines[i].Split(',');
+                    if(fields[1].ToLower().Contains(userEntry.ToLower())) {
+                        Console.WriteLine(fields[1]);
+                        return fields[0] + " (" + fields[1] + ") "  + fields[2];
+                    }
+                }
+            } catch (Exception ex) {
+                Console.WriteLine(ex);
+            }
+            return "No results";
+        }
+
         private void UpdateMarketData(){
             var valid = false;
             var i = -1; //Needs to be yesterday
@@ -65,17 +85,24 @@ namespace backend.services
         }
 
         public List<String> SearchForStock(string userEntry) {
+            userEntry = userEntry.Trim();
             var results = new List<string>();
 
             if(tickerList.Contains(userEntry)) {
                 JObject json = JObject.Parse(tickerList);
                 var list = json["results"]!.Where(t => t["T"].Value<string>().Contains(userEntry))!.ToList();
-                Console.WriteLine(list);
-                Console.WriteLine(list[0].ToString());
                 int i = 0;
                 foreach(var stock in list) {
                     i++;
-                    results.Add((string)stock["T"]);
+                    var moreDescriptiveName = TickerToCompanyMap((string)stock["T"]);
+                    if(moreDescriptiveName != "No results")
+                    {
+                        results.Add(moreDescriptiveName);
+                    }
+                    else 
+                    {
+                        results.Add((string)stock["T"]);
+                    }
                     //Limit results to 5 options
                     if(i == 5) {
                         break;
@@ -84,7 +111,7 @@ namespace backend.services
                 return (List<string>)results;
 
             } else { 
-                results.Add("No results");
+                results.Add(TickerToCompanyMap(userEntry)); 
                 return results;  
             }
         }
