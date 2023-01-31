@@ -1,0 +1,13 @@
+version: '1'
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "7299:80"
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "4200:80"

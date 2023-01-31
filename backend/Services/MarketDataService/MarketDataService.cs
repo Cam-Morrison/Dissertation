@@ -43,13 +43,13 @@ namespace backend.services
             var results = new List<string>();
             string csvFile = "C:/Users/Cam-M/Documents/Dissertation/backend/Services/MarketDataService/companyMapping.csv";
             try {
-                string[] lines = System.IO.File.ReadAllLines(@csvFile);
+                string[] rows = System.IO.File.ReadAllLines(@csvFile);
 
-                for(int i = 0; i < lines.Length; i++) {
-                    string[] fields = lines[i].Split(',');
-                    if(fields[1].ToLower().Contains(userEntry.ToLower())) {
-                        Console.WriteLine(fields[1]);
-                        return fields[0] + " (" + fields[1] + ") "  + fields[2];
+                for(int i = 0; i < rows.Length; i++) {
+                    string[] columns = rows[i].Split(',');
+                    if(columns[1].ToLower().Contains(userEntry.ToLower())) {
+                        Console.WriteLine(columns[1]);
+                        return columns[0] + " (" + columns[1] + ") "  + columns[2];
                     }
                 }
             } catch (Exception ex) {

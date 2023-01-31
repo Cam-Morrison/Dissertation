@@ -16,7 +16,7 @@
             "allowedCommonJsDependencies": [
                "apexcharts"
             ],
-            "outputPath": "dist/dissertation",
+            "outputPath": "dist/dissertation/frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
