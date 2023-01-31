@@ -71,12 +71,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     }
 );
-builder.Services.Configure<ForwardedHeadersOptions>(options =>
-{
-    options.ForwardedHeaders =
-        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-});
-
 //Healthchecks
 builder.Services.AddHealthChecks();
 //Building
@@ -86,14 +80,14 @@ app.MapHealthChecks("/health");
 app.UseCors(
   options => options.WithOrigins("*").AllowAnyMethod().AllowAnyHeader()
 );
-app.UseForwardedHeaders();
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-} 
+
+// if (app.Environment.IsDevelopment())
+// {
+// } 
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();

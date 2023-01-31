@@ -1,29 +1,19 @@
-# Use the official Microsoft .NET image as the base image
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
-
-# Set the working directory
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
+EXPOSE 80
 
-# Copy the project files to the working directory
-COPY . ./
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["backend.csproj", "."]
+RUN dotnet restore "./backend.csproj"
+COPY . .
+WORKDIR "/src/."
+RUN dotnet build "backend.csproj" -c Release -o /app/build
 
-# Restore the dependencies
-RUN dotnet restore
+FROM build AS publish
+RUN dotnet publish "backend.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-# Build the .NET API
-RUN dotnet build -c Release -o out
-
-# Use the official Microsoft .NET runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
-
-# Set the working directory
+FROM base AS final
 WORKDIR /app
-
-# Copy the built .NET API from the build-env
-COPY --from=build-env /app/out .
-
-# Expose the mapped port
-EXPOSE 7299
-
-# Set the entrypoint to run the .NET API
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "backend.dll"]

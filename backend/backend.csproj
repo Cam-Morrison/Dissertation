@@ -29,13 +29,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.24.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.ML" Version="1.5.0-preview" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DissertationML.Model\DissertationML.Model.csproj" />
+    <!-- <ProjectReference Include="..\DissertationML.Model\DissertationML.Model.csproj" /> -->
   </ItemGroup>
 
   <ItemGroup>
