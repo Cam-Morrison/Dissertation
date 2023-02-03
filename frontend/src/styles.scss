@@ -92,6 +92,7 @@ mat-sidenav-content {
   padding-bottom:10rem;
   transition: opacity .8s ease-in-out;
   zoom: 0.5;
+  z-index: 999;
 }
 
 .centerbox {

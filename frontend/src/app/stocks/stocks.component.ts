@@ -3,14 +3,14 @@ import { MyDataService } from '../shared/services/data.service';
 import { debounceTime, distinctUntilChanged, shareReplay, switchMap } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-stocks',
   templateUrl: './stocks.component.html',
   styleUrls: ['./stocks.component.scss'],
 })
-export class StocksComponent implements OnInit, AfterViewInit {
+export class StocksComponent implements OnInit {
   dataPoints: any[] = [];
   displayedColumns: string[] = ['Ticker', 'PE ratio', 'Price', 'Rating', 'Change'];
   dataSource: any;
@@ -72,8 +72,6 @@ export class StocksComponent implements OnInit, AfterViewInit {
       }
     );
   }
-
-  ngAfterViewInit() {}
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

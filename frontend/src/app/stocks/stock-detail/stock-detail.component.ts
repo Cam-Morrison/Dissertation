@@ -74,24 +74,26 @@ export class StockDetailComponent implements OnInit {
           };
         } catch(Exception) {}
 
-        //Company financial metrics
-        try {
-          dt = resp['metrics']['defaultKeyStatistics'];
-          this.metrics = {
-            marketCap: dt['enterpriseValue']['longFmt'],
-            marketCapCompressed: dt['enterpriseValue']['fmt'],
-            forwardPE: dt['forwardPE']['fmt'],
-            profitMargins: dt['profitMargins']['fmt'],
-            sharesOutstanding: dt['sharesOutstanding']['fmt'],
-            sharesHeldByInsider: dt['heldPercentInsiders']['fmt'],
-            sharesHeldByInstituions: dt['heldPercentInstitutions']['fmt'],
-            yield: dt['yield']['fmt'],
-            LastDividEnd: dt['lastDividendDate']['fmt'],
-            lastDividendValue: dt['lastDividendValue']['fmt'],
-          };
-        } catch(Exception) {
-          console.log(Exception)
-        }
+        // //Company financial metrics
+        // try {
+        //   dt = resp['metrics'];
+        //   dt = dt['defaultKeyStatistics'];
+        //   console.log(dt);
+        //   // this.metrics = {
+        //   //   forwardPE: dt['forwardPE']['fmt'],
+        //   //   profitMargins: dt['profitMargins']['fmt'],
+        //   //   sharesOutstanding: dt['sharesOutstanding']['fmt'],
+        //   //   sharesHeldByInsider: dt['heldPercentInsiders']['fmt'],
+        //   //   sharesHeldByInstituions: dt['heldPercentInstitutions']['fmt'],
+        //   //   yield: dt['yield']['fmt'],
+        //   //   LastDividEnd: dt['lastDividendDate']['fmt'],
+        //   //   lastDividendValue: dt['lastDividendValue']['fmt'],
+        //   //   marketCap: dt['enterpriseValue']['longFmt'],
+        //   //   marketCapCompressed: dt['enterpriseValue']['fmt'],
+        //   // };
+        // } catch(Exception) {
+        //   console.log(Exception)
+        // }
 
         this.detailsLoaded = true;
 
@@ -110,30 +112,30 @@ export class StockDetailComponent implements OnInit {
         this.pageNotFound();
       }
     );
-    // var detailsCall = this.MyDataService.getStockDetails(this.ticker!).pipe(
-    //   shareReplay()
-    // );
-    // detailsCall.subscribe(
-    //   (detailsResp: any) => {
-    //     console.log(detailsResp);
-    //     try {
-    //       var dt = detailsResp['assetProfile'];
-    //       this.details = {
-    //         companyUrl: dt['website'],
-    //         sector: dt['industry'],
-    //         name: this.ticker,
-    //         country: dt['country'],
-    //         city: dt['city'],
-    //         employees: dt['fullTimeEmployees'],
-    //         description: dt['longBusinessSummary'],
-    //       };
-    //     } catch(Exception) {}
-    //     this.detailsLoaded = true;
-    //   },
-    //   (error) => {
-    //     //Empty because if stock does not have information on one of these categories it can through an error
-    //   }
-    // );
+    var detailsCall = this.MyDataService.getStockDetails(this.ticker!).pipe(
+      shareReplay()
+    );
+    detailsCall.subscribe(
+      (detailsResp: any) => {
+        console.log(detailsResp);
+        try {
+          var dt = detailsResp['assetProfile'];
+          this.details = {
+            companyUrl: dt['website'],
+            sector: dt['industry'],
+            name: this.ticker,
+            country: dt['country'],
+            city: dt['city'],
+            employees: dt['fullTimeEmployees'],
+            description: dt['longBusinessSummary'],
+          };
+        } catch(Exception) {}
+        this.detailsLoaded = true;
+      },
+      (error) => {
+        //Empty because if stock does not have information on one of these categories it can through an error
+      }
+    );
   }
 
   pageNotFound() {

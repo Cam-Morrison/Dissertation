@@ -4,7 +4,14 @@
     </mat-progress-spinner>
   </div>
   <div *ngIf="!isLoading">
-    <ng-template ngFor let-item [ngForOf]="newsList" let-i="index">
+    <br />
+    <ng-template
+      matTabContent
+      ngFor
+      let-item
+      [ngForOf]="newsList"
+      let-i="index"
+    >
       <mat-card>
         <mat-card-content>
           <a href="{{ item['url'] }}">
@@ -22,18 +29,19 @@
             </mat-card-header>
 
             <ngx-picture
-            *ngIf="item['image'] != null"
-            src="{{ item['image'] }}" 
-            alt="{{item['headline']}}"
-            [lazyLoad]="true"
-            #picture
+              *ngIf="item['image'] != null"
+              src="{{ item['image'] }}"
+              alt="{{ item['headline'] }}"
+              [lazyLoad]="true"
+              #picture
             ></ngx-picture>
 
             <p>{{ item["summary"] }}</p>
           </a>
           <div *ngIf="AIassistance == true">
             <p>
-              A.I. assist has interpreted this as a {{ item["sentiment"] }} outcome.
+              A.I. assist has interpreted this as a
+              {{ item["sentiment"] }} outcome.
               <mat-icon
                 class="info"
                 [matTooltipClass]="{ 'tool-tip': true }"

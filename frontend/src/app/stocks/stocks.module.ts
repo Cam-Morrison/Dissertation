@@ -9,10 +9,10 @@ import { MatTableModule } from '@angular/material/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatRippleModule } from '@angular/material/core';
+import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { NgApexchartsModule } from "ng-apexcharts";
 import { MatSnackBarModule } from '@angular/material/snack-bar'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressSpinner, MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { myChartModule } from '../shared/component/charts/chart.module';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -22,6 +22,8 @@ import { TokenInterceptor } from '../shared/services/token.interceptor';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgxHideOnScrollModule } from 'ngx-hide-on-scroll';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -33,11 +35,14 @@ import { NgxHideOnScrollModule } from 'ngx-hide-on-scroll';
     MatButtonModule,
     MatInputModule,
     MatTableModule,
+    OverlayModule,
     MatIconModule,
     myChartModule,
+    MatOptionModule,
     MatSortModule,
     MatAutocompleteModule,
     MatRippleModule,
+    MatFormFieldModule,
     MatExpansionModule,
     MatSnackBarModule,
     MatSelectModule,

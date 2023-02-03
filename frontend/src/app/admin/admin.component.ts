@@ -1,32 +1,34 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource} from '@angular/material/table';  
+import { MatPaginator } from '@angular/material/paginator';
 import { shareReplay } from 'rxjs/internal/operators/shareReplay';
 import { AuthGuard } from '../shared/services/auth.guard';
 import { MyDataService } from '../shared/services/data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {LiveAnnouncer} from '@angular/cdk/a11y';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
 })
+
 export class AdminComponent implements OnInit {
   displayedColumns: string[] = ['Time', 'UserID', 'User', 'Action', 'Status'];
   public username: any;
   dataPoints: any[] = [];
   dataSource: any;
   isLoading: boolean | undefined;
-  sortedData: any[] = [];
   respMsg: string | undefined;
 
-  @ViewChild(MatTable, {static: false}) table : any 
+  @ViewChild(MatPaginator, { static: true })
+  paginator!: MatPaginator;
 
   constructor(
-    private auth: AuthGuard, 
+    private auth: AuthGuard,
     private myDataService: MyDataService,
     private matSnackBar: MatSnackBar,
-    private _liveAnnouncer: LiveAnnouncer) {
+  ) {
     try {
       var userObj = auth.getDecodedToken();
       this.username = userObj.user;
@@ -48,7 +50,8 @@ export class AdminComponent implements OnInit {
           };
           this.dataPoints.push(entry);
         }
-        this.dataSource = new MatTableDataSource(this.dataPoints);
+        this.dataSource = new MatTableDataSource<any>(this.dataPoints);
+        this.dataSource.paginator = this.paginator;
         this.isLoading = false;
       },
       (error: string) => {
@@ -57,8 +60,17 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  public lock(element: any) {
-    let resp = this.myDataService.lockAccount(Number(element.UID)).pipe(shareReplay());
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  lock(element: any) {
+    let resp = this.myDataService
+      .lockAccount(Number(element.UID))
+      .pipe(shareReplay());
     resp.subscribe(
       (response: any) => {
         this.respMsg = response;
@@ -67,6 +79,6 @@ export class AdminComponent implements OnInit {
         this.respMsg = error.error.text;
       }
     );
-    window.location.reload(); 
+    window.location.reload();
   }
 }

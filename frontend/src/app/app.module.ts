@@ -14,6 +14,7 @@ import { CdkMenuModule } from '@angular/cdk/menu';
 import { CommonModule } from '@angular/common';
 import { AuthGuard } from './shared/services/auth.guard';
 import { TokenInterceptor } from './shared/services/token.interceptor';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { TokenInterceptor } from './shared/services/token.interceptor';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
+    MatSlideToggleModule
   ],
   providers: [
     AuthGuard,

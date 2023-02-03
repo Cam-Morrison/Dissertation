@@ -30,19 +30,18 @@
         </mat-select>
       </mat-form-field> -->
     </div>
-  <!-- Loader -->
-  <div class="spinbox" *ngIf="isLoading">
-    <mat-progress-spinner color="primary" mode="indeterminate">
-    </mat-progress-spinner>
-  </div>
-  <br>
-  <stockChart
+    <br>
+    <!-- Loader -->
+    <div class="spinbox" *ngIf="isLoading">
+      <mat-progress-spinner color="primary" mode="indeterminate">
+      </mat-progress-spinner>
+    </div>
+    <stockChart
     *ngIf="!isLoading"
     [dataPoints]="dataPoints"
     [ticker]="chartTitle!"
     [chartType]="selectedChart"
   ></stockChart>
-
     <mat-divider></mat-divider>
     <br>
     <div class="center" *ngIf="loadingError == false && isLoading == false && stocks.length > 0">

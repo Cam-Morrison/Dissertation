@@ -1,13 +1,11 @@
 import { MyDataService } from '../../shared/services/data.service';
-import { Component, OnInit, AfterViewInit} from "@angular/core";
+import { Component, OnInit, AfterViewInit, ViewChild} from "@angular/core";
 import { shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog} from '@angular/material/dialog';
 import { editNameDialog } from './edit-title.component';
-import { of } from 'rxjs/internal/observable/of';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { AuthGuard } from '../../shared/services/auth.guard';
 
 @Component({
@@ -16,7 +14,7 @@ import { AuthGuard } from '../../shared/services/auth.guard';
   styleUrls: ["./dashboard.component.scss"]
 })
 
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit {
   stocks: any[] = [];
   watchlistTitle: string = "";
   chartTitle: string = "Today's performance";
@@ -31,8 +29,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   tickerValid: boolean = true;
   dataPoints: any = [];
   selectedChart: any = 'area';
-  previousCloses: any[] = [];
-  currentPrices: any[] = [];
   public portfolioChart = "treemap";
   public portfolioDataPoints: any[] = [];
   public editmode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -57,22 +53,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.sub =  resp.subscribe((data: any)=> {
       this.watchlistTitle = data["title"];
       this.stocks = data["stocks"];
-      
+      var previousCloses = [];
+      var currentPrices = [];
       for (let i = 0; i < this.stocks.length; i++) {
-        this.previousCloses.push(this.stocks[i]["regularMarketPreviousClose"])
-        this.currentPrices.push(this.stocks[i]["regularMarketPrice"])
+        previousCloses.push(this.stocks[i]["regularMarketPreviousClose"])
+        currentPrices.push(this.stocks[i]["regularMarketPrice"])
         this.portfolioDataPoints.push([{x: `${this.stocks[i]["symbol"]}`, y: Number(this.stocks[i]["regularMarketChangePercent"].toFixed(2))}]);
       }
-
-      const yesterdayPrices = this.previousCloses.reduce((accumulator, obj) => {
+      const yesterdayPrices = previousCloses.reduce((accumulator, obj) => {
         return accumulator + Number(obj);
       }, 0).toFixed(2);
 
-      const todaysPrices = this.currentPrices.reduce((accumulator, obj) => {
+      const todaysPrices = currentPrices.reduce((accumulator, obj) => {
         return accumulator + Number(obj);
       }, 0).toFixed(2);
-
-      this.dailyMovement = ((todaysPrices - yesterdayPrices) / yesterdayPrices) * 100;
 
       const todayDate = new Date(); 
       const yesterdayDate = new Date();  
@@ -91,6 +85,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           Number(todaysPrices),
         ]
       ]);
+      this.dailyMovement = ((todaysPrices - yesterdayPrices) / yesterdayPrices) * 100;
     },   
     (error) => {
       this.loadingError = true;
@@ -123,9 +118,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
-  }
-
-  ngAfterViewInit() {
   }
 
   openDialog(): void {

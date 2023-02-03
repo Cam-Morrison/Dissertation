@@ -51,6 +51,7 @@ import {
     @Input() dataPoints: any;
     @Input() ticker?: string;
     @Input() chartType?: string;
+    @Input() loaded?: boolean;
 
     public initCandleChart(): void {
         this.chartOptions = {
@@ -144,67 +145,17 @@ import {
     };
   }
 
-  public initTreemap(): void {
-    this.chartOptions = {
-      series: [
-        {
-          data: this.dataPoints,
-        }
-      ],
-      legend: {
-        show: false
-      },
-      chart: {
-        height: 350,
-        type: "treemap"
-      },
-      title: {
-        text: "Treemap of daily performance",
-        align: 'center'
-      },
-      dataLabels: {
-        enabled: true,
-
-        offsetY: -3
-      },
-      plotOptions: {
-        treemap: {
-          enableShades: true,
-          shadeIntensity: 0.5,
-          reverseNegativeShade: true,
-          colorScale: {
-            ranges: [
-              {
-                from: -6,
-                to: 0,
-                color: "#CD363A"
-              },
-              {
-                from: 0.001,
-                to: 6,
-                color: "#52B12C"
-              }
-            ]
-          }
-        }
-      }
-    };
-  }
-
-  @ViewChild('chart', { static: true }) chart!: ChartComponent;
+  @ViewChild('chart', { static: false }) chart!: ChartComponent;
 
   ngOnChanges(): void {
-      if(this.chartType === "area")
-      {
-        this.initAreaChart();
-      } 
-      else 
-      {
-        if(this.chartType === "treemap"){
-          this.initTreemap();
-        } else{
-          this.initCandleChart();
-        }
-      }
+    if(this.chartType === "area")
+    {
+      this.initAreaChart();
+    } 
+    else 
+    {
+      this.initCandleChart();
+    }
+    
   }
 }
