@@ -7,17 +7,20 @@ namespace backend.services
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using System.Linq;
+    using backend.entity;
 
     public class NewsService : INewsService
     {
 
         private readonly IConfiguration Configuration;
+        private DbContext _context;
         private static string? TodaysNews;
         private string newsToken;
 
         public NewsService(IConfiguration configuration)
         {
             Configuration = configuration;
+            _context = new dbContext(Configuration);
             this.newsToken = Configuration.GetSection("ClientConfiguration").GetValue<string>("finnHubKey");
         }
 
@@ -43,8 +46,10 @@ namespace backend.services
                 var call = callUrl(url);
 
                 JArray jArr = (JArray)JsonConvert.DeserializeObject(call);
+                int i = 1;
                 foreach (JObject item in jArr)
                 {
+                    
                     var sentimentScore = GetSentiment(item["summary"].ToString());
                     var textSentiment = "Neutral";
                     if(sentimentScore == "-1") {
@@ -53,6 +58,8 @@ namespace backend.services
                         textSentiment = "Positive";
                     }
                     item.Add(new JProperty("sentiment", textSentiment));
+                    item.Add(new JProperty("dailyArticleID", i));
+                    i++;
                 }
 
                 TodaysNews = jArr.ToString();
@@ -61,6 +68,21 @@ namespace backend.services
             return TodaysNews;
         }
 
+        public string getDailyArticleByID(int articleID){
+            if(TodaysNews == null) {
+                GetDailyNews();
+            }
+            
+            JArray jArr = (JArray)JsonConvert.DeserializeObject(TodaysNews);
+            foreach (JObject item in jArr)
+            {
+                if(item["dailyArticleID"]!.Value<int>() == articleID) {
+                    return item.ToString();
+                }
+            }
+            return null;
+        }
+        
         private string callUrl(string inputUrl)
         {
             HttpClient client = new HttpClient();

@@ -4,9 +4,7 @@
     </mat-progress-spinner>
   </div>
   <div *ngIf="!isLoading">
-    <br />
     <ng-template
-      matTabContent
       ngFor
       let-item
       [ngForOf]="newsList"

@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { NgApexchartsModule } from "ng-apexcharts";
 import { MatSnackBarModule } from '@angular/material/snack-bar'
-import { MatProgressSpinner, MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { myChartModule } from '../shared/component/charts/chart.module';
 import { MatExpansionModule } from '@angular/material/expansion';

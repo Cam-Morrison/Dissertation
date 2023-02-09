@@ -51,7 +51,6 @@ import {
     @Input() dataPoints: any;
     @Input() ticker?: string;
     @Input() chartType?: string;
-    @Input() loaded?: boolean;
 
     public initCandleChart(): void {
         this.chartOptions = {
@@ -148,6 +147,7 @@ import {
   @ViewChild('chart', { static: false }) chart!: ChartComponent;
 
   ngOnChanges(): void {
+    console.log("CHANGE CHANGE");
     if(this.chartType === "area")
     {
       this.initAreaChart();
@@ -156,6 +156,5 @@ import {
     {
       this.initCandleChart();
     }
-    
   }
 }

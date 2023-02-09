@@ -29,6 +29,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { myChartModule } from '../shared/component/charts/chart.module';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { NgxPictureModule, CLOUDINARY_CONFIG } from 'ngx-picture';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     CommonModule,
     BrowserAnimationsModule,
+    NgxPictureModule.forRoot(CLOUDINARY_CONFIG),
+    ClipboardModule, 
     NgApexchartsModule,
     MatTooltipModule,
     myChartModule,

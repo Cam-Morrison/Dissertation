@@ -17,6 +17,15 @@
     }
 }
 
+::ng-deep .mat-tooltip {
+    font-size: 15px;
+    white-space: pre-wrap;
+    color: black !important;
+    background-color: rgba(255, 255, 255, .9);
+    border:1px solid gray;
+    max-width: unset !important;
+}
+
 a:link, a:hover, a:active, a:visited { 
     text-decoration: none; 
     color:white;
@@ -36,6 +45,7 @@ h1 {
     margin-left:calc(+4rem);
     justify-content: center;
     display:inline-flex;
+    font-size:24px;
 }
 
 h2 {
@@ -65,7 +75,7 @@ h2 {
 .mat-card {
     background-color: transparent;
     padding:0;
-    margin-bottom:0.5em;
+    margin-top:0.5em;
     text-align: center;
     justify-content:center;
     height:auto;
@@ -86,6 +96,7 @@ h2 {
 
 h2 {
     padding-left:0.5rem;
+    padding-bottom:0px !important;
   }
   
   .ChartSelector  {
@@ -100,6 +111,11 @@ h2 {
     float: left;
     text-shadow:2px;
   }
+
+.info {
+    font-size:18px !important;
+    display:inline-grid;
+}
 
   .center {
     text-align:center;
@@ -119,7 +135,7 @@ h2 {
     background-color: white;
     overflow:auto;
     max-height:auto;
-    margin-bottom:10em;
+    margin-bottom:2em;
 }
 
 .inlineLink {

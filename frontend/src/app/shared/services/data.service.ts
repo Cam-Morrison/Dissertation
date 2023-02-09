@@ -73,4 +73,8 @@ export class MyDataService
   logSignOut() {
     this.http.get(`${this.myBackEndService}/logSignOut`)
   }
+
+  getReadingList() {
+    return this.http.get(`${this.myBackEndService}/getReadingList`)
+  }
 }

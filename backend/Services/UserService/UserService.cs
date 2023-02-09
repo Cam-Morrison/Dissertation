@@ -10,6 +10,7 @@ namespace backend.services
     using Newtonsoft.Json.Linq;
     using Newtonsoft.Json;
     using ProfanityFilter;
+    using System;
 
     public class UserService : IUserService
     {
@@ -17,6 +18,7 @@ namespace backend.services
         public static string SessionIdToken = "session-id";
         private readonly IConfiguration _configuration;
         private MarketDataService _marketDataService;
+        private NewsService _newsService;
         private AdminService log;
         private static JToken watchListCached;
         private Boolean watchListChange = true;
@@ -25,6 +27,7 @@ namespace backend.services
             _configuration = configration;
             _context = new dbContext(_configuration);
             _marketDataService = marketDataService;
+            _newsService = new NewsService(_configuration);
             this.log = new AdminService(_configuration);
         }
 
@@ -53,7 +56,7 @@ namespace backend.services
 
          public async Task<string> Register(Register input) {
             var filter = new ProfanityFilter();
-            if(filter.ContainsProfanity(input.UserName) == true) {
+            if(filter.ContainsProfanity(input.UserName.ToLower()) == true) {
                 return "Please do not use any rude words.";
             }
             if(_context.Users.Any(u => u.UserName == input.UserName)) 
@@ -230,7 +233,7 @@ namespace backend.services
                 return "Watchlist length is too short or long (3-16)";
             }
             var filter = new ProfanityFilter();
-            if(filter.ContainsProfanity(newTitle) == true) {
+            if(filter.ContainsProfanity(newTitle.ToLower()) == true) {
                 return "Please do not use any rude words.";
             }
             int userId = (int)_context.Users.FirstOrDefaultAsync(u => u.UserName == username).Result!.UserId!;
@@ -251,7 +254,6 @@ namespace backend.services
             user.UserAiSwitchedOnPreference = !user.UserAiSwitchedOnPreference;
             _context.Users.Update(user);
             _context.SaveChanges();
-            var msg = "";
             if(user.UserAiSwitchedOnPreference == true) {
                 log.logEvent(8, username);
             } else {
@@ -264,6 +266,82 @@ namespace backend.services
         public string LogSignOut(string username) {
             log.logEvent(3, username);
             return "Action Logged";
+        }
+
+        public string AddToReadingList(string username, int articleId)
+        {
+            var user = _context.Users.FirstOrDefaultAsync(u => u.UserName == username).Result!;
+            var article = _newsService.getDailyArticleByID(articleId);
+            if(article.IsNullOrEmpty())
+            {
+                return "There is no article with that ID";
+            }
+
+            var readingList = _context.ReadingLists.Where(u => u.UserId == user.UserId).FirstOrDefault(u => u.article == article);
+
+            if(readingList == null) {
+                var entry = new ReadingList
+                {
+                    UserId = (int)user.UserId,
+                    article = article
+                };
+                _context.ReadingLists.Add(entry);
+                _context.SaveChanges();
+                log.logEvent(9, user.UserName);
+                return "Added to reading list.";
+            }    
+            else 
+            {
+                return "That article is already in the reading list.";
+            }
+        }
+
+        public string RemoveFromReadingList(string username, int articleId)
+        {
+            try {
+                var user = _context.Users.FirstOrDefaultAsync(u => u.UserName == username).Result!;
+
+                var readingList = _context.ReadingLists.Where(u => u.UserId == user.UserId).FirstOrDefault(u => u.ArticleId == articleId);
+
+                if(readingList != null) 
+                {
+                    _context.ReadingLists.Remove(readingList);
+                    _context.SaveChanges();
+                    log.logEvent(10, username);
+                    return "Removed from reading list.";
+                }
+                else
+                {
+                    return "There is no article in the reading list with that ID.";
+                }
+            }
+            catch(Exception)
+            {
+                return "There was an issue, please try again later.";
+            }
+        }
+
+        public string getReadingList(string username)
+        {
+            try {
+                var user =  _context.Users.FirstOrDefaultAsync(u => u.UserName == username).Result!;
+
+                var readingList = _context.ReadingLists.Where(u => u.UserId == user.UserId).ToList();
+                if (readingList == null)
+                {
+                    _context.Dispose();
+                    return "empty";
+                }
+                else
+                {
+                    _context.Dispose();
+                    var resp = JArray.FromObject(readingList);
+                    return resp.ToString();
+                }
+            } catch (Exception) 
+            {
+                return "Something went wrong, please try again later.";
+            } 
         }
     }
 }
