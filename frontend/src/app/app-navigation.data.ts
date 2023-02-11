@@ -17,6 +17,6 @@ export const navigationData = [
     {
         routeLink: 'assistance',
         icon: 'memory',
-        label: 'Predictive Learning'
+        label: 'A.I. Assist'
     }
 ]

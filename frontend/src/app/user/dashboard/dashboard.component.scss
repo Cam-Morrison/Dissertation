@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 
 .content {
-    height:100vh !important;
+    height: 100vh !important;
     padding:0 !important;
     margin: 0 !important;
     background: transparent;
@@ -35,6 +35,15 @@ a:link, a:hover, a:active, a:visited {
     margin-top:0;
     border-radius:20px;
     background-color:#74b9ff;
+}
+
+.loadingErrorImage {
+    // max-width:500px;
+    // width:350px auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
 }
 
 h1 {
@@ -99,18 +108,6 @@ h2 {
     padding-bottom:0px !important;
   }
   
-  .ChartSelector  {
-    display:flex;
-    float: right;
-  }
-  
-  .movement {
-    width:3rem;
-    padding:1rem;
-    display:flex;
-    float: left;
-    text-shadow:2px;
-  }
 
 .info {
     font-size:18px !important;
@@ -135,7 +132,10 @@ h2 {
     background-color: white;
     overflow:auto;
     max-height:auto;
-    margin-bottom:2em;
+}
+
+.paddingBottom {
+    padding-bottom:10%;
 }
 
 .inlineLink {

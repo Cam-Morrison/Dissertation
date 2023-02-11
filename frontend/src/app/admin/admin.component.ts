@@ -50,7 +50,7 @@ export class AdminComponent implements OnInit {
           };
           this.dataPoints.push(entry);
         }
-        this.dataSource = new MatTableDataSource<any>(this.dataPoints);
+        this.dataSource = new MatTableDataSource<any>(this.dataPoints.slice().reverse());
         this.dataSource.paginator = this.paginator;
         this.isLoading = false;
       },

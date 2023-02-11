@@ -83,24 +83,32 @@
         </ng-template>
       </div>
     </div>
-      <div *ngIf="(loadingError | async) || !(isLoading | async) && stocks.length == 0;">
+      <div class="center" *ngIf="(loadingError | async) || !(isLoading | async) && stocks.length == 0;">
         <br />
         <h2>Welcome {{ username | titlecase }}!</h2>
-        <p>To create a watchlist, add a stock to your watchlist.</p>
+        <div class="loadingErrorImage center">
+          <ngx-picture
+            src="https://res.cloudinary.com/dqfq2aw7t/image/upload/v1676118749/watchlistEmpty-min_ooudxd.jpg"
+            alt="Investing art"
+            [lazyLoad]="false"
+            #picture
+          ></ngx-picture>
+        </div>
+        <p>To create a watchlist, research a company and add it to your watchlist!</p>
         <br />
         <button mat-button class="inlineLink" routerLink="/stocks">
-          You can browse stocks here
+          You can research stocks here
         </button>
       </div>
       <mat-divider></mat-divider>
       <!-- News articles -->
-      <div *ngIf="!(isLoading | async) && articles.length > 0" class="cardScroll">
+      <div *ngIf="!(isLoading | async) && articles.length > 0" class="cardScroll paddingBottom">
         <br />
         <h1 class="center"> <strong>Reading List</strong>  </h1>
         <ng-template ngFor let-item [ngForOf]="articles" let-i="index">
           <mat-card>
             <mat-card-content>
-              <a href="{{ item['url'] }}">
+              <a href="{{ item['url'] }}" target="_blank">
                 <mat-card-header>
                   <mat-card-title-group>
                     <mat-card-title
@@ -122,7 +130,7 @@
                   #picture
                 ></ngx-picture>
 
-                <p>{{ item["summary"] }}</p>
+                <p style="padding:1rem">{{ item["summary"] }}</p>
               </a>
               <div>
                 <p>
@@ -147,8 +155,7 @@
                 >
                   <b>SHARE</b>
                 </button>
-                <!-- <p>{{articleIdentifiers[i]}}</p> -->
-                <button mat-button color="secondry">
+                <button mat-button color="secondry" (click)="removeFromReadingList(articleIdentifiers[i])">
                   <b>REMOVE FROM READING LIST</b>
                 </button>
               </mat-card-actions>
@@ -156,14 +163,14 @@
           </mat-card>
         </ng-template>
       </div>
-      <div class="center" *ngIf="(loadingError| async) || !(isLoading | async) && articles.length == 0">
-        <br />
-        <h2>Save an article to read later</h2>
-        <p>To create a reading list, save an article for later.</p>
-        <br />
-        <button mat-button class="inlineLink" routerLink="/news">
-          You can browse the latest news here
-        </button>
-      </div>
+    <div class="center" *ngIf="(loadingError| async) || !(isLoading | async) && articles.length == 0">
+      <br />
+      <h2>Save an article to read later</h2>
+      <p>To create a reading list, save an article for later.</p>
+      <br />
+      <button mat-button class="inlineLink" routerLink="/news">
+        You can browse the latest news here
+      </button>
+    </div>
   </div>
 </div>

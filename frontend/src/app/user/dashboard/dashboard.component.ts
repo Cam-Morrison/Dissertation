@@ -105,6 +105,29 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     window.location.reload();
   }
 
+  removeFromReadingList(articleId: number) {
+    let resp = this.MyDataService.removeFromReadingList(articleId).pipe(
+      shareReplay()
+    );
+    resp.subscribe(
+      (response: any) => {
+        this.matSnackBar.open(`${response.toString()}`, 'Close', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
+      },
+      (error) => {
+        this.matSnackBar.open(`${error.error.text.toString()}`, 'Close', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
+      }
+    );
+    window.location.reload();
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(editNameDialog, {});
 

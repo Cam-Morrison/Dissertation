@@ -12,7 +12,7 @@
     >
       <mat-card>
         <mat-card-content>
-          <a href="{{ item['url'] }}">
+          <a href="{{ item['url'] }}" target="_blank">
             <mat-card-header>
               <mat-card-title-group>
                 <mat-card-title
@@ -59,7 +59,7 @@
             >
               <b>SHARE</b>
             </button>
-            <button mat-button color="primary">
+            <button mat-button color="primary" (click)="addToReadingList(item['dailyArticleID'])">
               <b>ADD TO READING LIST</b>
             </button>
           </mat-card-actions>

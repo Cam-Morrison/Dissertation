@@ -180,28 +180,6 @@ namespace backend.services
            return CallUrl(url, false);
         }
 
-        // public List<String> getStockTicker(string name) {
-        //     var call = CallUrl($"https://finnhub.io/api/v1/search?q={name.ToLower()}&token={finnHubKey}", true);
-        //     JObject json = JObject.Parse(call);
-        //     var results = new List<string>();
-        //     if(json["count"].Value<int>() > 0)
-        //     {
-        //         for(int i = 0; i < json["count"].Value<int>(); i++) {
-        //             var resp = json["result"][i]["symbol"].ToString();
-        //             if(resp.Contains(".") == false) {
-        //                 results.Add(resp);
-        //                 if(i == 5) {
-        //                     break;
-        //                 }
-        //             }
-        //         }
-        //     } else {
-        //         results.Add("No results");
-        //     }
-        //     results.Add("No results");
-        //     return results;  
-        // }
-
         public bool IsStockValid(string ticker) {
             var call = CallUrl($"https://finnhub.io/api/v1/search?q={ticker}&token={finnHubKey}", true);
             JObject json = JObject.Parse(call);

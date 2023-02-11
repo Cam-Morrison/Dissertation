@@ -77,4 +77,12 @@ export class MyDataService
   getReadingList() {
     return this.http.get(`${this.myBackEndService}/getReadingList`)
   }
+
+  addToReadingList(articleId: number) {
+    return this.http.get(`${this.myBackEndService}/addToReadingList/${articleId}`)
+  }
+
+  removeFromReadingList(articleId: number) {
+    return this.http.get(`${this.myBackEndService}/removeFromReadingList/${articleId}`)
+  }
 }

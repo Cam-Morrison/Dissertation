@@ -11,6 +11,7 @@ import { AuthGuard } from '../shared/services/auth.guard';
 })
 export class NewsComponent implements OnInit, OnDestroy {
   sub: any;
+  sub2: any;
   dataPoints: any;
   newsList: any = [];
   isLoading: boolean = true;
@@ -31,7 +32,6 @@ export class NewsComponent implements OnInit, OnDestroy {
         }
         var userObj = this.auth.getDecodedToken();
         this.AIassistance = userObj.AIpreference.toLowerCase() === 'true';
-        console.log(this.AIassistance);
     },   
     (error: any) => {});  
     this.isLoading = false;
@@ -49,7 +49,30 @@ export class NewsComponent implements OnInit, OnDestroy {
     );
   }
 
+  addToReadingList(articleId: any) {
+    let resp = this.MyDataService.addToReadingList(articleId).pipe(shareReplay());
+    this.sub2 =  resp.subscribe(
+      (response: any) => {
+        this.matSnackBar.open(`${response.toString()}`, 'Close', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
+      },
+      (error) => {
+        this.matSnackBar.open(`${error.error.text.toString()}`, 'Close', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
+      }
+    );
+  }
+
   ngOnDestroy() {
-    this.sub.unsubscribe();
- }
+    try {
+      this.sub.unsubscribe();
+      this.sub2.unsubscribe();
+    }catch(Exception){}
+  }
 }
