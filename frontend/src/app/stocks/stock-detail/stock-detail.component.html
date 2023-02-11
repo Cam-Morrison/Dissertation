@@ -105,7 +105,7 @@
     </div>
   </mat-expansion-panel>
 
-  <!-- Company metrics
+  <!-- Company metrics -->
   <mat-expansion-panel [expanded]="panelOpenState">
     <mat-expansion-panel-header matRipple>
       <mat-panel-title> <b>Stock's valuation and other metrics</b> </mat-panel-title>
@@ -115,23 +115,42 @@
         <span *ngIf="metrics.marketCap == null"> There is no information on this security</span>
       </h3>
       <div class="flexbox"> 
-        <p>
-          <b>Valuation</b>
-          <span *ngIf="metrics.marketCap"> Market capitalization - ${{metrics.marketCap}} ({{metrics.marketCapCompressed}}) </span> 
-          <span *ngIf="metrics['forwardPE']['fmt']"> Forward price/equity (PE) ratio - {{metrics['forwardPE']['fmt']}} </span>
-           <span *ngIf="metrics.profitMargins">  Profit margin - {{metrics.profitMargins}} </span>
-
-          <b>Who has what slice of the pie?</b>
-          <span *ngIf="metrics.sharesOutstanding"> Shares outstanding - {{metrics.sharesOutstanding}}</span>
-          <span *ngIf="metrics.sharesHeldByInsider"> Shares held by insiders - {{metrics.sharesHeldByInsider}}</span>
-          <span *ngIf="metrics.sharesHeldByInstituions"> Shares held by insitutional investors - {{metrics.sharesHeldByInstituions}}</span>
         
-          <b>Dividend information</b>
-          <span *ngIf="metrics.yield"> Yield percentage - {{metrics.yield}}</span>
-          <span *ngIf="metrics.LastDividEnd"> Last dividend date - {{metrics.LastDividEnd}}</span>
-          <span *ngIf="metrics.lastDividendValue"> Last dividend value - {{metrics.lastDividendValue}}</span>
-        </p>
+        <div class='row'>
+          <div class='column' *ngIf="metrics.marketCap || metrics.forwardPE || metrics.profitMargins">
+              <p>
+                <b>Valuation</b>
+                <span *ngIf="metrics.marketCap"> Market capitalization ${{metrics.marketCap}} ({{metrics.marketCapCompressed}}) </span> 
+                <span *ngIf="metrics.forwardPE"> Forward price/equity (PE) ratio {{metrics.forwardPE}} </span>
+                <span *ngIf="metrics.profitMargins">  Profit margin {{metrics.profitMargins}} </span>
+              </p>
+          </div>
+          <div class='column' *ngIf="metrics.sharesOutstanding || metrics.sharesHeldByInsider || metrics.sharesHeldByInstituions">
+            <p>
+              <b>Who has what slice of the pie?</b>
+              <span *ngIf="metrics.sharesOutstanding"> Shares outstanding {{metrics.sharesOutstanding}}</span>
+              <span *ngIf="metrics.sharesHeldByInsider"> Shares held by insiders {{metrics.sharesHeldByInsider}}</span>
+              <span *ngIf="metrics.sharesHeldByInstituions"> Shares held by insitutional investors {{metrics.sharesHeldByInstituions}}</span>
+            </p>
+          </div>
+          <div class='column' *ngIf="metrics.yield || metrics.LastDividEnd || metrics.lastDividendValue">
+            <p>
+              <b>Dividend information</b>
+              <span *ngIf="metrics.yield"> Yield percentage {{metrics.yield}}</span>
+              <span *ngIf="metrics.LastDividEnd"> Last dividend date {{metrics.LastDividEnd}}</span>
+              <span *ngIf="metrics.lastDividendValue"> Last dividend value {{metrics.lastDividendValue}}</span>
+            </p>
+          </div>
+          <div class="column" *ngIf="metrics.fiftyTwoWeekchange || metrics.earningsQuarterlyGrowth || metrics.revenueQuarterlyGrowth">
+            <p>
+              <b>Performance</b>
+              <span *ngIf="metrics.fiftyTwoWeekchange">52 Week change {{metrics.fiftyTwoWeekchange}}</span>
+              <span *ngIf="metrics.earningsQuarterlyGrowth">Earnings quarterly growth {{metrics.earningsQuarterlyGrowth}}</span>
+              <span *ngIf="metrics.revenueQuarterlyGrowth">Revenue quarterly growth {{metrics.revenueQuarterlyGrowth}}</span>
+            </p>
+          </div>
+        </div>
       </div>  
     </div>
-  </mat-expansion-panel> -->
+  </mat-expansion-panel>
 </div>

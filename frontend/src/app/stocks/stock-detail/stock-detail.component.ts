@@ -74,26 +74,29 @@ export class StockDetailComponent implements OnInit {
           };
         } catch(Exception) {}
 
-        // //Company financial metrics
-        // try {
-        //   dt = resp['metrics'];
-        //   dt = dt['defaultKeyStatistics'];
-        //   console.log(dt);
-        //   // this.metrics = {
-        //   //   forwardPE: dt['forwardPE']['fmt'],
-        //   //   profitMargins: dt['profitMargins']['fmt'],
-        //   //   sharesOutstanding: dt['sharesOutstanding']['fmt'],
-        //   //   sharesHeldByInsider: dt['heldPercentInsiders']['fmt'],
-        //   //   sharesHeldByInstituions: dt['heldPercentInstitutions']['fmt'],
-        //   //   yield: dt['yield']['fmt'],
-        //   //   LastDividEnd: dt['lastDividendDate']['fmt'],
-        //   //   lastDividendValue: dt['lastDividendValue']['fmt'],
-        //   //   marketCap: dt['enterpriseValue']['longFmt'],
-        //   //   marketCapCompressed: dt['enterpriseValue']['fmt'],
-        //   // };
-        // } catch(Exception) {
-        //   console.log(Exception)
-        // }
+        //Company financial metrics
+
+        try {
+          dt = JSON.parse(resp['metrics'])["defaultKeyStatistics"];
+          console.log(dt);
+          this.metrics = {
+            forwardPE: dt['forwardPE']['fmt'],
+            profitMargins: dt['profitMargins']['fmt'],
+            sharesOutstanding: dt['sharesOutstanding']['fmt'],
+            sharesHeldByInsider: dt['heldPercentInsiders']['fmt'],
+            sharesHeldByInstituions: dt['heldPercentInstitutions']['fmt'],
+            yield: dt['yield']['fmt'],
+            LastDividEnd: dt['lastDividendDate']['fmt'],
+            lastDividendValue: dt['lastDividendValue']['fmt'],
+            marketCap: dt['enterpriseValue']['longFmt'],
+            marketCapCompressed: dt['enterpriseValue']['fmt'],    
+            fiftyTwoWeekchange: dt['52WeekChange']['fmt'],
+            earningsQuarterlyGrowth: dt['earningsQuarterlyGrowth']['fmt'],
+            revenueQuarterlyGrowth: dt['revenueQuarterlyGrowth']['fmt'],     
+          };
+        } catch(Exception) {
+          console.log(Exception)
+        }
 
         this.detailsLoaded = true;
 
@@ -107,8 +110,6 @@ export class StockDetailComponent implements OnInit {
       }
       },
       (error: any) => {
-        //If stock doesn't exist go back to stock listings
-        console.log('error is: ' + error);
         this.pageNotFound();
       }
     );
@@ -117,7 +118,6 @@ export class StockDetailComponent implements OnInit {
     );
     detailsCall.subscribe(
       (detailsResp: any) => {
-        console.log(detailsResp);
         try {
           var dt = detailsResp['assetProfile'];
           this.details = {
@@ -175,7 +175,6 @@ export class StockDetailComponent implements OnInit {
           horizontalPosition: 'center',
           verticalPosition: 'top',
         });
-        console.log(error);
       }
     );
   }
