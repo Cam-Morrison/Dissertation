@@ -45,9 +45,9 @@ namespace backend.services
                 var url = $"https://finnhub.io/api/v1/news?category=general&token={newsToken}";
                 var call = callUrl(url);
 
-                JArray jArr = (JArray)JsonConvert.DeserializeObject(call);
+                JArray newsArticles = (JArray)JsonConvert.DeserializeObject(call);
                 int i = 1;
-                foreach (JObject item in jArr)
+                foreach (JObject item in newsArticles)
                 {
                     
                     var sentimentScore = GetSentiment(item["summary"].ToString());
@@ -61,8 +61,9 @@ namespace backend.services
                     item.Add(new JProperty("dailyArticleID", i));
                     i++;
                 }
+                JArray sortedBySentiment = new JArray(newsArticles.OrderByDescending(obj => (string)obj["sentiment"]));
 
-                TodaysNews = jArr.ToString();
+                TodaysNews = sortedBySentiment.ToString();
             }
 
             return TodaysNews;

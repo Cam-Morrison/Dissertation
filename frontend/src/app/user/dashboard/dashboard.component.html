@@ -132,7 +132,7 @@
 
                 <p style="padding:1rem">{{ item["summary"] }}</p>
               </a>
-              <div>
+              <div *ngIf="AIassistance">
                 <p>
                   A.I. assist has interpreted this as a
                   {{ item["sentiment"] }} outcome.

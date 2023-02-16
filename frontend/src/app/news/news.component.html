@@ -20,7 +20,7 @@
                 >
                 <mat-card-subtitle
                   ><h2>
-                    {{ item["source"] }} - {{ item["datetime"] | date }}
+                    {{ item["source"] }} - {{ item["datetime"] * 1000 | date:'EEE dd/MM/yyyy'}}
                   </h2></mat-card-subtitle
                 >
               </mat-card-title-group>

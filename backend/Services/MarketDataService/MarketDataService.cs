@@ -48,13 +48,10 @@ namespace backend.services
                 for(int i = 0; i < rows.Length; i++) {
                     string[] columns = rows[i].Split(',');
                     if(columns[1].ToLower().Contains(userEntry.ToLower())) {
-                        Console.WriteLine(columns[1]);
                         return columns[0] + " (" + columns[1] + ") "  + columns[2];
                     }
                 }
-            } catch (Exception ex) {
-                Console.WriteLine(ex);
-            }
+            } catch (Exception ex) {}
             return "No results";
         }
 
@@ -77,11 +74,8 @@ namespace backend.services
             string updatedMarketData = CallUrl(marketDataUrl, true);
             if(updatedMarketData != "Issue with API Call")
             {
-                Console.WriteLine(updatedMarketData);
                 tickerList = updatedMarketData;
-                Console.Write(tickerList.ToString());
             } 
-            Console.WriteLine(updatedMarketData);
         }
 
         public List<String> SearchForStock(string userEntry) {
@@ -137,7 +131,6 @@ namespace backend.services
         {
             if(ticker != recentTickerCall || recentStockDetailsPageCall == null) {
 
-                Console.WriteLine("3 Initial calls to yahoo finance.");
                 string updateInterval = "1wk";
                 var url = $"https://yahoo-finance15.p.rapidapi.com/api/yahoo/hi/history/{ticker}/{updateInterval}?diffandsplits=false";
                 var resp = CallUrl(url, false);
@@ -211,8 +204,6 @@ namespace backend.services
             new MediaTypeWithQualityHeaderValue("application/json"));
             // List data response.
             HttpResponseMessage response = client.GetAsync(inputUrl).Result;  // Blocking call! Program will wait here until a response is received or a timeout occurs.
-            Console.WriteLine(response.IsSuccessStatusCode);
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             if (response.IsSuccessStatusCode)
             {
                 // Parse the response body.

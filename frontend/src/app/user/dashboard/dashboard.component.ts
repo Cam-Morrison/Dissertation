@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   editmodeObs: Observable<boolean> = this.editmode.asObservable();
   articles: any[] = [];
   articleIdentifiers: number[] = [];
+  public AIassistance = true;
 
   constructor
   (
@@ -74,6 +75,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     (error: any) => {
       this.loadingError.next(true);
     });
+
+    var userObj = this.auth.getDecodedToken();
+    this.AIassistance = userObj.AIpreference.toLowerCase() === 'true';
   }
 
   ngAfterViewInit(){
