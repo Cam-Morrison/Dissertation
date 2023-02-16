@@ -1,55 +1,18 @@
 <div class="content">
   <div class="dashboard">
-    <div>
-      <div
-        class="movement"
-        [ngClass]="{
-          positive: dailyMovement > 0,
-          negative: dailyMovement < 0
-        }"
-        *ngIf="dailyMovement != null && stocks.length != 0"
-      >
-        <span *ngIf="dailyMovement > 0">
-          <mat-icon>trending_up</mat-icon>
-        </span>
-        <span *ngIf="dailyMovement < 0">
-          <mat-icon>trending_down</mat-icon>
-        </span>
-        <span *ngIf="dailyMovement == 0">
-          <mat-icon>trending_flat</mat-icon>
-        </span>
-        <h2>
-          {{ dailyMovement.toFixed(2) + "%" }}
-        </h2>
-      </div>
-      <!-- <mat-form-field class="ChartSelector" appearance="fill">
-        <mat-label>Change chart</mat-label>
-        <mat-select [(value)]="selectedChart">
-          <mat-option value="area">Area</mat-option>
-          <mat-option value="candlestick">Candle stick</mat-option>
-        </mat-select>
-      </mat-form-field> -->
+    <div class="spinbox" *ngIf="(isLoading | async)">
+      <mat-progress-spinner color="primary" mode="indeterminate">
+      </mat-progress-spinner>
     </div>
-  <!-- Loader -->
-  <div class="spinbox" *ngIf="isLoading">
-    <mat-progress-spinner color="primary" mode="indeterminate">
-    </mat-progress-spinner>
-  </div>
-  <br>
-  <stockChart
-    *ngIf="!isLoading"
-    [dataPoints]="dataPoints"
-    [ticker]="chartTitle!"
-    [chartType]="selectedChart"
-  ></stockChart>
-
-    <mat-divider></mat-divider>
-    <br>
-    <div class="center" *ngIf="loadingError == false && isLoading == false && stocks.length > 0">
+    <br />
+    <div
+      *ngIf="!(isLoading | async) && stocks.length > 0;"
+      class="center"
+    >
       <div class="fundTitle">
         <h1>
           <strong>
-          {{ watchlistTitle }}
+            {{ watchlistTitle }}
           </strong>
         </h1>
         <button
@@ -58,7 +21,7 @@
           class="toTheSideBtn"
           (click)="editmode.next(true)"
         >
-          <mat-icon *ngIf="loadingError == false">editMode</mat-icon>
+          <mat-icon *ngIf="!(loadingError| async)">editMode</mat-icon>
         </button>
         <button
           *ngIf="(editmodeObs | async) == true"
@@ -69,7 +32,7 @@
           <mat-icon>cancel</mat-icon>
         </button>
       </div>
-      <div class="center" *ngIf="(editmodeObs | async) == true">
+      <div *ngIf="(editmodeObs | async) == true">
         <button mat-button (click)="openDialog()">Change title</button>
       </div>
       <div class="cardScroll">
@@ -85,6 +48,7 @@
                       >
                       <mat-card-subtitle
                         ><p>
+                          {{ item["exchange"] }} -
                           {{ item["exchangeTimezoneName"] }}
                         </p>
                       </mat-card-subtitle>
@@ -117,21 +81,96 @@
             </mat-card-content>
           </mat-card>
         </ng-template>
-        <!-- Treemap -->
-        <!-- <stockChart
-          *ngIf="!isLoading"
-          [dataPoints]="portfolioDataPoints"
-          [ticker]="chartTitle"
-          [chartType]="portfolioChart"
-        ></stockChart> -->
       </div>
     </div>
-    <div class="center" *ngIf="loadingError == true || stocks.length == 0">
-      <br>
-      <h2> Welcome {{username | titlecase }}!</h2>
-      <p>To create a watchlist, add a stock to your watchlist.</p>
-      <br>
-      <button mat-button class="inlineLink" routerLink="/stocks">You can browse stocks here</button>
+      <div class="center" *ngIf="(loadingError | async) || !(isLoading | async) && stocks.length == 0;">
+        <br />
+        <h2>Welcome {{ username | titlecase }}!</h2>
+        <div class="loadingErrorImage center">
+          <ngx-picture
+            src="https://res.cloudinary.com/dqfq2aw7t/image/upload/v1676118749/watchlistEmpty-min_ooudxd.jpg"
+            alt="Investing art"
+            [lazyLoad]="false"
+            #picture
+          ></ngx-picture>
+        </div>
+        <p>To create a watchlist, research a company and add it to your watchlist!</p>
+        <br />
+        <button mat-button class="inlineLink" routerLink="/stocks">
+          You can research stocks here
+        </button>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- News articles -->
+      <div *ngIf="!(isLoading | async) && articles.length > 0" class="cardScroll paddingBottom">
+        <br />
+        <h1 class="center"> <strong>Reading List</strong>  </h1>
+        <ng-template ngFor let-item [ngForOf]="articles" let-i="index">
+          <mat-card>
+            <mat-card-content>
+              <a href="{{ item['url'] }}" target="_blank">
+                <mat-card-header>
+                  <mat-card-title-group>
+                    <mat-card-title
+                      ><h1>{{ item["headline"] }}</h1></mat-card-title
+                    >
+                    <mat-card-subtitle
+                      ><h2>
+                        {{ item["source"] }} - {{ item["datetime"] | date }}
+                      </h2></mat-card-subtitle
+                    >
+                  </mat-card-title-group>
+                </mat-card-header>
+
+                <ngx-picture
+                  *ngIf="item['image'] != null"
+                  src="{{ item['image'] }}"
+                  alt="{{ item['headline'] }}"
+                  [lazyLoad]="true"
+                  #picture
+                ></ngx-picture>
+
+                <p style="padding:1rem">{{ item["summary"] }}</p>
+              </a>
+              <div *ngIf="AIassistance">
+                <p>
+                  A.I. assist has interpreted this as a
+                  {{ item["sentiment"] }} outcome.
+                  <mat-icon
+                    class="info"
+                    [matTooltipClass]="{ 'tool-tip': true }"
+                    aria-label="Icon that displays a tooltip when focused or hovered over"
+                    matTooltip="A.I. assist is in its beta trial and could display incorrect answers. It should not be interpreted as investment advice."
+                  >
+                    information
+                  </mat-icon>
+                </p>
+              </div>
+              <mat-card-actions>
+                <button
+                  mat-button
+                  color="secondry"
+                  [cdkCopyToClipboard]="item['url']"
+                  (click)="linkCoppied()"
+                >
+                  <b>SHARE</b>
+                </button>
+                <button mat-button color="secondry" (click)="removeFromReadingList(articleIdentifiers[i])">
+                  <b>REMOVE FROM READING LIST</b>
+                </button>
+              </mat-card-actions>
+            </mat-card-content>
+          </mat-card>
+        </ng-template>
+      </div>
+    <div class="center" *ngIf="(loadingError| async) || !(isLoading | async) && articles.length == 0">
+      <br />
+      <h2>Save an article to read later</h2>
+      <p>To create a reading list, save an article for later.</p>
+      <br />
+      <button mat-button class="inlineLink" routerLink="/news">
+        You can browse the latest news here
+      </button>
     </div>
   </div>
 </div>

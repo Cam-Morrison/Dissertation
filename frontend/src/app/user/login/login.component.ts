@@ -12,7 +12,7 @@ import { ConfirmationDialog } from './confirmation-dialog.component';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   errorMessage: string = "";
   userForm = new FormGroup({
@@ -37,9 +37,6 @@ export class LoginComponent implements OnInit {
     public dialog: MatDialog,
     private backend: MyDataService
     ) { }
-
-  ngOnInit(): void {
-  }
 
   login() {
     this.HTTP.post(`${this.backend.getBackEndService()}/login/`, 

@@ -239,5 +239,77 @@ namespace backend.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
         }
+
+        [HttpGet]   
+        [Route("/addToReadingList/{articleId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [SwaggerOperation(Summary = "Adds an item to the users reading list using the daily article identifier which changes daily.")]
+        public async Task<IActionResult> AddToReadingList(int articleId)
+        {
+            try 
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
+                {
+                    var resp = _userService.AddToReadingList(HttpContext.User.Identity.Name, articleId);
+                    return Ok(resp);
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("UserProfileController.AddToReadingList(int articleId)");
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+        }
+
+        [HttpGet]   
+        [Route("/removeFromReadingList/{articleId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [SwaggerOperation(Summary = "Remove an article reading list using the autoincrementing id primary key.")]
+        public async Task<IActionResult> RemoveFromReadingList(int articleId)
+        {
+            try 
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
+                {
+                    var resp = _userService.RemoveFromReadingList(HttpContext.User.Identity.Name, articleId);
+                    return Ok(resp);
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("UserProfileController.RemoveFromReadingList(int articleId)");
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+        }
+
+        [HttpGet]   
+        [Route("/getReadingList")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [SwaggerOperation(Summary = "Gets users reading list of news articles.")]
+        public async Task<IActionResult> GetReadingList()
+        {
+            try 
+            {
+                if(await _featureFlag.GetFeatureFlagAsync("watchlistFeature"))
+                {
+                    var resp = _userService.getReadingList(HttpContext.User.Identity.Name);
+                    return Ok(resp);
+                } 
+                return Ok("Feature not implemented");
+            }
+            catch(Exception ex)
+            {
+                Log.Information("UserProfileController.getReadingList()");
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+        }
     }
 }

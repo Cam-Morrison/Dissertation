@@ -1,6 +1,7 @@
 using System.Linq;
 using Microsoft.ML;
 using Microsoft.ML.Data;
+using Microsoft.ML.Trainers;
 using Microsoft.ML.Transforms.TimeSeries;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -58,10 +59,10 @@ namespace TimeSeries.Model
 
             //Forecast using all the data
             var entireForecaster = forecastingPipeline.Fit(data);
-            var forecastEngine = forecaster.CreateTimeSeriesEngine<predictionInput, predictionOutput>(mlContext);
+            var forecastEngine = entireForecaster.CreateTimeSeriesEngine<predictionInput, predictionOutput>(mlContext);
             var forecasts = forecastEngine.Predict();
 
-            //Format data and return
+            // Format data and return
             List<float> forecastList = new List<float>();
             foreach (var forecast in forecasts.ForecastedPrice)
             {

@@ -75,11 +75,11 @@ export class StockDetailComponent implements OnInit {
         } catch(Exception) {}
 
         //Company financial metrics
+
         try {
-          dt = resp['metrics']['defaultKeyStatistics'];
+          dt = JSON.parse(resp['metrics'])["defaultKeyStatistics"];
+          console.log(dt);
           this.metrics = {
-            marketCap: dt['enterpriseValue']['longFmt'],
-            marketCapCompressed: dt['enterpriseValue']['fmt'],
             forwardPE: dt['forwardPE']['fmt'],
             profitMargins: dt['profitMargins']['fmt'],
             sharesOutstanding: dt['sharesOutstanding']['fmt'],
@@ -88,6 +88,11 @@ export class StockDetailComponent implements OnInit {
             yield: dt['yield']['fmt'],
             LastDividEnd: dt['lastDividendDate']['fmt'],
             lastDividendValue: dt['lastDividendValue']['fmt'],
+            marketCap: dt['enterpriseValue']['longFmt'],
+            marketCapCompressed: dt['enterpriseValue']['fmt'],    
+            fiftyTwoWeekchange: dt['52WeekChange']['fmt'],
+            earningsQuarterlyGrowth: dt['earningsQuarterlyGrowth']['fmt'],
+            revenueQuarterlyGrowth: dt['revenueQuarterlyGrowth']['fmt'],     
           };
         } catch(Exception) {
           console.log(Exception)
@@ -105,35 +110,32 @@ export class StockDetailComponent implements OnInit {
       }
       },
       (error: any) => {
-        //If stock doesn't exist go back to stock listings
-        console.log('error is: ' + error);
         this.pageNotFound();
       }
     );
-    // var detailsCall = this.MyDataService.getStockDetails(this.ticker!).pipe(
-    //   shareReplay()
-    // );
-    // detailsCall.subscribe(
-    //   (detailsResp: any) => {
-    //     console.log(detailsResp);
-    //     try {
-    //       var dt = detailsResp['assetProfile'];
-    //       this.details = {
-    //         companyUrl: dt['website'],
-    //         sector: dt['industry'],
-    //         name: this.ticker,
-    //         country: dt['country'],
-    //         city: dt['city'],
-    //         employees: dt['fullTimeEmployees'],
-    //         description: dt['longBusinessSummary'],
-    //       };
-    //     } catch(Exception) {}
-    //     this.detailsLoaded = true;
-    //   },
-    //   (error) => {
-    //     //Empty because if stock does not have information on one of these categories it can through an error
-    //   }
-    // );
+    var detailsCall = this.MyDataService.getStockDetails(this.ticker!).pipe(
+      shareReplay()
+    );
+    detailsCall.subscribe(
+      (detailsResp: any) => {
+        try {
+          var dt = detailsResp['assetProfile'];
+          this.details = {
+            companyUrl: dt['website'],
+            sector: dt['industry'],
+            name: this.ticker,
+            country: dt['country'],
+            city: dt['city'],
+            employees: dt['fullTimeEmployees'],
+            description: dt['longBusinessSummary'],
+          };
+        } catch(Exception) {}
+        this.detailsLoaded = true;
+      },
+      (error) => {
+        //Empty because if stock does not have information on one of these categories it can through an error
+      }
+    );
   }
 
   pageNotFound() {
@@ -173,7 +175,6 @@ export class StockDetailComponent implements OnInit {
           horizontalPosition: 'center',
           verticalPosition: 'top',
         });
-        console.log(error);
       }
     );
   }

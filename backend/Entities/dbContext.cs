@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-
-namespace backend.entity
+﻿namespace backend.entity
 {
     public partial class dbContext : DbContext
     {
@@ -23,6 +18,7 @@ namespace backend.entity
         public virtual DbSet<Task> Tasks { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<Watchlist> Watchlists { get; set; } = null!;
+        public virtual DbSet<ReadingList> ReadingLists { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

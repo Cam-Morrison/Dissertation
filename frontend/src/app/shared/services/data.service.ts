@@ -73,4 +73,16 @@ export class MyDataService
   logSignOut() {
     this.http.get(`${this.myBackEndService}/logSignOut`)
   }
+
+  getReadingList() {
+    return this.http.get(`${this.myBackEndService}/getReadingList`)
+  }
+
+  addToReadingList(articleId: number) {
+    return this.http.get(`${this.myBackEndService}/addToReadingList/${articleId}`)
+  }
+
+  removeFromReadingList(articleId: number) {
+    return this.http.get(`${this.myBackEndService}/removeFromReadingList/${articleId}`)
+  }
 }

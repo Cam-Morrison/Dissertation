@@ -12,6 +12,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
 import { RoleGuard } from '../shared/services/role.guard';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AdminComponent],
@@ -20,9 +25,15 @@ import { MatButtonModule } from '@angular/material/button';
     MatSnackBarModule,
     A11yModule,
     MatTableModule,
+    MatFormFieldModule,
+    MatIconModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatSortModule,
+    MatInputModule,
     MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       {
         path: 'admin',

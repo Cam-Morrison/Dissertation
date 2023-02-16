@@ -2,10 +2,18 @@
   <div class="dashboard">
     <h1>{{ username | titlecase }}'s administration panel</h1>
     <h2> {{respMsg}} </h2>
+    <div>
+      <form class="search-form">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($any($event.target).value)">
+          <mat-placeholder>Search</mat-placeholder>
+          <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
+        </mat-form-field>
+      </form>
+
     <table
-      *ngIf="!isLoading"
       mat-table
-      [dataSource]="dataSource"
+      [dataSource]="dataSource" 
     >
       <!-- Time Column -->
       <ng-container matColumnDef="Time">
@@ -59,7 +67,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[25]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+    </div>
   </div>
   <!-- Loader -->
   <div class="spinbox" *ngIf="isLoading">

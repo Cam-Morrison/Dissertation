@@ -6,6 +6,8 @@ using Swashbuckle.AspNetCore.Filters;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
+using backend.services.RateLimiting;
+using AspNetCoreRateLimit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,9 @@ builder.Services.AddSingleton<INewsService, NewsService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAdminService, AdminService>();
 builder.Services.AddTransient<MarketDataService>();
+
+//Rate limiting
+builder.Services.AddRateLimiting(builder.Configuration);
 
 // Configuring swagger
 builder.Services.AddSwaggerGen(c => 
@@ -70,9 +75,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     }
 );
-
+//Healthchecks
+builder.Services.AddHealthChecks();
 //Building
 var app = builder.Build();
+app.MapHealthChecks("/health");
 
 app.UseCors(
   options => options.WithOrigins("*").AllowAnyMethod().AllowAnyHeader()
@@ -83,8 +90,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 } 
+app.UseRateLimiting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();

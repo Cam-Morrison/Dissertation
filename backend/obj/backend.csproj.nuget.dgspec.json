@@ -51,7 +51,7 @@
             },
             "AspNetCoreRateLimit": {
               "target": "Package",
-              "version": "[4.0.2, )"
+              "version": "[5.0.0, )"
             },
             "Azure.Identity": {
               "target": "Package",
@@ -89,7 +89,7 @@
             },
             "Newtonsoft.Json": {
               "target": "Package",
-              "version": "[13.0.1, )"
+              "version": "[13.0.2, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",

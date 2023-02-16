@@ -100,6 +100,28 @@ namespace backend.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "ReadingLists",
+                columns: table => new
+                {
+                    ArticleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    article = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReadingLists", x => x.ArticleId);
+                    table.ForeignKey(
+                        name: "FK_Users_userID",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Actions_UserId",
                 table: "Actions",
@@ -119,6 +141,11 @@ namespace backend.Migrations
                 name: "IX_Watchlists_UserId",
                 table: "Watchlists",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReadingList_articleId",
+                table: "ReadingLists",
+                column: "articleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -134,6 +161,9 @@ namespace backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "ReadingLists");
         }
     }
 }

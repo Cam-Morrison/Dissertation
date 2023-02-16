@@ -2,6 +2,13 @@ html, body {
   height: 100%; 
 }
 
+body.dark-theme {
+  --text-color: #eee;
+  --bkg-color: #252222;
+  --btn-txt-color: rgb(46, 43, 43);
+  --btn-bg-color: rgb(20, 211, 195);
+}
+
 @media screen and (max-width: 768px){
   ::-webkit-scrollbar {
     width: 0px;
@@ -92,6 +99,7 @@ mat-sidenav-content {
   padding-bottom:10rem;
   transition: opacity .8s ease-in-out;
   zoom: 0.5;
+  z-index: 999;
 }
 
 .centerbox {

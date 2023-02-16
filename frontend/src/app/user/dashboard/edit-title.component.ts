@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MyDataService } from '../../shared/services/data.service';
 import { shareReplay } from 'rxjs/operators';
 import { DashboardComponent } from './dashboard.component';
+import { Router } from '@angular/router';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -46,8 +47,6 @@ export class editNameDialog {
   constructor(
     private backend: MyDataService,
     private matSnackBar: MatSnackBar,
-    private dashboard: DashboardComponent,
-    private HTTP : HttpClient,
     @Inject(MAT_DIALOG_DATA) private data: any,
     public dialogRef: MatDialogRef<editNameDialog>,
   ) {}
@@ -64,15 +63,18 @@ export class editNameDialog {
     resp.subscribe(
       (response: any) => {},
       (error) => {
-        this.onNoClick();
-        this.matSnackBar.open(`${error.error.text.toString()}`, 'Close', {
-          duration: 5000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-        });
+        var msg = error.error.text.toString();
+        if(msg == "Please do not use any rude words.") {
+          this.matSnackBar.open(`${msg}`, 'Close', {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+          });
+        } else {
+          window.location.reload();
+        }
       }
     );
-    window.location.reload();
   }
 }
 

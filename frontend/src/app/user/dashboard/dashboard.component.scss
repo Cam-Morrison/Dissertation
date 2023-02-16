@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 
 .content {
-    height:100vh !important;
+    height: 100vh !important;
     padding:0 !important;
     margin: 0 !important;
     background: transparent;
@@ -17,6 +17,15 @@
     }
 }
 
+::ng-deep .mat-tooltip {
+    font-size: 15px;
+    white-space: pre-wrap;
+    color: black !important;
+    background-color: rgba(255, 255, 255, .9);
+    border:1px solid gray;
+    max-width: unset !important;
+}
+
 a:link, a:hover, a:active, a:visited { 
     text-decoration: none; 
     color:white;
@@ -28,6 +37,13 @@ a:link, a:hover, a:active, a:visited {
     background-color:#74b9ff;
 }
 
+.loadingErrorImage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+
 h1 {
     font-size:20px;
 }
@@ -36,6 +52,7 @@ h1 {
     margin-left:calc(+4rem);
     justify-content: center;
     display:inline-flex;
+    font-size:24px;
 }
 
 h2 {
@@ -65,7 +82,7 @@ h2 {
 .mat-card {
     background-color: transparent;
     padding:0;
-    margin-bottom:0.5em;
+    margin-top:0.5em;
     text-align: center;
     justify-content:center;
     height:auto;
@@ -86,20 +103,14 @@ h2 {
 
 h2 {
     padding-left:0.5rem;
+    padding-bottom:0px !important;
   }
   
-  .ChartSelector  {
-    display:flex;
-    float: right;
-  }
-  
-  .movement {
-    width:3rem;
-    padding:1rem;
-    display:flex;
-    float: left;
-    text-shadow:2px;
-  }
+
+.info {
+    font-size:18px !important;
+    display:inline-grid;
+}
 
   .center {
     text-align:center;
@@ -119,7 +130,10 @@ h2 {
     background-color: white;
     overflow:auto;
     max-height:auto;
-    margin-bottom:10em;
+}
+
+.paddingBottom {
+    padding-bottom:10%;
 }
 
 .inlineLink {

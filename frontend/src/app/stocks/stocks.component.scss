@@ -59,3 +59,7 @@ td.mat-cell {
   font-size:auto;
   padding:0.5em;
 }
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+  z-index: 99999 !important;
+}

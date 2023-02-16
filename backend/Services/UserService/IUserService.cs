@@ -11,5 +11,8 @@ namespace backend.services
        public string GetWatchlist(string user);
        public string RemoveFromWatchList(string user, string ticker);
        public string UpdateWatchListTitle(string username, string newTitle);
+       public string AddToReadingList(string username, int articleId);
+       public string RemoveFromReadingList(string username, int articleId);
+       public string getReadingList(string username);
     }
 }

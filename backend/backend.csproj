@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCoreRateLimit" Version="4.0.2" />
+    <PackageReference Include="AspNetCoreRateLimit" Version="5.0.0" />
     <PackageReference Include="AWSSDK.SecretsManager.Caching" Version="1.0.2" />
     <PackageReference Include="Azure.Identity" Version="1.8.1" />
     <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.5.0-beta.1" />
@@ -20,7 +20,7 @@
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.24.0" />
     <PackageReference Include="Microsoft.ML" Version="1.5.0-preview" />
     <PackageReference Include="Microsoft.ML.TimeSeries" Version="1.5.0-preview" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
     <PackageReference Include="Profanity.Detector" Version="0.1.8" />
     <PackageReference Include="Serilog" Version="2.11.0" />
@@ -29,13 +29,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.24.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.ML" Version="1.5.0-preview" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DissertationML.Model\DissertationML.Model.csproj" />
+    <!-- <ProjectReference Include="..\DissertationML.Model\DissertationML.Model.csproj" /> -->
   </ItemGroup>
 
   <ItemGroup>

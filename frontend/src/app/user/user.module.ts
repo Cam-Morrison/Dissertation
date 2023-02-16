@@ -27,6 +27,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { myChartModule } from '../shared/component/charts/chart.module';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { NgxPictureModule, CLOUDINARY_CONFIG } from 'ngx-picture';
 
 @NgModule({
   declarations: [
@@ -38,6 +42,9 @@ import { myChartModule } from '../shared/component/charts/chart.module';
   ],
   imports: [
     CommonModule,
+    BrowserAnimationsModule,
+    NgxPictureModule.forRoot(CLOUDINARY_CONFIG),
+    ClipboardModule, 
     NgApexchartsModule,
     MatTooltipModule,
     myChartModule,
@@ -55,6 +62,7 @@ import { myChartModule } from '../shared/component/charts/chart.module';
     MatButtonModule,
     MatIconModule,
     A11yModule,
+    OverlayModule,
     MatFormFieldModule,
     MatDividerModule,
     RouterModule.forChild([

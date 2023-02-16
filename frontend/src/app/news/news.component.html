@@ -4,10 +4,15 @@
     </mat-progress-spinner>
   </div>
   <div *ngIf="!isLoading">
-    <ng-template ngFor let-item [ngForOf]="newsList" let-i="index">
+    <ng-template
+      ngFor
+      let-item
+      [ngForOf]="newsList"
+      let-i="index"
+    >
       <mat-card>
         <mat-card-content>
-          <a href="{{ item['url'] }}">
+          <a href="{{ item['url'] }}" target="_blank">
             <mat-card-header>
               <mat-card-title-group>
                 <mat-card-title
@@ -15,25 +20,26 @@
                 >
                 <mat-card-subtitle
                   ><h2>
-                    {{ item["source"] }} - {{ item["datetime"] | date }}
+                    {{ item["source"] }} - {{ item["datetime"] * 1000 | date:'EEE dd/MM/yyyy'}}
                   </h2></mat-card-subtitle
                 >
               </mat-card-title-group>
             </mat-card-header>
 
             <ngx-picture
-            *ngIf="item['image'] != null"
-            src="{{ item['image'] }}" 
-            alt="{{item['headline']}}"
-            [lazyLoad]="true"
-            #picture
+              *ngIf="item['image'] != null"
+              src="{{ item['image'] }}"
+              alt="{{ item['headline'] }}"
+              [lazyLoad]="true"
+              #picture
             ></ngx-picture>
 
             <p>{{ item["summary"] }}</p>
           </a>
           <div *ngIf="AIassistance == true">
             <p>
-              A.I. assist has interpreted this as a {{ item["sentiment"] }} outcome.
+              A.I. assist has interpreted this as a
+              {{ item["sentiment"] }} outcome.
               <mat-icon
                 class="info"
                 [matTooltipClass]="{ 'tool-tip': true }"
@@ -53,7 +59,7 @@
             >
               <b>SHARE</b>
             </button>
-            <button mat-button color="primary">
+            <button mat-button color="primary" (click)="addToReadingList(item['dailyArticleID'])">
               <b>ADD TO READING LIST</b>
             </button>
           </mat-card-actions>
