@@ -6,7 +6,7 @@ namespace backend.services
         string GetStockPrice(string ticker);
         string GetStockDetail(string ticker);
         string GetDetailsPageContent(string ticker);
-        string GetActiveStocks();
+        string GetActiveStocks(Boolean updating);
         string GetPricePrediction();
     }
 }

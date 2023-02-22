@@ -15,16 +15,19 @@ namespace backend.services
         private string finnHubKey;
         private string polygonKey;
         private static string activeStocks;
-        private static string homePagePrices;
         private static JObject recentStockDetailsPageCall; 
         private static string recentTickerCall; 
-        private string today = DateTime.Today.AddDays(0).ToString("yyyy-MM-dd");
-        private string lastWeek = DateTime.Today.AddDays(-7).ToString("yyyy-MM-dd");
 
         public MarketDataService(IConfiguration configuration)
         {
             Configuration = configuration;
             initialise();
+        }
+
+        public MarketDataService()
+        {
+            UpdateMarketData();
+            GetActiveStocks(true);
         }
 
         public void initialise()
@@ -153,8 +156,8 @@ namespace backend.services
             return recentStockDetailsPageCall.ToString();
         }
 
-        public string GetActiveStocks() {
-            if(activeStocks == null) {
+        public string GetActiveStocks(Boolean updating) {
+            if(updating == true || activeStocks == null) {
                 var url = "https://yahoo-finance15.p.rapidapi.com/api/yahoo/co/collections/day_gainers";
                 activeStocks = CallUrl(url, false);
             } 
