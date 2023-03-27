@@ -38,8 +38,13 @@ namespace TimeSeries.Model
             TrainTestData dataSplit = mlContext.Data.TrainTestSplit(data, testFraction: 0.2);
             IDataView trainData = dataSplit.TrainSet;
             IDataView testData = dataSplit.TestSet;
-
-            //Time series forecasting pipeline 
+            /*
+            Time series forecasting pipeline:
+            Windows size otherwise known as length ensures the signal and noise components of SSA are seperated.
+            Horizon size is the number of days to predict
+            Confidence level is the percentage of future values that will fall within the prediction interval.
+            Confidence levels are important as they limit how much an estimate can vary from trend. 
+            */
             var forecastingPipeline = mlContext.Forecasting.ForecastBySsa(
                 outputColumnName: nameof(predictionOutput.ForecastedPrice),
                 inputColumnName: nameof(predictionInput.price),
@@ -93,42 +98,4 @@ namespace TimeSeries.Model
             Console.WriteLine($"Root Mean Squared Error: {RMSE:F3}\n");
         }
     }
-
-             //ATTEMPT 1
-            // TrainTestData dataSplit = mlContext.Data.TrainTestSplit(newData, testFraction: 0.2);
-
-            // IDataView trainData = dataSplit.TrainSet;
-            // IDataView testData = dataSplit.TestSet;
-
-            // var forecastingPipeline = mlContext.Forecasting.ForecastBySsa(
-            //     outputColumnName: "ForecastedPrices",
-            //     inputColumnName: "close",
-            //     windowSize: 7,
-            //     seriesLength: 30,
-            //     trainSize: (int)testData.GetRowCount(),
-            //     horizon: 7,
-            //     confidenceLevel: 0.95f,
-            //     confidenceLowerBoundColumn: "LowerBoundPrices",
-            //     confidenceUpperBoundColumn: "UpperBoundPrices");
-
-            // SsaForecastingTransformer forecaster = forecastingPipeline.Fit(trainData);
-            // Evaluate(testData, forecaster, mlContext);
-
-            //ATTEMPT 2
-            // var pipeline = mlContext.Forecasting.ForecastBySsa(
-            //     nameof(predictionOutput.ForecastedPrices),
-            //     nameof(predictionInput.close),
-            //     windowSize: 5,
-            //     seriesLength: 10,
-            //     trainSize: 100,
-            //     horizon: 4
-            // );
-
-            // var model = pipeline.Fit(newData);
-            // var forecastingEngine = model.CreateTimeSeriesEngine<predictionInput, predictionOutput>(mlContext);
-            // var forecasts = forecastingEngine.Predict();
-            // foreach(var forecast in forecasts.ForecastedPrices) {
-            //     Console.WriteLine(forecast);
-            // }
-            // Console.ReadLine();
 }

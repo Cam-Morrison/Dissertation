@@ -78,7 +78,6 @@ export class StockDetailComponent implements OnInit {
 
         try {
           dt = JSON.parse(resp['metrics'])["defaultKeyStatistics"];
-          console.log(dt);
           this.metrics = {
             forwardPE: dt['forwardPE']['fmt'],
             profitMargins: dt['profitMargins']['fmt'],
@@ -167,7 +166,6 @@ export class StockDetailComponent implements OnInit {
           horizontalPosition: 'center',
           verticalPosition: 'top',
         });
-        console.log(response);
       },
       (error) => {
         this.matSnackBar.open(`${error.error.text.toString()}`, 'Close', {

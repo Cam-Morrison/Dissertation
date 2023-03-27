@@ -59,26 +59,34 @@ namespace backend.services
         }
 
         private void UpdateMarketData(){
-            var valid = false;
-            var i = -1; //Needs to be yesterday
-            string yesterday = DateTime.Today.AddDays(i).ToString("yyyy-MM-dd");
-                do{
-                yesterday = DateTime.Today.AddDays(i).ToString("yyyy-MM-dd");
-                DateTime dt = Convert.ToDateTime(yesterday);
-                DayOfWeek day = dt.DayOfWeek;
-                if(day == DayOfWeek.Sunday || day == DayOfWeek.Saturday) {
-                    i--; //Go back a day
-                } else {
-                    valid = true;
+            string updatedMarketData;
+            var i = 0; //Day
+            do {
+                i -= 1; //Needs to be yesterday
+                if(i == -3) 
+                {
+                    tickerList = "";
+                    return;
                 }
-            }while(valid == false);
+                var valid = false;
+                
+                string yesterday = DateTime.Today.AddDays(i).ToString("yyyy-MM-dd");
+                    do{
+                    yesterday = DateTime.Today.AddDays(i).ToString("yyyy-MM-dd");
+                    DateTime dt = Convert.ToDateTime(yesterday);
+                    DayOfWeek day = dt.DayOfWeek;
+                    if(day == DayOfWeek.Sunday || day == DayOfWeek.Saturday) {
+                        i--; //Go back a day
+                    } else {
+                        valid = true;
+                    }
+                }while(valid == false);
 
-            string marketDataUrl = $"https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/{yesterday}?adjusted=true&include_otc=false&apiKey={polygonKey}";
-            string updatedMarketData = CallUrl(marketDataUrl, true);
-            if(updatedMarketData != "Issue with API Call")
-            {
-                tickerList = updatedMarketData;
-            } 
+                string marketDataUrl = $"https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/{yesterday}?adjusted=true&include_otc=false&apiKey={polygonKey}";
+                updatedMarketData = CallUrl(marketDataUrl, true);
+            }while(updatedMarketData != "Issue with API Call");
+            
+            tickerList = updatedMarketData;
         }
 
         public List<String> SearchForStock(string userEntry) {
