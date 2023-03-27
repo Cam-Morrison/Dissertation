@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using backend.services.RateLimiting;
-using AspNetCoreRateLimit;
+using backend.services.schedulerService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +37,10 @@ builder.Services.AddSingleton<INewsService, NewsService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAdminService, AdminService>();
 builder.Services.AddTransient<MarketDataService>();
+
+//Scheduled task to update stored data which reduces api usage
+builder.Services.AddHostedService<SchedulerService>();
+
 
 //Rate limiting
 builder.Services.AddRateLimiting(builder.Configuration);
@@ -75,6 +79,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     }
 );
+
 //Healthchecks
 builder.Services.AddHealthChecks();
 //Building

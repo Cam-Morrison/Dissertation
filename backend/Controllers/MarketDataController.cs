@@ -127,7 +127,7 @@ namespace backend.Controllers
             {
                 if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
                 {
-                    return Ok(_marketDataService.GetActiveStocks());
+                    return Ok(_marketDataService.GetActiveStocks(false));
                 } 
                 return Ok("Feature not implemented");
             }

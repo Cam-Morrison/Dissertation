@@ -133,10 +133,6 @@ namespace backend.services
             }
         }
 
-        private string CreateRandomToken() {
-            return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
-        }
-
         public string AddToWatchlist(string user, string ticker)
         {
             try {
