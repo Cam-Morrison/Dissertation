@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace backend.entity
+﻿namespace backend.entity
 {
     public partial class Task
     {

@@ -1,36 +1,17 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace backend.Migrations
 {
+    /// <inheritdoc />
     public partial class Initial : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserName = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PasswordHash = table.Column<byte[]>(type: "longblob", nullable: false),
-                    PasswordSalt = table.Column<byte[]>(type: "longblob", nullable: false),
-                    UserIsAdmin = table.Column<bool>(type: "tinyint(1)", nullable: true),
-                    UserIsAccountLocked = table.Column<bool>(type: "tinyint(1)", nullable: true),
-                    UserAiSwitchedOnPreference = table.Column<bool>(type: "tinyint(1)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
-                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
@@ -49,25 +30,44 @@ namespace backend.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Watchlists",
+                name: "ReadingLists",
                 columns: table => new
                 {
-                    WatchListId = table.Column<int>(type: "int", nullable: false)
+                    ArticleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    WatchListName = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Stocks = table.Column<string>(type: "longtext", nullable: true)
+                    article = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Watchlists", x => x.WatchListId);
+                    table.PrimaryKey("PK_ReadingLists", x => x.ArticleId);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PasswordHash = table.Column<byte[]>(type: "longblob", nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "longblob", nullable: false),
+                    UserIsAdmin = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    UserIsAccountLocked = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    UserAiSwitchedOnPreference = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    ActionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_Watchlists_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
+                        name: "FK_Users_Actions_ActionId",
+                        column: x => x.ActionId,
+                        principalTable: "Actions",
+                        principalColumn: "ActionId",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -101,31 +101,28 @@ namespace backend.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ReadingLists",
+                name: "Watchlists",
                 columns: table => new
                 {
-                    ArticleId = table.Column<int>(type: "int", nullable: false)
+                    WatchListId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    article = table.Column<string>(type: "longtext", nullable: false)
+                    WatchListName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Stocks = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ReadingLists", x => x.ArticleId);
+                    table.PrimaryKey("PK_Watchlists", x => x.WatchListId);
                     table.ForeignKey(
-                        name: "FK_Users_userID",
+                        name: "FK_Watchlists_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Actions_UserId",
-                table: "Actions",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_ActionId",
@@ -138,18 +135,22 @@ namespace backend.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_ActionId",
+                table: "Users",
+                column: "ActionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Watchlists_UserId",
                 table: "Watchlists",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ReadingList_articleId",
-                table: "ReadingLists",
-                column: "articleId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ReadingLists");
+
             migrationBuilder.DropTable(
                 name: "Tasks");
 
@@ -157,13 +158,10 @@ namespace backend.Migrations
                 name: "Watchlists");
 
             migrationBuilder.DropTable(
-                name: "Actions");
-
-            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "ReadingLists");
+                name: "Actions");
         }
     }
 }

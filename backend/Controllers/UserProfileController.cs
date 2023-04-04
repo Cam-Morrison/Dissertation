@@ -2,10 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using backend.services;
 using Serilog;
 using Swashbuckle.AspNetCore.Annotations;
-using backend.entity;
 using backend.model;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace backend.Controllers
 {
@@ -61,7 +59,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch (Exception)
             {
                 Log.Information("UserProfileController.Login(Login input)");
                 return StatusCode(StatusCodes.Status400BadRequest);
@@ -91,7 +89,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch (Exception)
             {
                 Log.Information("UserProfileController.Register(Register input)");
                 return StatusCode(StatusCodes.Status400BadRequest);
@@ -114,7 +112,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("UserProfileController.toggleAIpreference()");
                 return StatusCode(StatusCodes.Status400BadRequest);
@@ -137,7 +135,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("UserProfileController.LogSignOut()");
                 return StatusCode(StatusCodes.Status400BadRequest);
@@ -161,7 +159,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("UserProfileController.AddToWatchlist(String ticker)");
                 return StatusCode(StatusCodes.Status400BadRequest);
@@ -185,7 +183,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("UserProfileController.GetWatchlist()");
                 return StatusCode(StatusCodes.Status400BadRequest);
@@ -209,7 +207,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("UserProfileController.RemoveFromWatchList(string ticker)");
                 return StatusCode(StatusCodes.Status400BadRequest);
@@ -233,7 +231,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("UserProfileController.UpdateWatchListTitle(string newTitle)");
                 return StatusCode(StatusCodes.Status400BadRequest);
@@ -257,7 +255,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("UserProfileController.AddToReadingList(int articleId)");
                 return StatusCode(StatusCodes.Status400BadRequest);
@@ -281,7 +279,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("UserProfileController.RemoveFromReadingList(int articleId)");
                 return StatusCode(StatusCodes.Status400BadRequest);
@@ -305,7 +303,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("UserProfileController.getReadingList()");
                 return StatusCode(StatusCodes.Status400BadRequest);

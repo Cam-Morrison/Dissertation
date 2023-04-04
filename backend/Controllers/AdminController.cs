@@ -43,7 +43,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("MarketDataController.GetTaskHistory()");
                 return StatusCode(StatusCodes.Status500InternalServerError);
@@ -66,7 +66,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("MarketDataController.GetTaskHistory()");
                 return StatusCode(StatusCodes.Status500InternalServerError);

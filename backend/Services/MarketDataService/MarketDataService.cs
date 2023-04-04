@@ -3,10 +3,9 @@ namespace backend.services
     using System;
     using System.Net.Http;
     using System.Net.Http.Headers; 
-    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using TimeSeries.Model;
-
+    
     public class MarketDataService : IMarketDataService
     {
         private readonly IConfiguration Configuration;
@@ -44,7 +43,7 @@ namespace backend.services
         private static string TickerToCompanyMap(string userEntry) 
         {
             var results = new List<string>();
-            string csvFile = "C:/Users/Cam-M/Documents/Dissertation/backend/Services/MarketDataService/companyMapping.csv";
+            string csvFile = @"../backend/Services/MarketDataService/companyMapping.csv";
             try {
                 string[] rows = System.IO.File.ReadAllLines(@csvFile);
 
@@ -120,11 +119,6 @@ namespace backend.services
                 return results;  
             }
         }
-
-        // public string GetIndividualStockNews(string ticker) {
-        //     var resp = CallUrl($"https://finnhub.io/api/v1/company-news?symbol={ticker}&from={lastWeek}&to={today}&token={polygonKey}", true);
-        //     return resp;
-        // }
 
         public string GetStockPrice(string ticker)
         {       

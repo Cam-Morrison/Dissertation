@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace backend.entity
+﻿namespace backend.entity
 {
     public partial class User
     {
@@ -21,5 +18,6 @@ namespace backend.entity
 
         public virtual ICollection<Task> Tasks { get; set; }
         public virtual ICollection<Watchlist> Watchlists { get; set; }
+        
     }
 }
