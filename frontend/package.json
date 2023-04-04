@@ -27,6 +27,7 @@
     "ng-apexcharts": "^1.7.1",
     "ngx-hide-on-scroll": "^0.2.1",
     "ngx-picture": "^3.0.0-alpha.1",
+    "ngx-window-token": "^6.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

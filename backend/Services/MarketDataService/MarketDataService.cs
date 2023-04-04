@@ -44,7 +44,7 @@ namespace backend.services
         private static string TickerToCompanyMap(string userEntry) 
         {
             var results = new List<string>();
-            string csvFile = "C:/Users/Cam-M/Documents/Dissertation/backend/Services/MarketDataService/companyMapping.csv";
+            string csvFile = @"../backend/Services/MarketDataService/companyMapping.csv";
             try {
                 string[] rows = System.IO.File.ReadAllLines(@csvFile);
 

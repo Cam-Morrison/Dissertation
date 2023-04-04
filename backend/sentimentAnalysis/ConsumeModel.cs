@@ -26,7 +26,7 @@ namespace Sentiment.Model
             MLContext mlContext = new MLContext();
 
             // Load model & create prediction engine
-            string modelPath = @"C:\Users\Cam-M\Documents\Dissertation\backend\sentimentAnalysis\MLModel.zip";
+            string modelPath = @"../backend/sentimentAnalysis/MLModel.zip";
             ITransformer mlModel = mlContext.Model.Load(modelPath, out var modelInputSchema);
             var predEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);
 

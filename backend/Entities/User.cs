@@ -21,5 +21,6 @@ namespace backend.entity
 
         public virtual ICollection<Task> Tasks { get; set; }
         public virtual ICollection<Watchlist> Watchlists { get; set; }
+        
     }
 }

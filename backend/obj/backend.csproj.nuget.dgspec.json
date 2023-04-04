@@ -1,25 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Cam-M\\Documents\\Dissertation\\backend\\backend.csproj": {}
+    "C:\\Users\\Cameron Morrison\\Downloads\\Dissertation-master\\Dissertation-master\\backend\\backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Cam-M\\Documents\\Dissertation\\backend\\backend.csproj": {
+    "C:\\Users\\Cameron Morrison\\Downloads\\Dissertation-master\\Dissertation-master\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Cam-M\\Documents\\Dissertation\\backend\\backend.csproj",
+        "projectUniqueName": "C:\\Users\\Cameron Morrison\\Downloads\\Dissertation-master\\Dissertation-master\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Users\\Cam-M\\Documents\\Dissertation\\backend\\backend.csproj",
-        "packagesPath": "C:\\Users\\Cam-M\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Cam-M\\Documents\\Dissertation\\backend\\obj\\",
+        "projectPath": "C:\\Users\\Cameron Morrison\\Downloads\\Dissertation-master\\Dissertation-master\\backend\\backend.csproj",
+        "packagesPath": "C:\\Users\\Cameron Morrison\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Cameron Morrison\\Downloads\\Dissertation-master\\Dissertation-master\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Cam-M\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Cameron Morrison\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -69,11 +67,15 @@
               "target": "Package",
               "version": "[6.0.0, )"
             },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.4, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.10, )"
+              "version": "[7.0.4, )"
             },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
@@ -93,7 +95,7 @@
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
-              "version": "[6.0.2, )"
+              "version": "[7.0.0, )"
             },
             "Profanity.Detector": {
               "target": "Package",
