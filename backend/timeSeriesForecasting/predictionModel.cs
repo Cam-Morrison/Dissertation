@@ -1,7 +1,5 @@
-using System.Linq;
 using Microsoft.ML;
 using Microsoft.ML.Data;
-using Microsoft.ML.Trainers;
 using Microsoft.ML.Transforms.TimeSeries;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -48,7 +46,7 @@ namespace TimeSeries.Model
             var forecastingPipeline = mlContext.Forecasting.ForecastBySsa(
                 outputColumnName: nameof(predictionOutput.ForecastedPrice),
                 inputColumnName: nameof(predictionInput.price),
-                windowSize: 12,
+                windowSize: 91,
                 seriesLength: modelInput.Count,
                 trainSize: modelInput.Count,
                 horizon: 30,
@@ -90,8 +88,8 @@ namespace TimeSeries.Model
                 .Select(prediction => prediction.ForecastedPrice[0]);
 
             var metrics = actual.Zip(forecast, (actualValue, forecastValue) => actualValue - forecastValue);
-            var MAE = metrics.Average(error => Math.Abs(error)); // Mean Absolute Error
-            var RMSE = Math.Sqrt(metrics.Average(error => Math.Pow(error, 2))); // Root Mean Squared Error
+            var MAE = metrics.Average(error => Math.Abs(error)); 
+            var RMSE = Math.Sqrt(metrics.Average(error => Math.Pow(error, 2))); 
             Console.WriteLine("Evaluation Metrics");
             Console.WriteLine("---------------------");
             Console.WriteLine($"Mean Absolute Error: {MAE:F3}");

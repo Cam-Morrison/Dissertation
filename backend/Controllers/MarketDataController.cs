@@ -42,7 +42,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("MarketDataController.SearchForStock()");
                 return StatusCode(StatusCodes.Status500InternalServerError);
@@ -64,7 +64,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("MarketDataController.GetStockPrice()");
                 return StatusCode(StatusCodes.Status500InternalServerError);
@@ -86,7 +86,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("MarketDataController.GetStockDetail()");
                 return StatusCode(StatusCodes.Status500InternalServerError);
@@ -109,7 +109,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("MarketDataController.GetStockHistory()");
                 return StatusCode(StatusCodes.Status500InternalServerError);
@@ -131,31 +131,9 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("MarketDataController.GetActiveStocks()");
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-        }
-
-        [HttpGet]
-        [Route("/timeSeriesForecasting")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [SwaggerOperation(Summary = "Attempts to predict future market value using time series forecasting. This is only for stock details page.")]
-        public async Task<IActionResult> GetStockPrediction()
-        {
-            try
-            {
-                if(await _featureFlag.GetFeatureFlagAsync("stockPriceFunctionality"))
-                {
-                    return Ok(_marketDataService.GetPricePrediction());
-                } 
-                return Ok("Feature not implemented");
-            }
-            catch(Exception ex)
-            {
-                Log.Information("MarketDataController.GetStockPrediction()");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

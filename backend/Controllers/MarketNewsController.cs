@@ -42,7 +42,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("MarketNewsController.GetDailyNews()");
                 return StatusCode(StatusCodes.Status500InternalServerError);
@@ -64,7 +64,7 @@ namespace backend.Controllers
                 } 
                 return Ok("Feature not implemented");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Log.Information("MarketNewsController.GetNewsSentiment()");
                 return StatusCode(StatusCodes.Status500InternalServerError);
