@@ -27,7 +27,7 @@ Data used within the application as outlined within the dissertation is obtained
   Kaggle 
   
  ## Installation guide
- An Integrated Development Environment (IDE) software is required to run the code. The recommended application used for this project is Visual Studio Code, a lightweight and highly customisable editor. To download it, see the link. 
+An Integrated Development Environment (IDE) software is required to run the code. The recommended application used for this project is Visual Studio Code, a lightweight and highly customisable editor. To download it, see the link. 
 https://code.visualstudio.com/
 To help with the navigation of the project, the Material Icon theme is recommended as it makes the distinct types of files stand out from each other. This is an extension for Visual Studio code, and you can find a quick install tutorial here. 
 https://youtu.be/XBO4rt3aKFE?t=37
@@ -38,45 +38,46 @@ https://www.youtube.com/watch?v=AC5UWby16sg
 To install the environment for Entity Framework to scaffold a database, you will need to install the MySQL server. When running the MySQL installer, click “Developer default” which will only download the client command line. For ease of installation, set the port number to 3306 and management user to root if it is not already as default. 
 https://dev.mysql.com/downloads/installer/
 
-Now, unzip the project folder and using Visual Studio code at the top left corner click “File” -> “Open folder”.
+ Now, unzip the project folder and using Visual Studio code at the top left corner click “File” -> “Open folder”.
 
-You should then see the following file structure. The backend contains the .NET server-side application and Frontend contains the Angular client-side application. 
+ You should then see the following file structure. The backend contains the .NET server-side application and Frontend contains the Angular client-side application. 
 
 Now you have opened the project, go to the top navigation bar of the editor, and click “Terminal” followed by “New Terminal”. 
 At the bottom of your editor, you should now see a command prompt terminal, click on it and type: 
 
-**cd frontend**
+cd frontend
 
 This will take you to the frontend folder where we will set up Angular, check its working and install dependencies for the project.
 First check that Node Package Manager has been installed properly by running the following command. If a version is returned, then it has worked. If not revisit the steps or search for the error code online. 
-
-**npm --version**
+npm --version
 
 Now run this command to install Angular.
 
-**npm install -g @angular/cli**
+npm install -g @angular/cli
 
 Now, run the following command to install dependencies. One dependency for injection may not be included in the install by default so run the second command separately.
 
-**npm i
-npm i ngx-window-token**
+npm i
+npm i ngx-window-token
 
-Finally, after the dependencies are installed, start the front end by running this command.
+Finally, after the dependencies are installed, start the frontend by running this command.
 
-**npm start**
+npm start
 
 The front end should now be running on the local device port 4200. Before navigating to the local host website. Start up the backend to give it the functionality. At the top right of the active terminal, create a new PowerShell window as seen in the image.
 
 Run the following commands individually to navigate to the server-side .NET application’s directory, then check the version of the .NET install. If a number is not returned, then there is an issue with the installation. The first number should be six. Finally, build the .NET application.
 
-**Cd backend
-Dotnet --version
-Dotnet build backend.csproj**
+cd backend
+dotnet --version
+dotnet build backend.csproj
 
 Now run the following commands one at a time. This will install the entity framework command for .NET, and then run the database update command to create the tables.
 
-**Dotnet tool install –global dotnet-ef
-dotnet ef database update --context backend.entity.dbcontext**
+dotnet tool install –-global dotnet-ef
+dotnet ef migrations add setup --context backend.entity.dbcontext
+dotnet ef database update --context backend.entity.dbcontext
+dotnet run
 
 You should now be able to access both the backend and frontend applications.
 Angular app: http://localhost:4200/
