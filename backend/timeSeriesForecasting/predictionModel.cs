@@ -46,7 +46,7 @@ namespace TimeSeries.Model
             var forecastingPipeline = mlContext.Forecasting.ForecastBySsa(
                 outputColumnName: nameof(predictionOutput.ForecastedPrice),
                 inputColumnName: nameof(predictionInput.price),
-                windowSize: 91,
+                windowSize: 12,
                 seriesLength: modelInput.Count,
                 trainSize: modelInput.Count,
                 horizon: 30,
