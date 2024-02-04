@@ -1,3 +1,5 @@
+Change -> release to public, this code will not run without all the API keys from the secrets manager.
+
 ## Disclaimer
 The project contains two applications which work together. 
 I certify that the intellectual property is my own other than Angular and .NET included libraries and the following dependencies,
